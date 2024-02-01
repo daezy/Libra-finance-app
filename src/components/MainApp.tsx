@@ -1,0 +1,66 @@
+// import { useContext } from "react";
+import {
+  AiOutlineSecurityScan,
+  AiOutlineClockCircle,
+  AiOutlineHeatMap,
+} from "react-icons/ai";
+const MainApp = () => {
+  return (
+    <>
+      <div className="my-20 bg-slate-200 w-11/12 md:w-8/12 lg:w-5/12 mx-auto p-6 py-9 rounded-xl">
+        {/* {ctx.successMsg && (
+          <div className="bg-green-500 text-white p-4 text-center my-4 rounded-lg">
+            <p>{ctx.successMsg}</p>
+          </div>
+        )}
+        {ctx.errorMsg && (
+          <div className="bg-green-700 text-white p-4 text-center my-4 rounded-lg">
+            <p>{ctx.errorMsg}</p>
+          </div>
+        )} */}
+
+        <h2 className="font-bold tracking-wider">REVENUE SHARING</h2>
+        <div className="p-6 text-center text-slate-600">
+          <p>You must hold at least 4000 $LIBRA to claim</p>
+        </div>
+
+        <div id="details" className="">
+          <ul className="text-slate-700">
+            <li className="flex items-center justify-between p-3 mb-1">
+              <span className="flex items-center">
+                <AiOutlineSecurityScan /> &nbsp; Pool total
+              </span>
+              <span>1 SOL</span>
+            </li>
+            <li className="flex items-center justify-between p-3 mb-1">
+              <span className="flex items-center">
+                <AiOutlineHeatMap /> &nbsp; Next Share Total
+              </span>
+              <span>1SOL</span>
+            </li>
+            <li className="flex items-center justify-between p-3 mb-1">
+              <span className="flex items-center">
+                <AiOutlineClockCircle /> &nbsp; Next Share Unlock
+              </span>
+              <span>1122</span>
+            </li>
+            <li className="flex items-center justify-between p-3 mb-1">
+              <span>$LIBRA Balance</span>
+              <span>1 $LIBRA</span>
+            </li>
+            <li className="flex items-center justify-between p-3 mb-1">
+              <span>SOL Balance</span>
+              <span>1 SOL</span>
+            </li>
+          </ul>
+        </div>
+
+        <button className="w-full text-center text-slate-100 bg-violet-600 hover:bg-violet-800 py-3 rounded-lg disabled:bg-slate-400">
+          Claim
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default MainApp;
