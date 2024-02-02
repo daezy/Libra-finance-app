@@ -5,7 +5,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <nav className="bg-slate-900">
+      <nav className="bg-slate-900 fixed w-full top-0 z-10">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
           <a
             href="https://www.libra-finance.com"
@@ -60,7 +60,7 @@ const Navbar = () => {
             } w-full md:flex md:w-auto md:order-1`}
             id="navbar-cta"
           >
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-solid border-slate-400 rounded-lg md:border-0  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0e bg-transparent text-white uppercase">
+            <ul className="flex flex-col gap-7 font-medium p-4 md:p-0 mt-4 border border-solid border-slate-400 rounded-lg md:border-0  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0e bg-transparent text-white uppercase">
               <li>
                 <a href="#about" className=" hover:text-violet-600 p-4 md:p-0">
                   Home
