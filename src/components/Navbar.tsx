@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaWallet } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { AppContext } from "../context/App-Context";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const ctx = useContext(AppContext);
   return (
     <>
       <nav className="bg-slate-900 fixed w-full top-0 z-10">
@@ -25,8 +28,20 @@ const Navbar = () => {
                 alt="sol"
               />
             </button>
-            <button className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center">
-              <FaWallet /> Connect Wallet
+            <button
+              className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
+              onClick={() => {
+                if (!ctx.isWalletConnected) {
+                  return ctx.connectWallet();
+                } else {
+                  return ctx.disconnectWallet();
+                }
+              }}
+            >
+              <FaWallet />{" "}
+              {ctx.isWalletConnected
+                ? ctx.walletAddress.toString().slice(0, 15)
+                : "Connect Wallet"}
             </button>
             <button
               data-collapse-toggle="navbar-cta"
@@ -62,24 +77,14 @@ const Navbar = () => {
           >
             <ul className="flex flex-col gap-7 font-medium p-4 md:p-0 mt-4 border border-solid border-slate-400 rounded-lg md:border-0  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0e bg-transparent text-white uppercase">
               <li>
-                <a href="#about" className=" hover:text-violet-600 p-4 md:p-0">
-                  Home
-                </a>
+                <Link to="/" className=" hover:text-violet-600 p-4 md:p-0">
+                  App
+                </Link>
               </li>
               <li>
-                <a href="#about" className=" hover:text-violet-600 p-4 md:p-0">
-                  Banks
-                </a>
-              </li>
-              <li>
-                <a href="#about" className=" hover:text-violet-600 p-4 md:p-0">
-                  Swap
-                </a>
-              </li>
-              <li>
-                <a href="#about" className=" hover:text-violet-600 p-4 md:p-0">
-                  Init
-                </a>
+                <Link to="/bank" className=" hover:text-violet-600 p-4 md:p-0">
+                  Bank
+                </Link>
               </li>
             </ul>
           </div>

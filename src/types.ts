@@ -8,9 +8,6 @@ import {
 export type AppContextType = {
   isWalletConnected: boolean;
   walletAddress: PublicKey;
-  contractData: ContractDataInterface | null;
-  balances: { token: string; sol: string };
-  connection: Connection | null;
   successMsg: string | null;
   errorMsg: string | null;
   connectWallet: () => void;
