@@ -1,11 +1,17 @@
 import { useContext, useState } from "react";
 import { FaWallet } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AppContext } from "../context/App-Context";
+import { AppContextType } from "../types";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const ctx = useContext(AppContext);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [dropOpen, setDropOpen] = useState<boolean>(false);
+  const ctx = useContext<AppContextType>(AppContext);
+
+  const toggleDropdown = () => {
+    setDropOpen((drop) => !drop);
+  };
   return (
     <>
       <nav className="bg-slate-900 fixed w-full top-0 z-10">
@@ -20,14 +26,43 @@ const Navbar = () => {
             </h2>
           </a>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
-            <button className="text-slate-100 border border-solid border-violet-600 py-4 px-3 rounded-2xl  flex justify-between gap-3 items-center mr-3">
-              <img
-                src="./img/sol.png"
-                className="max-w-full"
-                width={27}
-                alt="sol"
-              />
-            </button>
+            <div className="dropdown">
+              <button
+                className="text-slate-100 border border-solid border-violet-600 py-4 px-3 rounded-2xl  flex justify-between gap-3 items-center mr-3 capitalize"
+                onClick={() => toggleDropdown()}
+              >
+                <img
+                  src="./img/sol.png"
+                  className="max-w-full"
+                  width={27}
+                  alt="sol"
+                />{" "}
+                {ctx.network && ctx.network}
+              </button>
+              <div
+                id="myDropdown"
+                className={`dropdown-content ${dropOpen ? "show" : ""}`}
+              >
+                <a
+                  href="#"
+                  onClick={() => {
+                    ctx.setNetwork("devnet");
+                    toggleDropdown();
+                  }}
+                >
+                  Devnet
+                </a>
+                <a
+                  href="#"
+                  onClick={() => {
+                    ctx.setNetwork("mainnet");
+                    toggleDropdown();
+                  }}
+                >
+                  Mainnet
+                </a>
+              </div>
+            </div>
             <button
               className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
               onClick={() => {
@@ -77,14 +112,25 @@ const Navbar = () => {
           >
             <ul className="flex flex-col gap-7 font-medium p-4 md:p-0 mt-4 border border-solid border-slate-400 rounded-lg md:border-0  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0e bg-transparent text-white uppercase">
               <li>
-                <Link to="/" className=" hover:text-violet-600 p-4 md:p-0">
+                <NavLink to="/" className=" hover:text-violet-600 p-4 md:p-0">
                   App
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to="/bank" className=" hover:text-violet-600 p-4 md:p-0">
+                <NavLink
+                  to="/stake"
+                  className=" hover:text-violet-600 p-4 md:p-0"
+                >
+                  Stake
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/bank"
+                  className=" hover:text-violet-600 p-4 md:p-0"
+                >
                   Bank
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>

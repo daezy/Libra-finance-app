@@ -1,15 +1,12 @@
-import {
-  Connection,
-  PublicKey,
-  SendOptions,
-  Transaction,
-} from "@solana/web3.js";
+import { PublicKey, SendOptions, Transaction } from "@solana/web3.js";
 
 export type AppContextType = {
   isWalletConnected: boolean;
+  network: "devnet" | "mainnet" | null;
   walletAddress: PublicKey;
   successMsg: string | null;
   errorMsg: string | null;
+  setNetwork: (name: "devnet" | "mainnet") => void;
   connectWallet: () => void;
   disconnectWallet: () => void;
 };

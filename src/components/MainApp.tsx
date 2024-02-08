@@ -29,14 +29,14 @@ const MainApp = () => {
             </div>
             <div className="p-4 text-slate-900">
               <h2 className="text-lg text-slate-500 my-1">
-                Total Locked In Libero Bank
+                Total Locked In Libra Bank
               </h2>
               <p className="text-2xl ">$66,730.11</p>
               <p>( 23.89% total supply )</p>
             </div>
             <div className="p-4 text-slate-900">
               <h2 className="text-lg text-slate-500 my-1">
-                Total Locked In Libera System
+                Total Locked In Libra System
               </h2>
               <p className="text-2xl ">$2,253.14</p>
               <p>( 0.81% total supply )</p>
@@ -85,7 +85,7 @@ const MainApp = () => {
           </div>
           <div className="p-6 bg-slate-100 rounded-xl">
             <h2 className="text-lg text-slate-500 my-1">
-              Total $BUSD Rewarded
+              Total $USDC Rewarded
             </h2>
             <p className="text-purple-600 text-2xl">$3,300,511.28</p>
           </div>
