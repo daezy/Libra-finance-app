@@ -3,6 +3,7 @@ import { FaLock } from "react-icons/fa6";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
+  const [libraAmount, setLibraAmount] = useState<number>(0);
 
   return (
     <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
@@ -50,10 +51,17 @@ const Stake = () => {
               </div>
             </div>
 
-            <div className="right">
-              <button className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center w-full md:w-fit">
-                Approve LIBRA
-              </button>
+            <div className="right flex justify-center gap-1 flex-col">
+              <label htmlFor="libraamout">Enter Libra Amount to lock</label>
+              <input
+                type="number"
+                name="libraamount"
+                value={libraAmount}
+                onChange={(e) => setLibraAmount(Number(e.target.value))}
+                placeholder="*Libra amount"
+                id="libraamount"
+                className="py-2 px-4 rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"
+              />
             </div>
           </div>
 
