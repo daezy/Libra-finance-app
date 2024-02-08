@@ -4,6 +4,7 @@ import { PublicKey } from "@solana/web3.js";
 
 export const AppContext = createContext<AppContextType>({
   isWalletConnected: false,
+  loading: false,
   walletAddress: PublicKey.default,
   successMsg: "",
   network: null,
@@ -21,6 +22,7 @@ export const AppContextPorvider: React.FC<{ children: React.ReactNode }> = (
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [connected, setConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [network, setNetwork] = useState<"devnet" | "mainnet" | null>(null);
 
   useEffect(() => {
@@ -81,6 +83,7 @@ export const AppContextPorvider: React.FC<{ children: React.ReactNode }> = (
         isWalletConnected: connected,
         setNetwork: handleSetNetwork,
         network,
+        loading,
         walletAddress: pubKey,
         connectWallet: handleConnectWallet,
         successMsg: success,

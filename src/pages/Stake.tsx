@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { FaLock } from "react-icons/fa6";
+import { useContext, useState } from "react";
+import { FaLock, FaSpinner } from "react-icons/fa6";
+import { AppContext } from "../context/App-Context";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
   const [libraAmount, setLibraAmount] = useState<number>(0);
+
+  const ctx = useContext(AppContext);
 
   return (
     <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
@@ -168,8 +171,11 @@ const Stake = () => {
             </div>
           </div>
           <div className="my-3">
-            <button className="text-slate-100 mx-auto bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center">
-              Submit
+            <button
+              className="text-slate-100 mx-auto bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
+              disabled={ctx.loading}
+            >
+              {ctx.loading ? <FaSpinner className="animate-spin" /> : "Submit"}
             </button>
           </div>
           <p>

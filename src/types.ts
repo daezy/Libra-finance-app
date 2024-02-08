@@ -5,6 +5,7 @@ export type AppContextType = {
   network: "devnet" | "mainnet" | null;
   walletAddress: PublicKey;
   successMsg: string | null;
+  loading: boolean;
   errorMsg: string | null;
   setNetwork: (name: "devnet" | "mainnet") => void;
   connectWallet: () => void;

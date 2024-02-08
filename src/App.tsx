@@ -6,6 +6,8 @@ import MainApp from "./components/MainApp";
 import { Routes, Route } from "react-router-dom";
 import Stake from "./pages/Stake";
 import Bank from "./pages/Bank";
+import SuccessPopup from "./components/SuccessPopup";
+import ErrorPopup from "./components/ErrorPopup";
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
         <Route path="/bank" element={<Bank />} />
         <Route path="/stake" element={<Stake />} />
       </Routes>
+      <SuccessPopup />
+      <ErrorPopup />
+
       <Footer />
     </>
   );
