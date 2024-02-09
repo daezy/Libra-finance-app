@@ -15,8 +15,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<MainApp />} />
-        <Route path="/bank" element={<Bank />} />
-        <Route path="/stake" element={<Stake />} />
+        <Route path="/bank" element={<Stake />} />
+        <Route path="/stake" element={<Bank />} />
       </Routes>
       <SuccessPopup />
       <ErrorPopup />
