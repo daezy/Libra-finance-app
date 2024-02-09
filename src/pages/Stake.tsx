@@ -1,12 +1,56 @@
 import { useContext, useState } from "react";
 import { FaLock, FaSpinner } from "react-icons/fa6";
 import { AppContext } from "../context/App-Context";
+import { performStake, performUnStake } from "../solana/services.ts";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
   const [libraAmount, setLibraAmount] = useState<number>(0);
 
   const ctx = useContext(AppContext);
+
+  const handleStake = async () => {
+    ctx.setLoading(true);
+    if (ctx.connection && ctx.provider && ctx.tokenAccount) {
+      try {
+        const duration = days * 60 * 60;
+        await performStake(
+            ctx.connection,
+            ctx.provider,
+            libraAmount,
+            duration,
+            ctx.tokenAccount.address
+        );
+        ctx.setSuccess('Stake Success 🚀✅')
+      } catch (e) {
+        console.log(e)
+        ctx.setError('An Error Occurred while staking..')
+      }
+    } else {
+      ctx.setError('Unable to perform stake..')
+    }
+    ctx.setLoading(false);
+  }
+
+  const handleUnstake = async () => {
+    ctx.setLoading(true);
+    if (ctx.connection && ctx.provider && ctx.tokenAccount) {
+      try {
+        await performUnStake(
+            ctx.connection,
+            ctx.provider,
+            ctx.tokenAccount.address
+        );
+        ctx.setSuccess('Stake Success 🚀✅')
+      } catch (e) {
+        console.log(e)
+        ctx.setError('An Error Occurred while un-staking..')
+      }
+    } else {
+      ctx.setError('Unable to perform un-stake..')
+    }
+    ctx.setLoading(false);
+  }
 
   return (
     <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
@@ -174,6 +218,7 @@ const Stake = () => {
             <button
               className="text-slate-100 mx-auto bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
               disabled={ctx.loading}
+              onClick={handleStake}
             >
               {ctx.loading ? <FaSpinner className="animate-spin" /> : "Submit"}
             </button>
