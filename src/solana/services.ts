@@ -2,17 +2,17 @@ import {makeStakeInstruction, makeUnstakeInstruction, signAndConfirmTransaction}
 import {Connection, PublicKey, Transaction} from "@solana/web3.js";
 import {PhantomProvider} from "../types.ts";
 import {StakeType} from "./types.ts";
-import {CONTRACT_DATA_ACCOUNT, CONTRACT_TOKEN_ACCOUNT} from "./constants.ts";
+import {CONTRACT_DATA_ACCOUNT, CONTRACT_TOKEN_ACCOUNT, PROGRAM_ID} from "./constants.ts";
 
 export const performStake = async (
     connection: Connection,
     provider: PhantomProvider,
     amount: number,
     lockDuration: number,
-    programId: PublicKey,
     userTokenAccount: PublicKey,
 ) => {
-    const [userDataAccount, _] = PublicKey.findProgramAddressSync(
+    const programId = new PublicKey(PROGRAM_ID);
+    const [userDataAccount,] = PublicKey.findProgramAddressSync(
         [Buffer.from("spl_staking_user", "utf-8"), provider.publicKey.toBuffer()],
         programId
     );
@@ -34,10 +34,10 @@ export const performStake = async (
 export const performUnStake = async (
     connection: Connection,
     provider: PhantomProvider,
-    programId: PublicKey,
     userTokenAccount: PublicKey,
 ) => {
-    const [userDataAccount, _] = PublicKey.findProgramAddressSync(
+    const programId = new PublicKey(PROGRAM_ID);
+    const [userDataAccount,] = PublicKey.findProgramAddressSync(
         [Buffer.from("spl_staking_user", "utf-8"), provider.publicKey.toBuffer()],
         programId
     );
