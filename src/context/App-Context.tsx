@@ -54,7 +54,26 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         solWindow.solana.connect({ onlyIfTrusted: true });
       }
     }
+  }, [network]);
 
+  useEffect(() => {
+    provider?.on("connect", () => {
+      setConnected(true);
+      setSuccess("Wallet Connected successfully");
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
+    });
+    provider?.on("disconnect", () => {
+      setConnected(false);
+      setSuccess("Wallet Disconnected successfully");
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
+    });
+  }, [provider]);
+
+  useEffect(() => {
     // Function to set up user account, user token account and contract account data
     const setUp = async () => {
       if (connection && provider) {
@@ -81,24 +100,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
       }
     }
     setUp().then((val)=>console.log(val))
-  }, [network, connection, provider]);
-
-  useEffect(() => {
-    provider?.on("connect", () => {
-      setConnected(true);
-      setSuccess("Wallet Connected successfully");
-      setTimeout(() => {
-        setSuccess("");
-      }, 3000);
-    });
-    provider?.on("disconnect", () => {
-      setConnected(false);
-      setSuccess("Wallet Disconnected successfully");
-      setTimeout(() => {
-        setSuccess("");
-      }, 3000);
-    });
-  }, [provider]);
+  }, [connection, provider, success]);
 
   const handleConnectWallet = (): void => {
     provider?.connect().catch(() => {
