@@ -43,7 +43,7 @@ const RevShare = () => {
               </li>
               <li className="flex items-center justify-between p-3 mb-1">
                 <span>$LIBRA Balance</span>
-                <span>0 $CEX</span>
+                <span>0 $LIBRA</span>
               </li>
               <li className="flex items-center justify-between p-3 mb-1">
                 <span>SOL Balance</span>
