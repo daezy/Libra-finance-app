@@ -2,10 +2,13 @@ import { useContext, useState } from "react";
 import { FaLock, FaSpinner } from "react-icons/fa6";
 import { AppContext } from "../context/App-Context";
 import { performStake, performUnStake } from "../solana/services.ts";
+import {formatAmount} from "../solana/utils.ts";
+import {STAKE_TOKEN_DECIMALS} from "../solana/constants.ts";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
   const [libraAmount, setLibraAmount] = useState<number>(0);
+  const [unstakeLoading, setUnstakeLoading] = useState(false);
 
   const ctx = useContext(AppContext);
 
@@ -13,7 +16,8 @@ const Stake = () => {
     ctx.setLoading(true);
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
-        const duration = days * 60 * 60;
+        const duration = days * 24 * 60 * 60;
+        console.log(duration, libraAmount)
         await performStake(
             ctx.connection,
             ctx.provider,
@@ -33,23 +37,22 @@ const Stake = () => {
   }
 
   const handleUnstake = async () => {
-    ctx.setLoading(true);
+    setUnstakeLoading(true);
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
         await performUnStake(
             ctx.connection,
             ctx.provider,
             ctx.tokenAccount.address
-        );
-        ctx.setSuccess('Stake Success 🚀✅')
-      } catch (e) {
-        console.log(e)
-        ctx.setError('An Error Occurred while un-staking..')
+        )
+        ctx.setSuccess("Un Stake Success 🚀✅")
+      } catch {
+        ctx.setError('An Error Occurred while un staking..')
       }
     } else {
-      ctx.setError('Unable to perform un-stake..')
+      ctx.setError('Unable To Unstake...❌')
     }
-    ctx.setLoading(false);
+    setUnstakeLoading(false)
   }
 
   return (
@@ -94,7 +97,7 @@ const Stake = () => {
               />
               <div>
                 <h3 className="text-slate-950 text-lg">LIBRA</h3>
-                <p>Balance: 0</p>
+                <p>Balance: {ctx.tokenAccount ? formatAmount(parseInt(ctx.tokenAccount.amount.toString()), STAKE_TOKEN_DECIMALS) : 0 }</p>
               </div>
             </div>
 
@@ -230,55 +233,63 @@ const Stake = () => {
           </p>
         </div>
       </div>
-      <div className="bg-slate-100 p-6  rounded-xl text-slate-600">
-        <p className="text-lg">Your shares / Total reward:</p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-        <div className="bg-slate-100 p-6  rounded-xl text-slate-600  flex items-center gap-2">
-          <img src="./img/logo.png" width={70} alt="" />
-          <div className="flex flex-col gap-1">
-            <h3 className="text-slate-950 text-lg">Total $LIBRA Rewarded</h3>
-            <p>80,248,487,081.34($66,913.34)</p>
-          </div>
-        </div>
-        <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">
-          <img src="./img/logo.png" width={70} alt="" />
-          <div className="flex flex-col gap-1">
-            <h3 className="text-slate-950 text-lg">Total $USDC Rewarded</h3>
-            <p>3,300,511.28</p>
-          </div>
-        </div>
-        <div className="bg-slate-100 p-6  rounded-xl text-slate-600  flex items-center gap-2">
-          <img src="./img/logo.png" width={70} alt="" />
-          <div className="flex flex-col gap-1">
-            <h3 className="text-slate-950 text-lg">LIBRA Locked</h3>
-            <p>81,311,042,800.5($67,799.32)</p>
-          </div>
-        </div>
-        <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">
-          <img src="./img/logo.png" width={70} alt="" />
-          <div className="flex flex-col gap-1">
-            <h3 className="text-slate-950 text-lg">xLIBRA in circulation</h3>
-            <p>7,616,109,466.7</p>
-          </div>
-        </div>
-        <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">
-          <img src="./img/logo.png" width={70} alt="" />
-          <div className="flex flex-col gap-1">
-            <h3 className="text-slate-950 text-lg">Average Lock Time</h3>
-            <p>136.75 Days</p>
-          </div>
-        </div>
-      </div>
+      {/*<div className="bg-slate-100 p-6  rounded-xl text-slate-600">*/}
+      {/*  <p className="text-lg">Your shares / Total reward:</p>*/}
+      {/*</div>*/}
+      {/*<div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">*/}
+      {/*  <div className="bg-slate-100 p-6  rounded-xl text-slate-600  flex items-center gap-2">*/}
+      {/*    <img src="./img/logo.png" width={70} alt="" />*/}
+      {/*    <div className="flex flex-col gap-1">*/}
+      {/*      <h3 className="text-slate-950 text-lg">Total $LIBRA Rewarded</h3>*/}
+      {/*      <p>80,248,487,081.34($66,913.34)</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">*/}
+      {/*    <img src="./img/logo.png" width={70} alt="" />*/}
+      {/*    <div className="flex flex-col gap-1">*/}
+      {/*      <h3 className="text-slate-950 text-lg">Total $USDC Rewarded</h3>*/}
+      {/*      <p>3,300,511.28</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="bg-slate-100 p-6  rounded-xl text-slate-600  flex items-center gap-2">*/}
+      {/*    <img src="./img/logo.png" width={70} alt="" />*/}
+      {/*    <div className="flex flex-col gap-1">*/}
+      {/*      <h3 className="text-slate-950 text-lg">LIBRA Locked</h3>*/}
+      {/*      <p>81,311,042,800.5($67,799.32)</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">*/}
+      {/*    <img src="./img/logo.png" width={70} alt="" />*/}
+      {/*    <div className="flex flex-col gap-1">*/}
+      {/*      <h3 className="text-slate-950 text-lg">xLIBRA in circulation</h3>*/}
+      {/*      <p>7,616,109,466.7</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">*/}
+      {/*    <img src="./img/logo.png" width={70} alt="" />*/}
+      {/*    <div className="flex flex-col gap-1">*/}
+      {/*      <h3 className="text-slate-950 text-lg">Average Lock Time</h3>*/}
+      {/*      <p>136.75 Days</p>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
-      <h1 className="mt-7 text-3xl text-slate-950">Your Rewards</h1>
+      <h1 className="mt-7 text-3xl text-slate-950">Staking Info</h1>
       <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
         <div className="my-3  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-lg text-slate-950 my-1">Your LIBRA Locked</h2>
           <p className="text-xl my-2 text-violet-500 ">
-            0 LIBRA <span className="text-slate-500">($0)</span>
+            {ctx.userData ? formatAmount(parseInt(ctx.userData.totalStaked.toString()), STAKE_TOKEN_DECIMALS) : 0} LIBRA <span
+              className="text-slate-500">($0)</span>
           </p>
-
+          <div className="flex justify-end items-center">
+            <button
+                className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
+                onClick={handleUnstake}
+            >
+              {unstakeLoading ? <FaSpinner className="animate-spin" /> : "Unstake"}
+            </button>
+          </div>
           <h2 className="text-lg text-slate-950 my-1">Your xLIBRA Balance</h2>
           <p className="text-xl my-2 text-violet-500">0 xLIBRA</p>
 
@@ -290,7 +301,7 @@ const Stake = () => {
 
         <div className="my-3  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-lg text-slate-950 my-1">xLIBRA APY</h2>
-          <p className="text-xl my-2 text-violet-500 ">543.27% (0.51% / day)</p>
+          <p className="text-xl my-2 text-violet-500 ">{ctx.contractData ? formatAmount(parseInt(ctx.contractData.lockedStakingApy.toString()), 1) : 0}% / yr</p>
           <p className="mb-2">
             (You will get back 100% your locked LIBRA amount after 136 days if
             you lock for 4 years)

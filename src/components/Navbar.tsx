@@ -40,33 +40,42 @@ const Navbar = () => {
                 {ctx.network && ctx.network}
               </button>
               <div
-                id="myDropdown"
-                className={`dropdown-content ${dropOpen ? "show" : ""}`}
+                  id="myDropdown"
+                  className={`dropdown-content ${dropOpen ? "show" : ""}`}
               >
                 <a
-                  href="#"
-                  onClick={() => {
-                    ctx.setNetwork("devnet");
-                    toggleDropdown();
-                  }}
+                    href="#"
+                    onClick={() => {
+                      ctx.setNetwork("localnet");
+                      toggleDropdown();
+                    }}
+                >
+                  Localnet
+                </a>
+                <a
+                    href="#"
+                    onClick={() => {
+                      ctx.setNetwork("devnet");
+                      toggleDropdown();
+                    }}
                 >
                   Devnet
                 </a>
                 <a
-                  href="#"
-                  onClick={() => {
-                    ctx.setNetwork("mainnet");
-                    toggleDropdown();
-                  }}
+                    href="#"
+                    onClick={() => {
+                      ctx.setNetwork("mainnet");
+                      toggleDropdown();
+                    }}
                 >
                   Mainnet
                 </a>
               </div>
             </div>
             <button
-              className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
-              onClick={() => {
-                if (!ctx.isWalletConnected) {
+                className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
+                onClick={() => {
+                  if (!ctx.isWalletConnected) {
                   return ctx.connectWallet();
                 } else {
                   return ctx.disconnectWallet();
@@ -75,7 +84,7 @@ const Navbar = () => {
             >
               <FaWallet />{" "}
               {ctx.isWalletConnected
-                ? ctx.walletAddress.toString().slice(0, 15)
+                ? ctx.provider?.publicKey.toString().slice(0, 15)
                 : "Connect Wallet"}
             </button>
             <button

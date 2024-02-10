@@ -1,7 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
 import {AppContextType, ContractDataInterface, PhantomProvider, UserDataInterface, WindowWithSolana} from "../types";
 import {Connection, PublicKey} from "@solana/web3.js";
-import {CONTRACT_DATA_ACCOUNT, DEVNET_CONNECTION_URL, MAINNET_CONNECTION_URL} from "../solana/constants.ts";
+import {
+  CONTRACT_DATA_ACCOUNT,
+  DEVNET_CONNECTION_URL,
+  LOCALNET_CONNECTION_URL,
+  MAINNET_CONNECTION_URL
+} from "../solana/constants.ts";
 import { TokenAccount } from "../solana/types.ts";
 import {getContractData, getTokenAccount, getUserData} from "../solana/utils.ts";
 
@@ -14,7 +19,7 @@ export const AppContext = createContext<AppContextType>({
   userData: null,
   tokenAccount: null,
   successMsg: "",
-  network: null,
+  network: 'localnet',
   errorMsg: "",
   setNetwork: () => {},
   setSuccess: () => {},
@@ -36,7 +41,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [ error, setError] = useState("");
   const [ connected, setConnected] = useState(false);
   const [ loading, setLoading] = useState(false);
-  const [ network, setNetwork] = useState<"devnet" | "mainnet" | null>(null);
+  const [ network, setNetwork] = useState<"localnet" | "devnet" | "mainnet">('localnet');
 
 
   useEffect(() => {
@@ -45,7 +50,10 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
       const solWindow = window as WindowWithSolana;
       if (solWindow?.solana?.isPhantom) {
         setProvider(solWindow.solana);
-        if (network == "devnet") {
+        console.log(network)
+        if (network == "localnet") {
+          setConnection(new Connection(LOCALNET_CONNECTION_URL, "confirmed"))
+        } else if (network == "devnet") {
           setConnection(new Connection(DEVNET_CONNECTION_URL, "confirmed"))
         } else {
           setConnection(new Connection(MAINNET_CONNECTION_URL, "confirmed"))
@@ -81,9 +89,14 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
             connection,
             new PublicKey(CONTRACT_DATA_ACCOUNT)
         );
-        const userData = await getUserData(connection, provider.publicKey);
         setContractData(contractData);
-        setUserData(userData);
+        console.log(
+            contractData?.minimumStakeAmount.toString(),
+            contractData?.minimumLockDuration.toString(),
+            contractData?.earlyWithdrawalFee.toString(),
+            contractData?.lockedStakingApy.toString(),
+            contractData?.normalStakingApy.toString()
+        )
         try {
           if (contractData) {
             const tokenAccount = await getTokenAccount(
@@ -96,6 +109,12 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         } catch (error) {
           console.log(error);
           setError("You do not have Libra tokens in your wallet❌");
+        }
+        try {
+          const userData = await getUserData(connection, provider.publicKey);
+          setUserData(userData);
+        } catch {
+          console.log('User data not setup')
         }
       }
     }
@@ -111,7 +130,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
     });
   };
 
-  const handleSetNetwork = (name: "devnet" | "mainnet") => {
+  const handleSetNetwork = (name: "localnet" | "devnet" | "mainnet") => {
     setNetwork(name);
   };
 

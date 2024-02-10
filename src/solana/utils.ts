@@ -1,16 +1,21 @@
 import {Connection, PublicKey, SystemProgram, Transaction, TransactionInstruction} from "@solana/web3.js";
 import {CONTRACT_DATA_LAYOUT, USER_DATA_LAYOUT} from "./layout.ts";
 import BN from "bn.js";
-import {STAKE_TOKEN_DECIMALS} from "./constants.ts";
+import {PROGRAM_ID, STAKE_TOKEN_DECIMALS} from "./constants.ts";
 import {AccountLayout, getAssociatedTokenAddress, TOKEN_PROGRAM_ID} from "@solana/spl-token";
 import { StakeType } from "./types.ts";
 import {PhantomProvider} from "../types.ts";
+
+export const formatAmount = (amount: number, decimals: number) => {
+    return (amount/(10**decimals)).toString()
+}
 
 export const getTokenAccount = async (
     connection: Connection,
     owner: PublicKey,
     mint: PublicKey
 ) => {
+    console.log(connection.rpcEndpoint)
     const associatedToken = await getAssociatedTokenAddress(
         mint,
         owner
@@ -40,19 +45,23 @@ export const getAccountData = async (connection: Connection, address: PublicKey)
 }
 
 export const getUserData = async (connection: Connection, address: PublicKey) => {
-    const accountData = await getAccountData(connection, address);
+    const [userDataAccount,] = PublicKey.findProgramAddressSync(
+        [Buffer.from("spl_staking_user", "utf-8"), address.toBuffer()],
+        new PublicKey(PROGRAM_ID)
+    );
+    const accountData = await getAccountData(connection, userDataAccount);
     if (accountData) {
         const userData = USER_DATA_LAYOUT.decode(accountData);
         return {
             isInitialized: userData.isInitialized,
             ownerPubkey: new PublicKey(userData.ownerPubkey),
-            stakeType: new BN(userData.stakeType, 10, "le"),
-            lockDuration: new BN(userData.lockDuration, 10, "le"),
-            totalStaked: new BN(userData.totalStaked, 10, "le"),
-            interestAccrued: new BN(userData.interestAccrued, 10, "le"),
-            stakeTs: new BN(userData.stakeTs, 10, "le"),
-            lastClaimTs: new BN(userData.lastClaimTs, 10, "le"),
-            lastUnstakeTs: new BN(userData.lastUnstakeTs, 10, "le")
+            stakeType: userData.stakeType as unknown as bigint,
+            lockDuration: userData.lockDuration as unknown as bigint,
+            totalStaked: userData.totalStaked as unknown as bigint,
+            interestAccrued: userData.interestAccrued as unknown as bigint,
+            stakeTs: userData.stakeTs as unknown as bigint,
+            lastClaimTs: userData.lastClaimTs as unknown as bigint,
+            lastUnstakeTs: userData.lastUnstakeTs as unknown as bigint
         }
     }
     return null
@@ -67,13 +76,13 @@ export const getContractData = async (connection: Connection, address: PublicKey
             adminPubkey: new PublicKey(contractData.adminPubkey),
             stakeTokenMint: new PublicKey(contractData.stakeTokenMint),
             stakeTokenAccount: new PublicKey(contractData.stakeTokenAccount),
-            minimumStakeAmount: new BN(contractData.minimumStakeAmount, 10, "le"),
-            minimumLockDuration: new BN(contractData.minimumLockDuration, 10, "le"),
-            normalStakingApy: new BN(contractData.normalStakingApy, 10, "le"),
-            lockedStakingApy: new BN(contractData.lockedStakingApy, 10, "le"),
-            earlyWithdrawalFee: new BN(contractData.earlyWithdrawalFee, 10, "le"),
-            totalStaked: new BN(contractData.totalStaked, 10, "le"),
-            totalEarned: new BN(contractData.totalEarned, 10, "le")
+            minimumStakeAmount: contractData.minimumStakeAmount as unknown as bigint,
+            minimumLockDuration: contractData.minimumLockDuration as unknown as bigint,
+            normalStakingApy: contractData.normalStakingApy as unknown as bigint,
+            lockedStakingApy: contractData.lockedStakingApy as unknown as bigint,
+            earlyWithdrawalFee: contractData.earlyWithdrawalFee as unknown as bigint,
+            totalStaked: contractData.totalStaked as unknown as bigint,
+            totalEarned: contractData.totalEarned as unknown as bigint
         }
     }
     return null
@@ -94,7 +103,7 @@ export const makeStakeInstruction = (
         Uint8Array.of(
             1,
             stakeType,
-            ...new BN(amount * (10^STAKE_TOKEN_DECIMALS)).toArray("le", 8),
+            ...new BN(amount * (10**STAKE_TOKEN_DECIMALS)).toArray("le", 8),
             ...new BN(lockDuration).toArray("le", 8)
         )
     )
@@ -143,12 +152,13 @@ export const signAndConfirmTransaction = async (
 ) => {
     txn.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
     txn.feePayer = provider.publicKey;
+    //console.log(connection.rpcEndpoint)
     const signedTxn = await provider.signTransaction(txn);
-    const signature = await connection.sendRawTransaction(signedTxn.serialize(), { skipPreflight: true, preflightCommitment: "confirmed"});
-    const res = await connection.confirmTransaction(signature, "confirmed");
+    const sig = await connection.sendRawTransaction(signedTxn.serialize(), { skipPreflight: false, preflightCommitment: "confirmed"});
+    const res = await connection.confirmTransaction(sig, "confirmed");
     const { err } = res.value;
     if (err) {
-        console.log(err)
-        throw new Error(`An Error Occurred: ${err.toString()}`)
+       console.log(err)
+       throw new Error(`An Error Occurred: ${err.toString()}`)
     }
 }

@@ -1,10 +1,9 @@
 import {Connection, PublicKey, SendOptions, Transaction} from "@solana/web3.js";
-import BN from "bn.js";
 import {TokenAccount} from "./solana/types.ts";
 
 export type AppContextType = {
   isWalletConnected: boolean;
-  network: "devnet" | "mainnet" | null;
+  network: "localnet" | "devnet" | "mainnet";
   provider: PhantomProvider | null;
   connection: Connection | null;
   userData: UserDataInterface | null;
@@ -13,7 +12,7 @@ export type AppContextType = {
   successMsg: string | null;
   loading: boolean;
   errorMsg: string | null;
-  setNetwork: (name: "devnet" | "mainnet") => void;
+  setNetwork: (name: "localnet" | "devnet" | "mainnet") => void;
   setSuccess: (message: string) => void;
   setError: (message: string) => void;
   setLoading: (val: boolean) => void;
@@ -49,23 +48,23 @@ export interface ContractDataInterface {
   adminPubkey: PublicKey,
   stakeTokenMint: PublicKey,
   stakeTokenAccount: PublicKey,
-  minimumStakeAmount: BN,
-  minimumLockDuration: BN,
-  normalStakingApy: BN,
-  lockedStakingApy: BN,
-  earlyWithdrawalFee: BN,
-  totalStaked: BN,
-  totalEarned: BN
+  minimumStakeAmount: bigint,
+  minimumLockDuration: bigint,
+  normalStakingApy: bigint,
+  lockedStakingApy: bigint,
+  earlyWithdrawalFee: bigint,
+  totalStaked: bigint,
+  totalEarned: bigint
 }
 
 export interface UserDataInterface {
   isInitialized: boolean,
   ownerPubkey: PublicKey,
-  stakeType: BN,
-  lockDuration: BN,
-  totalStaked: BN,
-  interestAccrued: BN,
-  stakeTs: BN,
-  lastClaimTs: BN,
-  lastUnstakeTs: BN
+  stakeType: bigint,
+  lockDuration: bigint,
+  totalStaked: bigint,
+  interestAccrued: bigint,
+  stakeTs: bigint,
+  lastClaimTs: bigint,
+  lastUnstakeTs: bigint
 }
