@@ -1,13 +1,21 @@
-import { PublicKey, SendOptions, Transaction } from "@solana/web3.js";
+import {Connection, PublicKey, SendOptions, Transaction} from "@solana/web3.js";
+import {TokenAccount} from "./solana/types.ts";
 
 export type AppContextType = {
   isWalletConnected: boolean;
-  network: "devnet" | "mainnet" | null;
-  walletAddress: PublicKey;
+  network: "localnet" | "devnet" | "mainnet";
+  provider: PhantomProvider | null;
+  connection: Connection | null;
+  userData: UserDataInterface | null;
+  contractData: ContractDataInterface | null;
+  tokenAccount: TokenAccount | null;
   successMsg: string | null;
   loading: boolean;
   errorMsg: string | null;
-  setNetwork: (name: "devnet" | "mainnet") => void;
+  setNetwork: (name: "localnet" | "devnet" | "mainnet") => void;
+  setSuccess: (message: string) => void;
+  setError: (message: string) => void;
+  setLoading: (val: boolean) => void;
   connectWallet: () => void;
   disconnectWallet: () => void;
 };
@@ -36,16 +44,27 @@ export type WindowWithSolana = Window & {
 };
 
 export interface ContractDataInterface {
-  isInitialized: number;
-  adminPubkey: PublicKey;
-  tokenMintPubkey: PublicKey;
-  pdaBump: Uint8Array;
-  depositPerPeriod: number;
-  minimumTokenBalanceForClaim: number;
+  isInitialized: boolean,
+  adminPubkey: PublicKey,
+  stakeTokenMint: PublicKey,
+  stakeTokenAccount: PublicKey,
+  minimumStakeAmount: bigint,
+  minimumLockDuration: bigint,
+  normalStakingApy: bigint,
+  lockedStakingApy: bigint,
+  earlyWithdrawalFee: bigint,
+  totalStaked: bigint,
+  totalEarned: bigint
 }
 
 export interface UserDataInterface {
-  isInitialized: number;
-  ownerPubkey: PublicKey;
-  lastClaimTs: number;
+  isInitialized: boolean,
+  ownerPubkey: PublicKey,
+  stakeType: bigint,
+  lockDuration: bigint,
+  totalStaked: bigint,
+  interestAccrued: bigint,
+  stakeTs: bigint,
+  lastClaimTs: bigint,
+  lastUnstakeTs: bigint
 }
