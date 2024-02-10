@@ -72,6 +72,7 @@ export const AppContextPorvider: React.FC<{ children: React.ReactNode }> = (
   const handleDisconnectWallet = (): void => {
     provider?.disconnect().catch(() => {
       setError("Could not disconnect wallet");
+      setLoading(false);
       setTimeout(() => {
         setError("");
       }, 3000);

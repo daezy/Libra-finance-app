@@ -132,6 +132,14 @@ const Navbar = () => {
                   Bank
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/revShare"
+                  className=" hover:text-violet-600 p-4 md:p-0"
+                >
+                  Auto Stake
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>
