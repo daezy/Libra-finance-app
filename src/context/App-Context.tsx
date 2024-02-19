@@ -90,13 +90,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
             new PublicKey(CONTRACT_DATA_ACCOUNT)
         );
         setContractData(contractData);
-        console.log(
-            contractData?.minimumStakeAmount.toString(),
-            contractData?.minimumLockDuration.toString(),
-            contractData?.earlyWithdrawalFee.toString(),
-            contractData?.lockedStakingApy.toString(),
-            contractData?.normalStakingApy.toString()
-        )
         try {
           if (contractData) {
             const tokenAccount = await getTokenAccount(

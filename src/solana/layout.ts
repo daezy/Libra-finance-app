@@ -14,7 +14,9 @@ export const CONTRACT_DATA_LAYOUT = struct<ContractData>([
     u64('lockedStakingApy'),
     u64('earlyWithdrawalFee'),
     u64('totalStaked'),
-    u64('totalEarned')
+    u64('totalEarned'),
+    u64('feeBasisPoints'),
+    u64('maxFee')
 ])
 
 export const USER_DATA_LAYOUT = struct<UserData>([

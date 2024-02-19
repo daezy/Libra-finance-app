@@ -16,7 +16,9 @@ export interface ContractData {
     lockedStakingApy: Uint8Array,
     earlyWithdrawalFee: Uint8Array,
     totalStaked: Uint8Array,
-    totalEarned: Uint8Array
+    totalEarned: Uint8Array,
+    feeBasisPoints: Uint8Array,
+    maxFee: Uint8Array
 }
 
 export interface UserData {
