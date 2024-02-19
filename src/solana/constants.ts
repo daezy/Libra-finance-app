@@ -1,9 +1,10 @@
 export const STAKE_TOKEN_DECIMALS = 6;
-export const PROGRAM_ID = "7iPzfTTkxYbEZy8JQLfsafApbzw5m9JYE7Amt7zeEDST";
+export const STAKE_TOKEN_MINT = "6mPqBzakZ7ssVwdYEpM8wb6m2hVGGrAgWGeH4YxLwpgh";
+export const PROGRAM_ID = "9Ef7uzrdsFCjb3jCqR9YERTKAKnmpxj8QMRGKED1Csq5";
 export const CONTRACT_TOKEN_ACCOUNT =
-  "H97UDqkok5tjQYnkrKP4unczY4UynGGjC8WsbA64y6md";
+  "Bbjqg99DF1iUEBBvk9LqyaUnusMJ4zQr1HMk2BgW2tjK";
 export const CONTRACT_DATA_ACCOUNT =
-  "3RbRDbqrVW33q8C6ADw99e8vacy8BYgXqwL1yT6GijnV";
+  "A1PRKeV4S8JPNkfNR2pJoHMngJDAt1yWcXQrKuUHyM21";
 export const LOCALNET_CONNECTION_URL = "http://127.0.0.1:8899";
 export const DEVNET_CONNECTION_URL = "https://api.devnet.solana.com";
 export const MAINNET_CONNECTION_URL =

@@ -1,8 +1,8 @@
 import {Connection, PublicKey, SystemProgram, Transaction, TransactionInstruction} from "@solana/web3.js";
 import {CONTRACT_DATA_LAYOUT, USER_DATA_LAYOUT} from "./layout.ts";
 import BN from "bn.js";
-import {PROGRAM_ID, STAKE_TOKEN_DECIMALS} from "./constants.ts";
-import {AccountLayout, getAssociatedTokenAddress, TOKEN_PROGRAM_ID} from "@solana/spl-token";
+import {PROGRAM_ID, STAKE_TOKEN_DECIMALS, STAKE_TOKEN_MINT} from "./constants.ts";
+import {AccountLayout, getAssociatedTokenAddress, TOKEN_2022_PROGRAM_ID} from "@solana/spl-token";
 import { StakeType } from "./types.ts";
 import {PhantomProvider} from "../types.ts";
 
@@ -18,7 +18,9 @@ export const getTokenAccount = async (
     console.log(connection.rpcEndpoint)
     const associatedToken = await getAssociatedTokenAddress(
         mint,
-        owner
+        owner,
+        undefined,
+        TOKEN_2022_PROGRAM_ID
     )
     const accountData = await getAccountData(
         connection,
@@ -82,7 +84,9 @@ export const getContractData = async (connection: Connection, address: PublicKey
             lockedStakingApy: contractData.lockedStakingApy as unknown as bigint,
             earlyWithdrawalFee: contractData.earlyWithdrawalFee as unknown as bigint,
             totalStaked: contractData.totalStaked as unknown as bigint,
-            totalEarned: contractData.totalEarned as unknown as bigint
+            totalEarned: contractData.totalEarned as unknown as bigint,
+            feeBasisPoints: contractData.feeBasisPoints as unknown as bigint,
+            maxFee: contractData.maxFee as unknown as bigint
         }
     }
     return null
@@ -104,6 +108,7 @@ export const makeStakeInstruction = (
             1,
             stakeType,
             ...new BN(amount * (10**STAKE_TOKEN_DECIMALS)).toArray("le", 8),
+            ...new BN(STAKE_TOKEN_DECIMALS).toArray("le", 8),
             ...new BN(lockDuration).toArray("le", 8)
         )
     )
@@ -115,7 +120,8 @@ export const makeStakeInstruction = (
             {pubkey: userDataAccount, isSigner: false, isWritable: true},
             {pubkey: contractTokenAccount, isSigner: false, isWritable: true},
             {pubkey: contractDataAccount, isSigner: false, isWritable: true},
-            {pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false},
+            {pubkey: new PublicKey(STAKE_TOKEN_MINT), isWritable: false, isSigner: false},
+            {pubkey: TOKEN_2022_PROGRAM_ID, isSigner: false, isWritable: false},
             {pubkey: SystemProgram.programId, isSigner: false, isWritable: false}
         ],
         data: instructionData
@@ -130,7 +136,10 @@ export const makeUnstakeInstruction = (
     contractTokenAccount: PublicKey,
     contractDataAccount: PublicKey
 ) => {
-    const instructionData = Buffer.from(Uint8Array.of(2));
+    const instructionData = Buffer.from(Uint8Array.of(
+        2,
+        ...new BN(STAKE_TOKEN_DECIMALS).toArray("le", 8)
+    ));
     return new TransactionInstruction({
         programId,
         keys: [
@@ -139,7 +148,8 @@ export const makeUnstakeInstruction = (
             {pubkey: userDataAccount, isSigner: false, isWritable: true},
             {pubkey: contractTokenAccount, isSigner: false, isWritable: true},
             {pubkey: contractDataAccount, isSigner: false, isWritable: true},
-            {pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false},
+            {pubkey: new PublicKey(STAKE_TOKEN_MINT), isWritable: false, isSigner: false},
+            {pubkey: TOKEN_2022_PROGRAM_ID, isSigner: false, isWritable: false},
         ],
         data: instructionData
     })
