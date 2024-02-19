@@ -9,6 +9,7 @@ import Bank from "./pages/Bank";
 import SuccessPopup from "./components/SuccessPopup";
 import ErrorPopup from "./components/ErrorPopup";
 import RevShare from "./components/RevShare/RevShare";
+import Init from "./components/RevShare/Init";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/bank" element={<Stake />} />
         <Route path="/stake" element={<Bank />} />
         <Route path="/revShare" element={<RevShare />} />
+        <Route path="/revShare/init" element={<Init />} />
       </Routes>
       <SuccessPopup />
       <ErrorPopup />

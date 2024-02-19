@@ -4,25 +4,25 @@ import {
   SendOptions,
   Transaction,
 } from "@solana/web3.js";
-import { TokenAccount } from "./solana/types.ts";
 
 export type AppContextType = {
   isWalletConnected: boolean;
-  network: "localnet" | "devnet" | "mainnet";
-  provider: PhantomProvider | null;
-  connection: Connection | null;
-  userData: UserDataInterface | null;
+  canClaim: boolean;
+  walletAddress: PublicKey;
   contractData: ContractDataInterface | null;
-  tokenAccount: TokenAccount | null;
+  balances: { token: string; sol: string };
+  connection: Connection | null;
   successMsg: string | null;
-  loading: boolean;
   errorMsg: string | null;
-  setNetwork: (name: "localnet" | "devnet" | "mainnet") => void;
-  setSuccess: (message: string) => void;
-  setError: (message: string) => void;
-  setLoading: (val: boolean) => void;
+  poolTotal: number;
+  nextShareTotal: number;
+  tokenBalance: number;
+  tokenClaimed: number;
+  nextClaimTime: number;
   connectWallet: () => void;
   disconnectWallet: () => void;
+  onClaim: () => void;
+  handleInit: (amount: number, minimumTokenBalance: number) => Promise<void>;
 };
 
 export type PhantomEvent = "disconnect" | "connect" | "accountChanged";
@@ -49,27 +49,16 @@ export type WindowWithSolana = Window & {
 };
 
 export interface ContractDataInterface {
-  isInitialized: boolean;
+  isInitialized: number;
   adminPubkey: PublicKey;
-  stakeTokenMint: PublicKey;
-  stakeTokenAccount: PublicKey;
-  minimumStakeAmount: bigint;
-  minimumLockDuration: bigint;
-  normalStakingApy: bigint;
-  lockedStakingApy: bigint;
-  earlyWithdrawalFee: bigint;
-  totalStaked: bigint;
-  totalEarned: bigint;
+  tokenMintPubkey: PublicKey;
+  pdaBump: Uint8Array;
+  depositPerPeriod: number;
+  minimumTokenBalanceForClaim: number;
 }
 
 export interface UserDataInterface {
-  isInitialized: boolean;
+  isInitialized: number;
   ownerPubkey: PublicKey;
-  stakeType: bigint;
-  lockDuration: bigint;
-  totalStaked: bigint;
-  interestAccrued: bigint;
-  stakeTs: bigint;
-  lastClaimTs: bigint;
-  lastUnstakeTs: bigint;
+  lastClaimTs: number;
 }
