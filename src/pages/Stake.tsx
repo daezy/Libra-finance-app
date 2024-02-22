@@ -68,21 +68,16 @@ const Stake = () => {
             will give a 1:1 ratio of LIBRA to xLIBRA conversion.)
           </p>
           <p className="mb-1">
-            - By just holding xLIBRA, everyday you get USDC reward from 7% LIBRA
-            trading volume, plus 0.51% LIBRA interest (auto-compound to 543.27%
-            APY for you). You will get back your locked amount after 136 days if
-            you lock for 4 years.
+            - By just holding xLIBRA, you get LIBRA interest (auto-compound to
+            6057% APY for you). You will get back your locked amount after 14
+            days if you lock for a month.
           </p>
           <p className="mb-1">
             - xLIBRA holders will receive other benefit such as
             multichain-farming profits in the future
           </p>
           <p className="mb-1">
-            - xLIBRA holders can vote in LIBRA DAO governance for important
-            factor such as transaction tax change...
-          </p>
-          <p className="mb-1">
-            - You can unlock xLIBRA before time but 90% of your locked LIBRA
+            - You can unlock xLIBRA before time but 10% of your locked LIBRA
             will go to current xLIBRA holders.
           </p>
         </div>
