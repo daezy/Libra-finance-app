@@ -134,9 +134,10 @@ export const getOrCreateAssociatedTokenAccount = async (
     // TokenAccountNotFoundError can be possible if the associated address has already received some lamports,
     // becoming a system account. Assuming program derived addressing is safe, this is the only case for the
     // TokenInvalidAccountOwnerError in this code path.
-    //@ts-expect-error fuck-off
     if (
+        // @ts-expect-error rest
       error.message === "TokenAccountNotFoundError" ||
+        // @ts-expect-error rest
       error.message === "TokenInvalidAccountOwnerError"
     ) {
       // As this isn't atomic, it's possible others can create associated accounts meanwhile.
