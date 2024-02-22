@@ -130,14 +130,14 @@ const Navbar = () => {
                   Bank
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to="/stake"
                   className=" hover:text-violet-600 p-4 md:p-0"
                 >
                   Stake
                 </NavLink>
-              </li>
+              </li> */}
 
               <li>
                 <NavLink

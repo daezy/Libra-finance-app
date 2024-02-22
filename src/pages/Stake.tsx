@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { FaLock, FaSpinner } from "react-icons/fa6";
 import { AppContext } from "../context/App-Context";
 import { performStake, performUnStake } from "../solana/services.ts";
-import {formatAmount} from "../solana/utils.ts";
-import {STAKE_TOKEN_DECIMALS} from "../solana/constants.ts";
+import { formatAmount } from "../solana/utils.ts";
+import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
@@ -17,44 +17,44 @@ const Stake = () => {
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
         const duration = days * 24 * 60 * 60;
-        console.log(duration, libraAmount)
+        console.log(duration, libraAmount);
         await performStake(
-            ctx.connection,
-            ctx.provider,
-            libraAmount,
-            duration,
-            ctx.tokenAccount.address
+          ctx.connection,
+          ctx.provider,
+          libraAmount,
+          duration,
+          ctx.tokenAccount.address
         );
-        ctx.setSuccess('Stake Success 🚀✅')
+        ctx.setSuccess("Stake Success 🚀✅");
       } catch (e) {
-        console.log(e)
-        ctx.setError('An Error Occurred while staking..')
+        console.log(e);
+        ctx.setError("An Error Occurred while staking..");
       }
     } else {
-      ctx.setError('Unable to perform stake..')
+      ctx.setError("Unable to perform stake..");
     }
     ctx.setLoading(false);
-  }
+  };
 
   const handleUnstake = async () => {
     setUnstakeLoading(true);
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
         await performUnStake(
-            ctx.connection,
-            ctx.provider,
-            ctx.tokenAccount.address
-        )
-        ctx.setSuccess("Un Stake Success 🚀✅")
+          ctx.connection,
+          ctx.provider,
+          ctx.tokenAccount.address
+        );
+        ctx.setSuccess("Un Stake Success 🚀✅");
       } catch (e) {
         console.log(e);
-        ctx.setError('An Error Occurred while un staking..')
+        ctx.setError("An Error Occurred while un staking..");
       }
     } else {
-      ctx.setError('Unable To Unstake...❌')
+      ctx.setError("Unable To Unstake...❌");
     }
-    setUnstakeLoading(false)
-  }
+    setUnstakeLoading(false);
+  };
 
   return (
     <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
@@ -98,7 +98,15 @@ const Stake = () => {
               />
               <div>
                 <h3 className="text-slate-950 text-lg">LIBRA</h3>
-                <p>Balance: {ctx.tokenAccount ? formatAmount(parseInt(ctx.tokenAccount.amount.toString()), STAKE_TOKEN_DECIMALS) : 0 }</p>
+                <p>
+                  Balance:{" "}
+                  {ctx.tokenAccount
+                    ? formatAmount(
+                        parseInt(ctx.tokenAccount.amount.toString()),
+                        STAKE_TOKEN_DECIMALS
+                      )
+                    : 0}
+                </p>
               </div>
             </div>
 
@@ -228,9 +236,9 @@ const Stake = () => {
             </button>
           </div>
           <p>
-            - You need to lock a minimum amount of 0 LIBRA <br />
+            - You need to lock a minimum amount of 10 LIBRA <br />
             - You can lock maximum Unlimited LIBRA <br />- Early unlock penalty
-            fee is 99.999%
+            fee is 10%
           </p>
         </div>
       </div>
@@ -280,39 +288,43 @@ const Stake = () => {
         <div className="my-3  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-lg text-slate-950 my-1">Your LIBRA Locked</h2>
           <p className="text-xl my-2 text-violet-500 ">
-            {ctx.userData ? formatAmount(parseInt(ctx.userData.totalStaked.toString()), STAKE_TOKEN_DECIMALS) : 0} LIBRA <span
-              className="text-slate-500">($0)</span>
+            {ctx.userData
+              ? formatAmount(
+                  parseInt(ctx.userData.totalStaked.toString()),
+                  STAKE_TOKEN_DECIMALS
+                )
+              : 0}{" "}
+            LIBRA <span className="text-slate-500">($0)</span>
           </p>
           <div className="flex justify-end items-center">
             <button
-                className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
-                onClick={handleUnstake}
+              className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
+              onClick={handleUnstake}
             >
-              {unstakeLoading ? <FaSpinner className="animate-spin" /> : "Unstake"}
+              {unstakeLoading ? (
+                <FaSpinner className="animate-spin" />
+              ) : (
+                "Unstake"
+              )}
             </button>
           </div>
-          <h2 className="text-lg text-slate-950 my-1">Your xLIBRA Balance</h2>
-          <p className="text-xl my-2 text-violet-500">0 xLIBRA</p>
-
-          <h2 className="text-lg text-slate-950 my-1">
-            Your total rewards in USDC
-          </h2>
-          <p className="text-xl my-2 text-violet-500">$0</p>
         </div>
 
         <div className="my-3  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-lg text-slate-950 my-1">xLIBRA APY</h2>
-          <p className="text-xl my-2 text-violet-500 ">{ctx.contractData ? formatAmount(parseInt(ctx.contractData.lockedStakingApy.toString()), 1) : 0}% / yr</p>
-          <p className="mb-2">
-            (You will get back 100% your locked LIBRA amount after 136 days if
-            you lock for 4 years)
+          <p className="text-xl my-2 text-violet-500 ">
+            {ctx.contractData
+              ? formatAmount(
+                  parseInt(ctx.contractData.lockedStakingApy.toString()),
+                  1
+                )
+              : 0}
+            % / yr
           </p>
-
-          <h2 className="text-lg text-slate-950 my-1">USDC APY</h2>
-          <p className="text-xl my-2 text-violet-500">815.27% (2.23% / day)</p>
-
-          <h2 className="text-lg text-slate-950 my-1">Next Reward</h2>
-          <p className="text-xl my-2 text-violet-500">0:0:0</p>
+          <p className="mb-2">
+            (You will get back 100% your locked LIBRA amount after staking for
+            14 days)
+          </p>
         </div>
 
         <div className="my-1 bg-slate-100 p-6  rounded-xl text-slate-600">
@@ -346,20 +358,6 @@ const Stake = () => {
             </div>
           </div>
           <br />
-
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div>
-              <h2 className="text-lg text-slate-950 my-1">
-                Pending $USDC Reward
-              </h2>
-              <p className="text-xl my-2 text-violet-500">$0</p>
-            </div>
-            <div className="flex justify-end items-center">
-              <button className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center">
-                Claim $USDC
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
