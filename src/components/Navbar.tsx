@@ -40,42 +40,42 @@ const Navbar = () => {
                 {ctx.network && ctx.network}
               </button>
               <div
-                  id="myDropdown"
-                  className={`dropdown-content ${dropOpen ? "show" : ""}`}
+                id="myDropdown"
+                className={`dropdown-content ${dropOpen ? "show" : ""}`}
               >
                 <a
-                    href="#"
-                    onClick={() => {
-                      ctx.setNetwork("localnet");
-                      toggleDropdown();
-                    }}
+                  href="#"
+                  onClick={() => {
+                    ctx.setNetwork("localnet");
+                    toggleDropdown();
+                  }}
                 >
                   Localnet
                 </a>
                 <a
-                    href="#"
-                    onClick={() => {
-                      ctx.setNetwork("devnet");
-                      toggleDropdown();
-                    }}
+                  href="#"
+                  onClick={() => {
+                    ctx.setNetwork("devnet");
+                    toggleDropdown();
+                  }}
                 >
                   Devnet
                 </a>
                 <a
-                    href="#"
-                    onClick={() => {
-                      ctx.setNetwork("mainnet");
-                      toggleDropdown();
-                    }}
+                  href="#"
+                  onClick={() => {
+                    ctx.setNetwork("mainnet");
+                    toggleDropdown();
+                  }}
                 >
                   Mainnet
                 </a>
               </div>
             </div>
             <button
-                className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
-                onClick={() => {
-                  if (!ctx.isWalletConnected) {
+              className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
+              onClick={() => {
+                if (!ctx.isWalletConnected) {
                   return ctx.connectWallet();
                 } else {
                   return ctx.disconnectWallet();
@@ -120,9 +120,14 @@ const Navbar = () => {
             id="navbar-cta"
           >
             <ul className="flex flex-col gap-7 font-medium p-4 md:p-0 mt-4 border border-solid border-slate-400 rounded-lg md:border-0  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0e bg-transparent text-white uppercase">
-              <li>
+              {/* <li>
                 <NavLink to="/" className=" hover:text-violet-600 p-4 md:p-0">
                   App
+                </NavLink>
+              </li> */}
+              <li>
+                <NavLink to="/" className=" hover:text-violet-600 p-4 md:p-0">
+                  Bank
                 </NavLink>
               </li>
               <li>
@@ -133,14 +138,7 @@ const Navbar = () => {
                   Stake
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/bank"
-                  className=" hover:text-violet-600 p-4 md:p-0"
-                >
-                  Bank
-                </NavLink>
-              </li>
+
               <li>
                 <NavLink
                   to="/revShare"
