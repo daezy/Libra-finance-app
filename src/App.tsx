@@ -20,7 +20,7 @@ function App() {
         <Route path="/bank" element={<Stake />} />
         <Route path="/stake" element={<Bank />} />
         <Route path="/revShare" element={<RevShare />} />
-        <Route path="/revShare/init" element={<Init />} />
+        {/*<Route path="/revShare/init" element={<Init />} />*/}
       </Routes>
       <SuccessPopup />
       <ErrorPopup />
