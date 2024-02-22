@@ -1,12 +1,12 @@
 export const REV_SHARE_PROGRAM_ID =
-  "4yBTZXsuz7c1X3PJF4PPCJr8G6HnNAgRvzAWVoFZMncH";
+  "556AkjyCYA86cEoQ16bNq2ZmymK6oMfWYZYQHgPy1Zf9";
 export const REV_SHARE_TOKEN_MINT =
-  "8xGwDmoFWh6Fjn8jwH7wfipgSeifdNwuduGNzJ3kpyLm";
-export const REV_SHARE_TOKEN_DECIMALS = 6;
+  "Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd";
+export const REV_SHARE_TOKEN_DECIMALS = 9;
 export const REV_SHARE_PDA_ADDRESS =
-  "E3jmhV4wSecGALupf3E9Nz2jYrcFt1jRaUrjM4ymgZ2U";
+  "8b9mfW2zQZnUAwj5FMPgH6Q5rJtRa8TpP6zcGyWXCUb8";
 export const REV_SHARE_DATA_ACCOUNT =
-  "CBEM5s7R4nS3PEjVShJAMan995pKweE1YHFmWAVrN6sm";
+  "4TUFUgbYYGC4NV9qcJh6V2JMjx5Mj2nnwnzrcimfeyKz";
 export const SOLANA_LOCAL_NET_RPC_URL = "http://127.0.0.1:8899";
 export const SOLANA_DEVNET_CONNECTION_URL = "https://api.devnet.solana.com";
 export const SOLANA_MAINNET_CONNECTION_URL =

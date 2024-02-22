@@ -23,7 +23,7 @@ import {
   AccountState,
   ASSOCIATED_TOKEN_PROGRAM_ID,
   getAssociatedTokenAddress,
-  MintLayout,
+  MintLayout, TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 
@@ -292,7 +292,6 @@ export const initializeContract = async (
   const amountToLamport = amountPerPeriod * LAMPORTS_PER_SOL;
   const minimumTknBalance =
     minimumTokenBalance * 10 ** REV_SHARE_TOKEN_DECIMALS;
-  console.log(amountToLamport, minimumTknBalance);
   const revShareProgramId = new PublicKey(REV_SHARE_PROGRAM_ID);
   const dataAccountKeypair = new Keypair();
   const tokenMint = new PublicKey(REV_SHARE_TOKEN_MINT);
@@ -366,7 +365,9 @@ export const handleClaim = async (
     provider.publicKey,
     new PublicKey(REV_SHARE_TOKEN_MINT),
     provider.publicKey,
-    provider
+    provider,
+      false,
+      TOKEN_2022_PROGRAM_ID
   );
   const [claimerPDA] = PublicKey.findProgramAddressSync(
     [

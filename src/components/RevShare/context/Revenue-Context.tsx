@@ -6,7 +6,7 @@ import {
   REV_SHARE_PDA_ADDRESS,
   REV_SHARE_TOKEN_DECIMALS,
   REV_SHARE_TOKEN_MINT,
-  SOLANA_LOCAL_NET_RPC_URL,
+  SOLANA_LOCAL_NET_RPC_URL, SOLANA_MAINNET_CONNECTION_URL,
 } from "../solana/constants.ts";
 import {
   AppContextType,
@@ -164,7 +164,7 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
       setTimeout(() => {
         setSuccess("");
       }, 3000);
-      setConnection(new Connection(SOLANA_LOCAL_NET_RPC_URL, "confirmed"));
+      setConnection(new Connection(SOLANA_MAINNET_CONNECTION_URL, "confirmed"));
       setUp(connection, publicKey, provider).then((res) => console.log(res));
     });
     provider?.on("disconnect", () => {
