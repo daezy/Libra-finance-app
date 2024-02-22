@@ -29,7 +29,7 @@ export const AppContext = createContext<AppContextType>({
   userData: null,
   tokenAccount: null,
   successMsg: "",
-  network: "localnet",
+  network: "mainnet",
   errorMsg: "",
   setNetwork: () => {},
   setSuccess: () => {},
@@ -53,7 +53,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(false);
   const [network, setNetwork] = useState<"localnet" | "devnet" | "mainnet">(
-    "localnet"
+    "mainnet"
   );
 
   useEffect(() => {

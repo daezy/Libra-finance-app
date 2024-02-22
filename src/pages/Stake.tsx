@@ -46,7 +46,8 @@ const Stake = () => {
             ctx.tokenAccount.address
         )
         ctx.setSuccess("Un Stake Success 🚀✅")
-      } catch {
+      } catch (e) {
+        console.log(e);
         ctx.setError('An Error Occurred while un staking..')
       }
     } else {
