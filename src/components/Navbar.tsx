@@ -37,7 +37,9 @@ const Navbar = () => {
                   width={27}
                   alt="sol"
                 />{" "}
-                {ctx.network && ctx.network}
+                <span className="hidden md:block">
+                  {ctx.network && ctx.network}
+                </span>
               </button>
               <div
                 id="myDropdown"
