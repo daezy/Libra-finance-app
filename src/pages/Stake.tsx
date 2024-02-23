@@ -97,7 +97,7 @@ const Stake = () => {
         <div className="my-8  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-3xl my-3 text-slate-950">What is Libra Bank?</h2>
           <p className="mb-1">
-            - You lock LIBRA (any period from 1 day to 4 years) in the LIBRA
+            - You lock LIBRA (any period from 1 week to 4 years) in the LIBRA
             Stake to receive xLIBRA token as a receipt. (Proportionally, the
             longer you lock, the more xLIBRA you will receive. A 4 year lock
             will give a 1:1 ratio of LIBRA to xLIBRA conversion.)
@@ -377,7 +377,7 @@ const Stake = () => {
             </div>
             <br />
             <div>
-              <h2 className="text-lg text-slate-950 my-1">Locked Unitil</h2>
+              <h2 className="text-lg text-slate-950 my-1">Locked Until</h2>
               <p className="text-xl my-2 text-violet-500">
                 {ctx.userData
                   ? getLockDate(
