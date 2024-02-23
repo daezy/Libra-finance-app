@@ -142,7 +142,7 @@ const Bank = () => {
             </div>
           </div>
           <div className="my-6  bg-slate-100 p-6  rounded-xl text-slate-600">
-            <h2 className="text-lg text-slate-950 my-1">xLIBRA APY</h2>
+            <h2 className="text-lg text-slate-950 my-1">$LIBRA APY</h2>
             <p className="text-xl my-2 text-violet-500 ">
               {ctx.contractData
                 ? formatAmount(
