@@ -13,7 +13,7 @@ const Stake = () => {
 
   const ctx = useContext(AppContext);
 
-  const getLockDate = (): string => {
+  const getLockDate = (days: number): string => {
     const todayDate = new Date();
     const result = todayDate.setDate(todayDate.getDate() + days);
     const newDate = new Date(result);
@@ -249,11 +249,7 @@ const Stake = () => {
             </div>
 
             <div className="my-4 *:mb-1">
-              <p>Lock until: {getLockDate()}</p>
-              <p>1 LIBRA locked for 4 years = 1.00 xLIBRA</p>
-              <p>1 LIBRA locked for 3 years = 0.75 xLIBRA</p>
-              <p>1 LIBRA locked for 2 years = 0.50 xLIBRA</p>
-              <p>1 LIBRA locked for 1 years = 0.25 xLIBRA</p>
+              <p>Lock until: {getLockDate(days)}</p>
             </div>
           </div>
           <div className="my-3">
@@ -377,6 +373,20 @@ const Stake = () => {
                     60
                   : 0}{" "}
                 Days
+              </p>
+            </div>
+            <br />
+            <div>
+              <h2 className="text-lg text-slate-950 my-1">Locked Unitil</h2>
+              <p className="text-xl my-2 text-violet-500">
+                {ctx.userData
+                  ? getLockDate(
+                      parseInt(ctx.userData?.lockDuration.toString()) /
+                        24 /
+                        60 /
+                        60
+                    )
+                  : new Date().toDateString()}{" "}
               </p>
             </div>
           </div>
