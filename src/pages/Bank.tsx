@@ -5,11 +5,46 @@ import { performStake, performUnStake } from "../solana/services.ts";
 import { StakeType } from "../solana/types.ts";
 import { FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
+// import * as moment from "moment";
 
 const Bank = () => {
   const [amount, setAmount] = useState<number>(0);
   const [unstakeLoading, setUnstakeLoading] = useState(false);
   const ctx = useContext(AppContext);
+
+  const getTotalRewards = (): number => {
+    const totalStaked: number | null =
+      ctx.userData && ctx.userData.stakeType == BigInt(0)
+        ? Number(
+            formatAmount(
+              parseInt(ctx.userData.totalStaked.toString()),
+              STAKE_TOKEN_DECIMALS
+            )
+          )
+        : 0;
+
+    const apy = ctx.contractData
+      ? Number(
+          formatAmount(
+            parseInt(ctx.contractData.normalStakingApy.toString()),
+            1
+          )
+        )
+      : 0;
+
+    const dayOfStake = ctx.userData
+      ? parseInt(ctx.userData?.stakeTs.toString()) * 1000
+      : 0;
+    const dateOfStamp = new Date(dayOfStake);
+    // const todayDate = new Date();
+    // const result = todayDate.setDate(todayDate.getDate() + 14);
+    const newDate = new Date();
+    const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+    const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+
+    const rewards = totalStaked * (dayDiff / 365) * (apy / 100);
+    return totalStaked + rewards;
+  };
 
   const handleStake = async () => {
     ctx.setLoading(true);
@@ -140,6 +175,10 @@ const Bank = () => {
                 )}
               </button>
             </div>
+
+            <p className="text-slate-600 my-2">
+              (You cannot withdraw for 24hrs after staking)
+            </p>
           </div>
           <div className="my-6  bg-slate-100 p-6  rounded-xl text-slate-600">
             <h2 className="text-lg text-slate-950 my-1">$LIBRA APY</h2>
@@ -155,6 +194,11 @@ const Bank = () => {
             <p className="mb-2">
               (You will get back 100% your locked LIBRA amount after Lock for 14
               days)
+            </p>
+            <br />
+            <h2 className="text-lg text-slate-950 my-1">Expected Rewards</h2>
+            <p className="text-xl my-2 text-violet-500 ">
+              {ctx.contractData ? getTotalRewards() : 0} LIBRA
             </p>
           </div>
         </div>

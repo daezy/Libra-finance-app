@@ -18,8 +18,8 @@ function App() {
       <Navbar />
       <Routes>
         {/* <Route path="/" element={<MainApp />} /> */}
-        <Route path="/" element={<Stake />} />
-         <Route path="/bank" element={<Bank />} />
+        <Route path="/" element={<Bank />} />
+        <Route path="/bank" element={<Stake />} />
         <Route path="/revShare" element={<RevShare />} />
         {/*<Route path="/revShare/init" element={<Init />} />*/}
       </Routes>

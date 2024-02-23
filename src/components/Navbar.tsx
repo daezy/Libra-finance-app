@@ -127,7 +127,7 @@ const Navbar = () => {
               </li> */}
               <li>
                 <NavLink to="/" className=" hover:text-violet-600 p-4 md:p-0">
-                  Lock
+                  Stake
                 </NavLink>
               </li>
               <li>

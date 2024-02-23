@@ -93,18 +93,20 @@ const Stake = () => {
 
   return (
     <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
-      {ctx.userData?.stakeType == BigInt(0) ? <div className="bg-red-700 text-white p-4 text-center my-4 rounded-lg">
-        <p>You currently have $LIBRA Staked. Kindly unstake your $LIBRA in the Bank to Lock $LIBRA</p>
-      </div>: ""}
+      {ctx.userData?.stakeType == BigInt(0) ? (
+        <div className="bg-red-700 text-white p-4 text-center my-4 rounded-lg">
+          <p>
+            You currently have $LIBRA Staked. Kindly unstake your $LIBRA in the
+            Stake to Lock $LIBRA
+          </p>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
         <div className="my-8  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-3xl my-3 text-slate-950">What is Libra Bank?</h2>
-          <p className="mb-1">
-            - You lock LIBRA (any period from 1 week to 4 years) in the LIBRA
-            Stake to receive xLIBRA token as a receipt. (Proportionally, the
-            longer you lock, the more xLIBRA you will receive. A 4 year lock
-            will give a 1:1 ratio of LIBRA to xLIBRA conversion.)
-          </p>
+
           <p className="mb-1">
             - By just holding xLIBRA, you get LIBRA interest (auto-compound to
             6057% APY for you). You will get back your locked amount after 14
@@ -261,7 +263,11 @@ const Stake = () => {
               disabled={ctx.loading}
               onClick={handleStake}
             >
-              {ctx.loading ? <FaSpinner className="animate-spin" /> : "Lock LIBRA"}
+              {ctx.loading ? (
+                <FaSpinner className="animate-spin" />
+              ) : (
+                "Lock LIBRA"
+              )}
             </button>
           </div>
           <p>
