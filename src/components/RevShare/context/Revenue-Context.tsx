@@ -51,7 +51,7 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [provider, setProvider] = useState<PhantomProvider | null>(null);
   const [connected, setConnected] = useState(false);
   const [connection, setConnection] = useState<Connection>(
-    new Connection(SOLANA_MAINNET_CONNECTION_URL)
+    new Connection(SOLANA_LOCAL_NET_RPC_URL)
   );
   const [pubKey, setPubKey] = useState<PublicKey>(PublicKey.default);
   const [success, setSuccess] = useState("");
@@ -71,6 +71,9 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
       const solWindow = window as WindowWithSolana;
       if (solWindow?.solana?.isPhantom) {
         setProvider(solWindow.solana);
+        setConnection(
+          new Connection(SOLANA_MAINNET_CONNECTION_URL, "confirmed")
+        );
         // Attempt an eager connection
         solWindow.solana.connect({ onlyIfTrusted: true });
       }
@@ -164,7 +167,7 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
       setTimeout(() => {
         setSuccess("");
       }, 3000);
-      setConnection(new Connection(SOLANA_MAINNET_CONNECTION_URL, "confirmed"));
+      // setConnection(new Connection(SOLANA_MAINNET_CONNECTION_URL, "confirmed"));
       setUp(connection, publicKey, provider).then((res) => console.log(res));
     });
     provider?.on("disconnect", () => {

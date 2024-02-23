@@ -80,6 +80,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
     provider?.on("connect", () => {
       setConnected(true);
       setSuccess("Wallet Connected successfully");
+
       setTimeout(() => {
         setSuccess("");
       }, 3000);
