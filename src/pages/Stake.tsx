@@ -93,6 +93,9 @@ const Stake = () => {
 
   return (
     <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
+      {ctx.userData?.stakeType == BigInt(0) ? <div className="bg-red-700 text-white p-4 text-center my-4 rounded-lg">
+        <p>You currently have $LIBRA Staked. Kindly unstake your $LIBRA in the Bank to Lock $LIBRA</p>
+      </div>: ""}
       <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
         <div className="my-8  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-3xl my-3 text-slate-950">What is Libra Bank?</h2>
@@ -258,7 +261,7 @@ const Stake = () => {
               disabled={ctx.loading}
               onClick={handleStake}
             >
-              {ctx.loading ? <FaSpinner className="animate-spin" /> : "Submit"}
+              {ctx.loading ? <FaSpinner className="animate-spin" /> : "Lock LIBRA"}
             </button>
           </div>
           <p>
@@ -314,7 +317,7 @@ const Stake = () => {
         <div className="my-3  bg-slate-100 p-6  rounded-xl text-slate-600">
           <h2 className="text-lg text-slate-950 my-1">Your LIBRA Locked</h2>
           <p className="text-xl my-2 text-violet-500 ">
-            {ctx.userData
+            {ctx.userData && ctx.userData.stakeType == BigInt(1)
               ? formatAmount(
                   parseInt(ctx.userData.totalStaked.toString()),
                   STAKE_TOKEN_DECIMALS
@@ -330,7 +333,7 @@ const Stake = () => {
               {unstakeLoading ? (
                 <FaSpinner className="animate-spin" />
               ) : (
-                "Unstake"
+                "UnLock LIBRA"
               )}
             </button>
           </div>
