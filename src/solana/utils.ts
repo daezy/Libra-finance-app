@@ -15,7 +15,6 @@ export const getTokenAccount = async (
     owner: PublicKey,
     mint: PublicKey
 ) => {
-    console.log(connection.rpcEndpoint)
     const associatedToken = await getAssociatedTokenAddress(
         mint,
         owner,
@@ -162,7 +161,6 @@ export const signAndConfirmTransaction = async (
 ) => {
     txn.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
     txn.feePayer = provider.publicKey;
-    //console.log(connection.rpcEndpoint)
     const signedTxn = await provider.signTransaction(txn);
     const sig = await connection.sendRawTransaction(signedTxn.serialize(), { skipPreflight: false, preflightCommitment: "confirmed"});
     const res = await connection.confirmTransaction(sig, "confirmed");

@@ -6,7 +6,6 @@ import {
   REV_SHARE_PDA_ADDRESS,
   REV_SHARE_TOKEN_DECIMALS,
   REV_SHARE_TOKEN_MINT,
-  SOLANA_LOCAL_NET_RPC_URL,
   SOLANA_MAINNET_CONNECTION_URL,
 } from "../solana/constants.ts";
 import {
@@ -19,19 +18,21 @@ import {
   calculateShare,
   formatAmount,
   getContractData,
-  getOrCreateAssociatedTokenAccount,
+  // getOrCreateAssociatedTokenAccount,
   getUserBalances,
   getUserData,
   handleClaim,
   initializeContract,
 } from "../solana/utils.ts";
+import {getTokenAccount} from "../../../solana/utils.ts";
+
 const RevenueContext = React.createContext<AppContextType>({
   isWalletConnected: false,
   canClaim: false,
   walletAddress: PublicKey.default,
   balances: { token: "", sol: "" },
   contractData: null,
-  connection: new Connection(SOLANA_LOCAL_NET_RPC_URL),
+  connection: new Connection(SOLANA_MAINNET_CONNECTION_URL),
   successMsg: "",
   errorMsg: "",
   poolTotal: 0.0,
@@ -51,7 +52,7 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [provider, setProvider] = useState<PhantomProvider | null>(null);
   const [connected, setConnected] = useState(false);
   const [connection, setConnection] = useState<Connection>(
-    new Connection(SOLANA_LOCAL_NET_RPC_URL)
+    new Connection(SOLANA_MAINNET_CONNECTION_URL)
   );
   const [pubKey, setPubKey] = useState<PublicKey>(PublicKey.default);
   const [success, setSuccess] = useState("");
@@ -117,12 +118,10 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
       } catch (e) {
         setError(`Error Fetching user Data ${e}`);
       }
-      const userTokenAccount = await getOrCreateAssociatedTokenAccount(
-        connection,
-        payer,
-        new PublicKey(REV_SHARE_TOKEN_MINT),
-        payer,
-        provider
+      const userTokenAccount = await getTokenAccount(
+          connection,
+          payer,
+          new PublicKey(REV_SHARE_TOKEN_MINT)
       );
       console.log(`User Token Account: ${userTokenAccount.address}`);
       try {

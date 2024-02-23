@@ -1,13 +1,28 @@
-import { useContext, useState } from "react";
-import { AppContext } from "../context/App-Context";
-import { formatAmount } from "../solana/utils";
+import {useContext, useState} from "react";
+import {AppContext} from "../context/App-Context";
+import {formatAmount} from "../solana/utils";
+// import {performStake} from "../solana/services.ts";
+// import {StakeType} from "../solana/types.ts";
 
 const Bank = () => {
   const [amount, setAmount] = useState<number>();
   const ctx = useContext(AppContext);
 
-  const handleLock = async () => {};
-  const handleDeposit = async () => {};
+  const handleLock = async () => {
+    // if (ctx.connection && ctx.provider && ctx.tokenAccount && amount && amount > 0) {
+    //   await performStake(
+    //       ctx.connection,
+    //       ctx.provider,
+    //       amount,
+    //       0,
+    //       ctx.tokenAccount.address,
+    //       StakeType.NORMAL
+    //   )
+    // } else {
+    //   ctx.setError("Unable to Perform Staking...")
+    // }
+  };
+  // const handleDeposit = async () => {};
 
   return (
     <>
@@ -49,14 +64,14 @@ const Bank = () => {
                 className="py-2 px-4 w-full rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"
               />
             </div>
-            <div className="my-3 flex justify-end">
-              <button
-                className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"
-                onClick={handleDeposit}
-              >
-                Deposit LIBRA
-              </button>
-            </div>
+            {/*<div className="my-3 flex justify-end">*/}
+            {/*  <button*/}
+            {/*    className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center"*/}
+            {/*    onClick={handleDeposit}*/}
+            {/*  >*/}
+            {/*    Deposit LIBRA*/}
+            {/*  </button>*/}
+            {/*</div>*/}
           </div>
           <div className="my-6  bg-slate-100 p-6  rounded-xl text-slate-600">
             <h2 className="text-lg text-slate-950 my-1">xLIBRA APY</h2>

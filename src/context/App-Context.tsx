@@ -62,7 +62,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
       const solWindow = window as WindowWithSolana;
       if (solWindow?.solana?.isPhantom) {
         setProvider(solWindow.solana);
-        console.log(network);
         if (network == "localnet") {
           setConnection(new Connection(LOCALNET_CONNECTION_URL, "confirmed"));
         } else if (network == "devnet") {
@@ -103,13 +102,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
           new PublicKey(CONTRACT_DATA_ACCOUNT)
         );
         setContractData(contractData);
-        console.log(
-          contractData?.minimumStakeAmount.toString(),
-          contractData?.minimumLockDuration.toString(),
-          contractData?.earlyWithdrawalFee.toString(),
-          contractData?.lockedStakingApy.toString(),
-          contractData?.normalStakingApy.toString()
-        );
         try {
           if (contractData) {
             const tokenAccount = await getTokenAccount(
@@ -131,7 +123,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         }
       }
     };
-    setUp().then((val) => console.log(val));
+    setUp().then((val) => val);
   }, [connection, provider, success]);
 
   const handleConnectWallet = (): void => {

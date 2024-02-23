@@ -10,6 +10,7 @@ export const performStake = async (
     amount: number,
     lockDuration: number,
     userTokenAccount: PublicKey,
+    stakeType: StakeType,
 ) => {
     const programId = new PublicKey(PROGRAM_ID);
     const [userDataAccount,] = PublicKey.findProgramAddressSync(
@@ -17,7 +18,7 @@ export const performStake = async (
         programId
     );
     const ix = makeStakeInstruction(
-        StakeType.LOCKED,
+        stakeType,
         amount,
         lockDuration,
         programId,
