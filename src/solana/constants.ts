@@ -8,4 +8,4 @@ export const CONTRACT_DATA_ACCOUNT =
 export const LOCALNET_CONNECTION_URL = "http://127.0.0.1:8899";
 export const DEVNET_CONNECTION_URL = "https://api.devnet.solana.com";
 export const MAINNET_CONNECTION_URL =
-  "https://solana-mainnet.g.alchemy.com/v2/a0Xic8r2YTu7uJ-O-Gn27SgmDTKaelhL";
+  "https://solana-mainnet.g.alchemy.com/v2/mSSt0hYTZTKiDCQwz8TLgt7duMQLueDZ";
