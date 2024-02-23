@@ -8,8 +8,8 @@ import Stake from "./pages/Stake";
 // import Bank from "./pages/Bank";
 import SuccessPopup from "./components/SuccessPopup";
 import ErrorPopup from "./components/ErrorPopup";
-// import RevShare from "./components/RevShare/RevShare";
-import LiveSoon from "./components/LiveSoon";
+import RevShare from "./components/RevShare/RevShare";
+// import LiveSoon from "./components/LiveSoon";
 // import Init from "./components/RevShare/Init";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         {/* <Route path="/" element={<MainApp />} /> */}
         <Route path="/" element={<Stake />} />
         {/* <Route path="/stake" element={<Bank />} /> */}
-        <Route path="/revShare" element={<LiveSoon />} />
+        <Route path="/revShare" element={<RevShare />} />
         {/*<Route path="/revShare/init" element={<Init />} />*/}
       </Routes>
       <SuccessPopup />

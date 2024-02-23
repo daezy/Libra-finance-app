@@ -6,7 +6,8 @@ import {
   REV_SHARE_PDA_ADDRESS,
   REV_SHARE_TOKEN_DECIMALS,
   REV_SHARE_TOKEN_MINT,
-  SOLANA_LOCAL_NET_RPC_URL, SOLANA_MAINNET_CONNECTION_URL,
+  SOLANA_LOCAL_NET_RPC_URL,
+  SOLANA_MAINNET_CONNECTION_URL,
 } from "../solana/constants.ts";
 import {
   AppContextType,
@@ -24,7 +25,6 @@ import {
   handleClaim,
   initializeContract,
 } from "../solana/utils.ts";
-
 const RevenueContext = React.createContext<AppContextType>({
   isWalletConnected: false,
   canClaim: false,
@@ -51,7 +51,7 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [provider, setProvider] = useState<PhantomProvider | null>(null);
   const [connected, setConnected] = useState(false);
   const [connection, setConnection] = useState<Connection>(
-    new Connection(SOLANA_LOCAL_NET_RPC_URL)
+    new Connection(SOLANA_MAINNET_CONNECTION_URL)
   );
   const [pubKey, setPubKey] = useState<PublicKey>(PublicKey.default);
   const [success, setSuccess] = useState("");

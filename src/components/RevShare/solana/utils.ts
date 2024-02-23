@@ -23,7 +23,8 @@ import {
   AccountState,
   ASSOCIATED_TOKEN_PROGRAM_ID,
   getAssociatedTokenAddress,
-  MintLayout, TOKEN_2022_PROGRAM_ID,
+  MintLayout,
+  TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 
@@ -135,9 +136,9 @@ export const getOrCreateAssociatedTokenAccount = async (
     // becoming a system account. Assuming program derived addressing is safe, this is the only case for the
     // TokenInvalidAccountOwnerError in this code path.
     if (
-        // @ts-expect-error rest
+      // @ts-expect-error rest
       error.message === "TokenAccountNotFoundError" ||
-        // @ts-expect-error rest
+      // @ts-expect-error rest
       error.message === "TokenInvalidAccountOwnerError"
     ) {
       // As this isn't atomic, it's possible others can create associated accounts meanwhile.
@@ -366,8 +367,8 @@ export const handleClaim = async (
     new PublicKey(REV_SHARE_TOKEN_MINT),
     provider.publicKey,
     provider,
-      false,
-      TOKEN_2022_PROGRAM_ID
+    false,
+    TOKEN_2022_PROGRAM_ID
   );
   const [claimerPDA] = PublicKey.findProgramAddressSync(
     [
