@@ -1,10 +1,10 @@
-import {useContext, useState} from "react";
-import {FaLock, FaSpinner} from "react-icons/fa6";
-import {AppContext} from "../context/App-Context";
-import {performStake, performUnStake} from "../solana/services.ts";
-import {formatAmount} from "../solana/utils.ts";
-import {STAKE_TOKEN_DECIMALS} from "../solana/constants.ts";
-import {StakeType} from "../solana/types.ts";
+import { useContext, useState } from "react";
+import { FaLock, FaSpinner } from "react-icons/fa6";
+import { AppContext } from "../context/App-Context";
+import { performStake, performUnStake } from "../solana/services.ts";
+import { formatAmount } from "../solana/utils.ts";
+import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
+import { StakeType } from "../solana/types.ts";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
@@ -12,6 +12,13 @@ const Stake = () => {
   const [unstakeLoading, setUnstakeLoading] = useState(false);
 
   const ctx = useContext(AppContext);
+
+  const getLockDate = (): string => {
+    const todayDate = new Date();
+    const result = todayDate.setDate(todayDate.getDate() + days);
+    const newDate = new Date(result);
+    return newDate.toDateString();
+  };
 
   const getTotalRewards = (): number => {
     const totalStaked: number | null = ctx.userData
@@ -46,12 +53,12 @@ const Stake = () => {
       try {
         const duration = days * 24 * 60 * 60;
         await performStake(
-            ctx.connection,
-            ctx.provider,
-            libraAmount,
-            duration,
-            ctx.tokenAccount.address,
-            StakeType.LOCKED
+          ctx.connection,
+          ctx.provider,
+          libraAmount,
+          duration,
+          ctx.tokenAccount.address,
+          StakeType.LOCKED
         );
         ctx.setSuccess("Stake Success 🚀✅");
       } catch (e) {
@@ -242,7 +249,7 @@ const Stake = () => {
             </div>
 
             <div className="my-4 *:mb-1">
-              <p>Lock until: Sun Feb 06 2028 15:52:33</p>
+              <p>Lock until: {getLockDate()}</p>
               <p>1 LIBRA locked for 4 years = 1.00 xLIBRA</p>
               <p>1 LIBRA locked for 3 years = 0.75 xLIBRA</p>
               <p>1 LIBRA locked for 2 years = 0.50 xLIBRA</p>
