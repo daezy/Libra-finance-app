@@ -12,6 +12,29 @@ const Stake = () => {
 
   const ctx = useContext(AppContext);
 
+  const getTotalRewards = (): number => {
+    const totalStaked: number | null = ctx.userData
+      ? Number(
+          formatAmount(
+            parseInt(ctx.userData.totalStaked.toString()),
+            STAKE_TOKEN_DECIMALS
+          )
+        )
+      : 0;
+
+    const apy = ctx.contractData
+      ? Number(
+          formatAmount(
+            parseInt(ctx.contractData.lockedStakingApy.toString()),
+            1
+          )
+        )
+      : 0;
+
+    const rewards = totalStaked * (14 / 365) * (apy / 100);
+    return rewards;
+  };
+
   const handleStake = async () => {
     ctx.setLoading(true);
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
@@ -289,7 +312,7 @@ const Stake = () => {
                   STAKE_TOKEN_DECIMALS
                 )
               : 0}{" "}
-            LIBRA <span className="text-slate-500">($0)</span>
+            LIBRA
           </p>
           <div className="flex justify-end items-center">
             <button
@@ -328,17 +351,25 @@ const Stake = () => {
               <h2 className="text-lg text-slate-950 my-1">
                 Total $LIBRA Reward
               </h2>
-              <p className="text-xl my-2 text-violet-500">0 LIBRA($0)</p>
+              <p className="text-xl my-2 text-violet-500">
+                {getTotalRewards()} LIBRA
+              </p>
             </div>
             <div>
-              <h2 className="text-lg text-slate-950 my-1">
-                Total $USDC Reward
-              </h2>
-              <p className="text-xl my-2 text-violet-500">$0</p>
+              <h2 className="text-lg text-slate-950 my-1">Lock Duration</h2>
+              <p className="text-xl my-2 text-violet-500">
+                {ctx.userData
+                  ? parseInt(ctx.userData?.lockDuration.toString()) /
+                    24 /
+                    60 /
+                    60
+                  : 0}{" "}
+                Days
+              </p>
             </div>
           </div>
-          <br />
-          <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* <br /> */}
+          {/* <div className="grid grid-cols-1 md:grid-cols-2">
             <div>
               <h2 className="text-lg text-slate-950 my-1">
                 Pending $LIBRA Reward
@@ -351,7 +382,7 @@ const Stake = () => {
                 Claim LIBRA
               </button>
             </div>
-          </div>
+          </div> */}
           <br />
         </div>
       </div>
