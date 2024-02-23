@@ -43,7 +43,7 @@ const Navbar = () => {
                 id="myDropdown"
                 className={`dropdown-content ${dropOpen ? "show" : ""}`}
               >
-                <a
+                {/* <a
                   href="#"
                   onClick={() => {
                     ctx.setNetwork("localnet");
@@ -60,7 +60,7 @@ const Navbar = () => {
                   }}
                 >
                   Devnet
-                </a>
+                </a> */}
                 <a
                   href="#"
                   onClick={() => {

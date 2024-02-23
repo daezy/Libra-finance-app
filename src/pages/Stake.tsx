@@ -31,7 +31,11 @@ const Stake = () => {
         )
       : 0;
 
-    const rewards = totalStaked * (14 / 365) * (apy / 100);
+    const duration = ctx.userData
+      ? parseInt(ctx.userData?.lockDuration.toString()) / 24 / 60 / 60
+      : 0;
+
+    const rewards = totalStaked * (duration / 365) * (apy / 100);
     return rewards;
   };
 
@@ -349,7 +353,7 @@ const Stake = () => {
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div>
               <h2 className="text-lg text-slate-950 my-1">
-                Total $LIBRA Reward
+                Total $LIBRA Reward(After Duration)
               </h2>
               <p className="text-xl my-2 text-violet-500">
                 {getTotalRewards()} LIBRA
