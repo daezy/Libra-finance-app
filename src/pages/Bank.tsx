@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/App-Context";
 import { formatAmount } from "../solana/utils";
 import { performStake, performUnStake } from "../solana/services.ts";
@@ -10,7 +10,24 @@ import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 const Bank = () => {
   const [amount, setAmount] = useState<number>(0);
   const [unstakeLoading, setUnstakeLoading] = useState(false);
+  const [canUnStake, setCanUnstake] = useState<boolean>(true);
   const ctx = useContext(AppContext);
+
+  useEffect(() => {
+    const dayOfStake = ctx.userData
+      ? parseInt(ctx.userData?.stakeTs.toString()) * 1000
+      : 0;
+
+    const dateOfStamp = new Date(dayOfStake);
+    const newDate = new Date();
+    const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+    const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+    if (dayDiff >= 1) {
+      setCanUnstake(true);
+    } else {
+      setCanUnstake(false);
+    }
+  }, [ctx.userData]);
 
   const getTotalRewards = (): number => {
     const totalStaked: number | null =
@@ -152,8 +169,8 @@ const Bank = () => {
 
               <div className="right">
                 <button
-                  className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center w-full md:w-fit"
-                  disabled={ctx.userData?.stakeType != BigInt(0)}
+                  className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center w-full md:w-fit disabled:bg-slate-400"
+                  disabled={ctx.userData?.stakeType != BigInt(0) || !canUnStake}
                   onClick={handleUnstake}
                 >
                   {unstakeLoading ? (
@@ -214,7 +231,7 @@ const Bank = () => {
             <h2 className="text-lg text-slate-950 my-1">Expected Rewards</h2>
             <p className="text-xl my-2 text-violet-500 ">
               {ctx.contractData ? getTotalRewards() : 0} LIBRA
-            </p>
+            </p>{" "}
           </div>
         </div>
       </div>

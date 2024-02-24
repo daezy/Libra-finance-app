@@ -108,17 +108,17 @@ const Stake = () => {
           <h2 className="text-3xl my-3 text-slate-950">What is Libra Bank?</h2>
 
           <p className="mb-1">
-            - By just holding xLIBRA, you get LIBRA interest (auto-compound to
+            - By just holding LIBRA, you get LIBRA interest (auto-compound to
             6057% APY for you). You will get back your locked amount after 14
             days if you lock for a month.
           </p>
           <p className="mb-1">
-            - xLIBRA holders will receive other benefit such as
+            - LIBRA holders will receive other benefit such as
             multichain-farming profits in the future
           </p>
           <p className="mb-1">
-            - You can unlock xLIBRA before time but 10% of your locked LIBRA
-            will go to current xLIBRA holders.
+            - You can unlock LIBRA before time but 10% of your locked LIBRA
+            will go to current LIBRA holders.
           </p>
         </div>
 
@@ -320,7 +320,7 @@ const Stake = () => {
       {/*  <div className="bg-slate-100 p-6  rounded-xl text-slate-600 flex items-center gap-2">*/}
       {/*    <img src="./img/logo.png" width={70} alt="" />*/}
       {/*    <div className="flex flex-col gap-1">*/}
-      {/*      <h3 className="text-slate-950 text-lg">xLIBRA in circulation</h3>*/}
+      {/*      <h3 className="text-slate-950 text-lg">LIBRA in circulation</h3>*/}
       {/*      <p>7,616,109,466.7</p>*/}
       {/*    </div>*/}
       {/*  </div>*/}
@@ -361,7 +361,7 @@ const Stake = () => {
         </div>
 
         <div className="my-3  bg-slate-100 p-6  rounded-xl text-slate-600">
-          <h2 className="text-lg text-slate-950 my-1">xLIBRA APY</h2>
+          <h2 className="text-lg text-slate-950 my-1">LIBRA APY</h2>
           <p className="text-xl my-2 text-violet-500 ">
             {ctx.contractData
               ? formatAmount(
