@@ -123,7 +123,6 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
           payer,
           new PublicKey(REV_SHARE_TOKEN_MINT)
       );
-      console.log(`User Token Account: ${userTokenAccount.address}`);
       try {
         const { tokenBalance, solBalance } = await getUserBalances(
           connection,
