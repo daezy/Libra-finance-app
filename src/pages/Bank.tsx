@@ -107,6 +107,19 @@ const Bank = () => {
     setUnstakeLoading(false);
   };
 
+  const setMaxAmount = () => {
+    setAmount(
+      ctx.tokenAccount
+        ? Number(
+            formatAmount(
+              parseInt(ctx.tokenAccount.amount.toString()),
+              STAKE_TOKEN_DECIMALS
+            )
+          )
+        : 0
+    );
+  };
+
   return (
     <>
       <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
@@ -132,21 +145,7 @@ const Bank = () => {
                 />
                 <div>
                   <h3 className="text-slate-950 text-lg">LIBRA</h3>
-                  <p
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setAmount(
-                        ctx.tokenAccount
-                          ? Number(
-                              formatAmount(
-                                parseInt(ctx.tokenAccount.amount.toString()),
-                                STAKE_TOKEN_DECIMALS
-                              )
-                            )
-                          : 0
-                      );
-                    }}
-                  >
+                  <p>
                     Balance:{" "}
                     {ctx.tokenAccount
                       ? formatAmount(
@@ -193,6 +192,14 @@ const Bank = () => {
                 placeholder="*Enter Amount"
                 className="py-2 px-4 w-full rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"
               />
+              <button
+                className="bg-transparent border border-solid border-violet-500 rounded-xl p-2 px-3 hover:bg-slate-300"
+                onClick={() => {
+                  setMaxAmount();
+                }}
+              >
+                Max
+              </button>
             </div>
             <div className="my-3 flex justify-end">
               <button

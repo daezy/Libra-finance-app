@@ -117,8 +117,8 @@ const Stake = () => {
             multichain-farming profits in the future
           </p>
           <p className="mb-1">
-            - You can unlock LIBRA before time but 10% of your locked LIBRA
-            will go to current LIBRA holders.
+            - You can unlock LIBRA before time but 10% of your locked LIBRA will
+            go to current LIBRA holders.
           </p>
         </div>
 
@@ -133,21 +133,7 @@ const Stake = () => {
               />
               <div>
                 <h3 className="text-slate-950 text-lg">LIBRA</h3>
-                <p
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setLibraAmount(
-                      ctx.tokenAccount
-                        ? Number(
-                            formatAmount(
-                              parseInt(ctx.tokenAccount.amount.toString()),
-                              STAKE_TOKEN_DECIMALS
-                            )
-                          )
-                        : 0
-                    );
-                  }}
-                >
+                <p>
                   Balance:{" "}
                   {ctx.tokenAccount
                     ? formatAmount(
@@ -161,16 +147,35 @@ const Stake = () => {
 
             <div className="right flex justify-center gap-1 flex-col">
               <label htmlFor="libraamout">Enter Libra Amount to lock</label>
-              <input
-                type="number"
-                min={0}
-                name="libraamount"
-                value={libraAmount}
-                onChange={(e) => setLibraAmount(Number(e.target.value))}
-                placeholder="*Libra amount"
-                id="libraamount"
-                className="py-2 px-4 rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"
-              />
+              <div className="flex gap-1 items-center">
+                <input
+                  type="number"
+                  min={0}
+                  name="libraamount"
+                  value={libraAmount}
+                  onChange={(e) => setLibraAmount(Number(e.target.value))}
+                  placeholder="*Libra amount"
+                  id="libraamount"
+                  className="py-2 px-4 rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"
+                />
+                <button
+                  className="bg-transparent border border-solid border-violet-500 rounded-xl p-2 px-3 hover:bg-slate-300"
+                  onClick={() => {
+                    setLibraAmount(
+                      ctx.tokenAccount
+                        ? Number(
+                            formatAmount(
+                              parseInt(ctx.tokenAccount.amount.toString()),
+                              STAKE_TOKEN_DECIMALS
+                            )
+                          )
+                        : 0
+                    );
+                  }}
+                >
+                  Max
+                </button>
+              </div>
             </div>
           </div>
 
