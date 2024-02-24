@@ -15,7 +15,6 @@ import {
   WindowWithSolana,
 } from "../solana/types.ts";
 import {
-  calculateShare,
   formatAmount,
   getContractData,
   // getOrCreateAssociatedTokenAccount,
@@ -144,12 +143,7 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
             );
             setPoolShare("0");
           } else {
-            const poolShare = await calculateShare(
-              connection,
-              tokenBalance,
-              globCData,
-              new PublicKey(REV_SHARE_TOKEN_MINT)
-            );
+            const poolShare = poolBalance/100;
             setPoolShare(poolShare.toString());
             setCanClaim(true);
           }
