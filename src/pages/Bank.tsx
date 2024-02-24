@@ -115,7 +115,21 @@ const Bank = () => {
                 />
                 <div>
                   <h3 className="text-slate-950 text-lg">LIBRA</h3>
-                  <p>
+                  <p
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setAmount(
+                        ctx.tokenAccount
+                          ? Number(
+                              formatAmount(
+                                parseInt(ctx.tokenAccount.amount.toString()),
+                                STAKE_TOKEN_DECIMALS
+                              )
+                            )
+                          : 0
+                      );
+                    }}
+                  >
                     Balance:{" "}
                     {ctx.tokenAccount
                       ? formatAmount(
@@ -157,6 +171,7 @@ const Bank = () => {
                 type="number"
                 id="amount"
                 value={amount}
+                min={0}
                 onChange={(e) => setAmount(Number(e.target.value))}
                 placeholder="*Enter Amount"
                 className="py-2 px-4 w-full rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"

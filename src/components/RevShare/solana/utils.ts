@@ -26,7 +26,7 @@ import {
   MintLayout,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import {getTokenAccount} from "../../../solana/utils.ts";
+import { getTokenAccount } from "../../../solana/utils.ts";
 
 const saveDataToFile = (data: {
   programId: string;
@@ -371,10 +371,10 @@ export const handleClaim = async (
   //   TOKEN_2022_PROGRAM_ID
   // );
   const tokenAccount = await getTokenAccount(
-      connection,
-      provider.publicKey,
-      new PublicKey(REV_SHARE_TOKEN_MINT)
-  )
+    connection,
+    provider.publicKey,
+    new PublicKey(REV_SHARE_TOKEN_MINT)
+  );
   const [claimerPDA] = PublicKey.findProgramAddressSync(
     [
       Buffer.from("rev_share_user", "utf-8"),

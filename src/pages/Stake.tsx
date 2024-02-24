@@ -133,7 +133,21 @@ const Stake = () => {
               />
               <div>
                 <h3 className="text-slate-950 text-lg">LIBRA</h3>
-                <p>
+                <p
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setLibraAmount(
+                      ctx.tokenAccount
+                        ? Number(
+                            formatAmount(
+                              parseInt(ctx.tokenAccount.amount.toString()),
+                              STAKE_TOKEN_DECIMALS
+                            )
+                          )
+                        : 0
+                    );
+                  }}
+                >
                   Balance:{" "}
                   {ctx.tokenAccount
                     ? formatAmount(
@@ -149,6 +163,7 @@ const Stake = () => {
               <label htmlFor="libraamout">Enter Libra Amount to lock</label>
               <input
                 type="number"
+                min={0}
                 name="libraamount"
                 value={libraAmount}
                 onChange={(e) => setLibraAmount(Number(e.target.value))}

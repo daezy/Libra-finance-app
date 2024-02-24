@@ -24,7 +24,7 @@ import {
   handleClaim,
   initializeContract,
 } from "../solana/utils.ts";
-import {getTokenAccount} from "../../../solana/utils.ts";
+import { getTokenAccount } from "../../../solana/utils.ts";
 
 const RevenueContext = React.createContext<AppContextType>({
   isWalletConnected: false,
@@ -116,12 +116,12 @@ export const RevenueContextProvider: React.FC<{ children: React.ReactNode }> = (
           setNextClaimTime(userData.lastClaimTs + 24 * 60 * 60);
         }
       } catch (e) {
-        setError(`Error Fetching user Data ${e}`);
+        // setError(`Error Fetching user Data ${e}`);
       }
       const userTokenAccount = await getTokenAccount(
-          connection,
-          payer,
-          new PublicKey(REV_SHARE_TOKEN_MINT)
+        connection,
+        payer,
+        new PublicKey(REV_SHARE_TOKEN_MINT)
       );
       try {
         const { tokenBalance, solBalance } = await getUserBalances(
