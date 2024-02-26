@@ -233,11 +233,6 @@ const Bank = () => {
               </p>
               <p className="text-[#0D47A1]">Per Year</p>
             </div>
-
-            <p className="mb-2 text-[#222222D1]">
-              (You will get back 100% your locked LIBRA amount after Lock for 14
-              days)
-            </p>
           </div>
           <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 flex md:items-center md:gap-3 shadow-sm flex-col md:flex-row">
             <h2 className="text-lg text-slate-950 my-1 uppercase">
