@@ -5,10 +5,9 @@ import { performStake, performUnStake } from "../solana/services.ts";
 import { StakeType } from "../solana/types.ts";
 import { FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
-// import * as moment from "moment";
 
 const Bank = () => {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>();
   const [unstakeLoading, setUnstakeLoading] = useState(false);
   const [canUnStake, setCanUnstake] = useState<boolean>(true);
   const ctx = useContext(AppContext);
@@ -122,9 +121,9 @@ const Bank = () => {
 
   return (
     <>
-      <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
+      <div className="w-11/12 mx-auto my-9">
         {ctx.userData?.stakeType == BigInt(1) ? (
-          <div className="bg-red-700 text-white p-4 text-center my-4 rounded-lg">
+          <div className="bg-red-200 text-red-700 p-4 text-center my-4 rounded-md">
             <p>
               You currently have $LIBRA Locked. Kindly unlock your Locked $LIBRA
               to Stake $LIBRA Here
@@ -133,9 +132,9 @@ const Bank = () => {
         ) : (
           ""
         )}
-        <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <div className="my-6  bg-slate-100 p-6  rounded-xl">
-            <div className="flex md:items-center justify-between  flex-col md:flex-row">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
+          <div className="bg-white  rounded-lg shadow-sm md:col-span-3">
+            <div className="flex md:items-center justify-between  flex-col md:flex-row p-4 border-b border-solid">
               <div className="libra flex items-center gap-3">
                 <img
                   src="./img/logo.png"
@@ -144,7 +143,6 @@ const Bank = () => {
                   alt=""
                 />
                 <div>
-                  <h3 className="text-slate-950 text-lg">LIBRA</h3>
                   <p>
                     Balance:{" "}
                     {ctx.tokenAccount
@@ -168,75 +166,84 @@ const Bank = () => {
 
               <div className="right">
                 <button
-                  className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center w-full md:w-fit disabled:bg-slate-400"
+                  className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-between gap-3 items-center w-full md:w-fit disabled:bg-slate-400"
                   disabled={ctx.userData?.stakeType != BigInt(0) || !canUnStake}
                   onClick={handleUnstake}
                 >
                   {unstakeLoading ? (
                     <FaSpinner className="animate-spin" />
                   ) : (
-                    "UN STAKE LIBRA"
+                    "UNSTAKE"
                   )}
                 </button>
               </div>
             </div>
-            <h2 className="text-2xl text-slate-950 my-4">Stake</h2>
-            <div className="flex items-center gap-3">
-              <label htmlFor="amount">Amount</label>
-              <input
-                type="number"
-                id="amount"
-                value={amount}
-                min={0}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                placeholder="*Enter Amount"
-                className="py-2 px-4 w-full rounded-xl bg-opacity-45 bg-white border border-solid border-slate-500"
-              />
-              <button
-                className="bg-transparent border border-solid border-violet-500 rounded-xl p-2 px-3 hover:bg-slate-300"
-                onClick={() => {
-                  setMaxAmount();
-                }}
-              >
-                Max
-              </button>
+            <div className="p-4">
+              <div className="flex items-center gap-3">
+                <label htmlFor="amount" className="text-lg text-slate-950 my-4">
+                  STAKE:
+                </label>
+                <input
+                  type="number"
+                  id="amount"
+                  value={amount}
+                  min={0}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  placeholder="Amount"
+                  className="py-2 px-4 w-full rounded bg-opacity-45 bg-[#F2F2F2] "
+                />
+                <button
+                  className="bg-transparent border border-solid border-[#0D47A1] rounded-lg p-2 px-3 hover:bg-slate-300"
+                  onClick={() => {
+                    setMaxAmount();
+                  }}
+                >
+                  Max
+                </button>
+              </div>
+              <div className="my-3 flex justify-between flex-col md:flex-row">
+                <p className="text-slate-600 my-2">
+                  (You cannot withdraw for 24hrs after staking)
+                </p>
+                <button
+                  className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-center gap-3 items-center w-full md:w-fit text-center"
+                  // disabled={ctx.userData?.stakeType != BigInt(0)}
+                  onClick={handleStake}
+                >
+                  {ctx.loading ? (
+                    <FaSpinner className="animate-spin" />
+                  ) : (
+                    "STAKE LIBRA"
+                  )}
+                </button>
+              </div>
             </div>
-            <div className="my-3 flex justify-end">
-              <button
-                className="text-slate-100 bg-violet-600 py-4 px-6 rounded-2xl hover:bg-violet-800 flex justify-between gap-3 items-center w-full md:w-fit"
-                // disabled={ctx.userData?.stakeType != BigInt(0)}
-                onClick={handleStake}
-              >
-                {ctx.loading ? (
-                  <FaSpinner className="animate-spin" />
-                ) : (
-                  "STAKE LIBRA"
-                )}
-              </button>
+          </div>
+          <div className="bg-white p-5  rounded-lg text-slate-600 md:col-span-2 shadow-sm flex flex-col justify-center text-center gap-2">
+            <h2 className="text-lg text-[#1F242F] my-1">$LIBRA APY</h2>
+            <div>
+              <p className="text-4xl my-2 text-[#0D47A1] ">
+                {ctx.contractData
+                  ? formatAmount(
+                      parseInt(ctx.contractData.normalStakingApy.toString()),
+                      1
+                    )
+                  : 0}
+                %
+              </p>
+              <p className="text-[#0D47A1]">Per Year</p>
             </div>
 
-            <p className="text-slate-600 my-2">
-              (You cannot withdraw for 24hrs after staking)
-            </p>
-          </div>
-          <div className="my-6  bg-slate-100 p-6  rounded-xl text-slate-600">
-            <h2 className="text-lg text-slate-950 my-1">$LIBRA APY</h2>
-            <p className="text-xl my-2 text-violet-500 ">
-              {ctx.contractData
-                ? formatAmount(
-                    parseInt(ctx.contractData.normalStakingApy.toString()),
-                    1
-                  )
-                : 0}
-              % / yr
-            </p>
-            <p className="mb-2">
+            <p className="mb-2 text-[#222222D1]">
               (You will get back 100% your locked LIBRA amount after Lock for 14
               days)
             </p>
-            <br />
-            <h2 className="text-lg text-slate-950 my-1">Expected Rewards</h2>
-            <p className="text-xl my-2 text-violet-500 ">
+          </div>
+          <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 flex md:items-center md:gap-3 shadow-sm flex-col md:flex-row">
+            <h2 className="text-lg text-slate-950 my-1 uppercase">
+              Expected Rewards:
+            </h2>
+            <p className="text-xl my-2 text-[#0D47A1]">
               {ctx.contractData ? getTotalRewards() : 0} LIBRA
             </p>{" "}
           </div>

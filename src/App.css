@@ -42,7 +42,12 @@
 .show {
   display: block;
 }
-
 .active {
-  color: blueviolet;
+  border-left: 3px solid #0d47a1;
+  border-radius: 3px;
+}
+
+.active span {
+  background-color: #0d47a142;
+  color: #0d47a1;
 }

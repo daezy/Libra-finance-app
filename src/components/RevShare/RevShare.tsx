@@ -11,21 +11,21 @@ const RevShare = () => {
   const ctx = useContext(RevenueContext);
 
   return (
-    <div className="w-11/12 md:w-11/12 mx-auto mt-52 md:mt-40">
-      <div className="grid gap-5 grid-cols-1 ">
-        <div className="my-6  bg-slate-100 p-6  rounded-xl">
+    <div className="w-11/12 mx-auto my-9">
+      <div className="grid gap-3 grid-cols-1 ">
+        <div className=" bg-white p-5  rounded-lg">
           {ctx.successMsg && (
-            <div className="bg-green-500 text-white p-4 text-center my-4 rounded-lg">
+            <div className="bg-green-200 text-green-700 p-4 text-center my-4 rounded-md">
               <p>{ctx.successMsg}</p>
             </div>
           )}
           {ctx.errorMsg && (
-            <div className="bg-red-700 text-white p-4 text-center my-4 rounded-lg">
+            <div className="bg-red-200 text-red-700 p-4 text-center my-4 rounded-md">
               <p>{ctx.errorMsg}</p>
             </div>
           )}
-          <h2 className="font-bold tracking-wider">AUTO STAKE</h2>
-          <div className="p-6 text-center text-slate-600">
+          <h2 className="font-bold tracking-wider text-center">AUTO STAKE</h2>
+          <div className="p-4 text-center text-slate-600">
             <p>
               You must hold at least{" "}
               {formatAmount(
@@ -74,7 +74,7 @@ const RevShare = () => {
             </ul>
           </div>
           <button
-            className="w-full text-center text-slate-100 bg-violet-600  hover:bg-violet-800 py-3 rounded-lg disabled:bg-slate-400"
+            className="w-full text-center text-slate-100 bg-[#0D47A1]  hover:bg-blue-800 py-3 rounded-lg disabled:bg-slate-400"
             disabled={
               !ctx.isWalletConnected ||
               !ctx.canClaim ||
