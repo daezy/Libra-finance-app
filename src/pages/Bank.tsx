@@ -19,9 +19,10 @@ const Bank = () => {
 
     const dateOfStamp = new Date(dayOfStake);
     const newDate = new Date();
+
     const timeDiff = newDate.getTime() - dateOfStamp.getTime();
     const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
-    if (dayDiff >= 1) {
+    if (dayDiff >= 2) {
       setCanUnstake(true);
     } else {
       setCanUnstake(false);
@@ -132,6 +133,15 @@ const Bank = () => {
         ) : (
           ""
         )}
+        {canUnStake && (
+          <div className="bg-blue-100 text-blue-700 p-4 text-center my-4 rounded-md capitalize">
+            <p>
+              Have Troubles unstaking? Restake 100 more tokens and try again
+              after 24hrs
+            </p>
+          </div>
+        )}
+
         <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
           <div className="bg-white  rounded-lg shadow-sm md:col-span-3">
             <div className="flex md:items-center justify-between  flex-col md:flex-row p-4 border-b border-solid">
@@ -203,7 +213,7 @@ const Bank = () => {
               </div>
               <div className="my-3 flex justify-between flex-col md:flex-row">
                 <p className="text-slate-600 my-2">
-                  (You cannot withdraw for 24hrs after staking)
+                  (You cannot withdraw for 48hrs after staking)
                 </p>
                 <button
                   className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-center gap-3 items-center w-full md:w-fit text-center"
@@ -234,10 +244,13 @@ const Bank = () => {
               <p className="text-[#0D47A1]">Per Year</p>
             </div>
           </div>
-          <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 flex md:items-center md:gap-3 shadow-sm flex-col md:flex-row">
-            <h2 className="text-lg text-slate-950 my-1 uppercase">
-              Expected Rewards:
-            </h2>
+          <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 flex md:items-center md:gap-4 shadow-sm flex-col md:flex-row">
+            <div className="flex flex-col justify-center">
+              <h2 className="text-lg text-slate-950 uppercase">
+                Expected Rewards:
+              </h2>
+              <p className="text-sm text-slate-400">(Updates every 24hrs)</p>
+            </div>
             <p className="text-xl my-2 text-[#0D47A1]">
               {ctx.contractData ? getTotalRewards() : 0} LIBRA
             </p>{" "}
