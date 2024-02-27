@@ -1,6 +1,12 @@
 import React from "react";
 import { FaHome, FaTelegramPlane } from "react-icons/fa";
-import { FaBook, FaCoins, FaTwitter } from "react-icons/fa6";
+import {
+  FaBook,
+  FaCalculator,
+  FaCoins,
+  FaMoneyBill1Wave,
+  FaTwitter,
+} from "react-icons/fa6";
 
 import { NavLink } from "react-router-dom";
 
@@ -44,7 +50,15 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
             </NavLink>
             <NavLink to="/revShare" className="my-1 w-full inline-block pl-3">
               <span className="flex items-center gap-2 rounded-md p-2 px-3">
-                <FaCoins /> AutoStake
+                <FaMoneyBill1Wave /> AutoStake
+              </span>
+            </NavLink>
+            <NavLink
+              to="/apyCalculator"
+              className="my-1 w-full inline-block pl-3"
+            >
+              <span className="flex items-center gap-2 rounded-md p-2 px-3">
+                <FaCalculator /> Apy Calculator
               </span>
             </NavLink>
           </div>

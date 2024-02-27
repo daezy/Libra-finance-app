@@ -11,6 +11,7 @@ import ErrorPopup from "./components/ErrorPopup";
 import RevShare from "./components/RevShare/RevShare";
 import SideBar from "./components/SideBar";
 import Overlay from "./components/Overlay";
+import ApyCalculator from "./components/ApyCalculator";
 // import LiveSoon from "./components/LiveSoon";
 // import Init from "./components/RevShare/Init";
 
@@ -35,7 +36,7 @@ const App = () => {
               <Route path="/" element={<Stake />} />
               <Route path="/stake" element={<Bank />} />
               <Route path="/revShare" element={<RevShare />} />
-              {/*<Route path="/revShare/init" element={<Init />} />*/}
+              <Route path="/apyCalculator" element={<ApyCalculator />} />
             </Routes>
             <SuccessPopup />
             <ErrorPopup />

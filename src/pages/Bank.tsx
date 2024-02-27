@@ -9,7 +9,8 @@ import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 const Bank = () => {
   const [amount, setAmount] = useState<number>();
   const [unstakeLoading, setUnstakeLoading] = useState(false);
-  const [canUnStake, setCanUnstake] = useState<boolean>(true);
+  const [canUnStake, setCanUnstake] = useState<boolean>(false);
+  const [showInfo, setShowInfo] = useState<boolean>(false);
   const ctx = useContext(AppContext);
 
   useEffect(() => {
@@ -24,8 +25,14 @@ const Bank = () => {
     const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
     if (dayDiff >= 2) {
       setCanUnstake(true);
+      if (ctx.userData) {
+        setShowInfo(true);
+      } else {
+        setShowInfo(false);
+      }
     } else {
       setCanUnstake(false);
+      setShowInfo(false);
     }
   }, [ctx.userData]);
 
@@ -133,7 +140,7 @@ const Bank = () => {
         ) : (
           ""
         )}
-        {canUnStake && (
+        {showInfo && (
           <div className="bg-blue-100 text-blue-700 p-4 text-center my-4 rounded-md capitalize">
             <p>
               Have Troubles unstaking? Restake 100 more tokens and try again
@@ -141,7 +148,6 @@ const Bank = () => {
             </p>
           </div>
         )}
-
         <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
           <div className="bg-white  rounded-lg shadow-sm md:col-span-3">
             <div className="flex md:items-center justify-between  flex-col md:flex-row p-4 border-b border-solid">

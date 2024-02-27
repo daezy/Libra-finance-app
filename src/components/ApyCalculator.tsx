@@ -1,95 +1,218 @@
+import { useContext, useState } from "react";
+import { formatAmount } from "../solana/utils";
+import { AppContext } from "../context/App-Context";
+
 const ApyCalculator = () => {
+  const [appName, setAppName] = useState<"stake" | "bank">("bank");
+  const [amount, setAmount] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const [totalRewards, setTotalRewards] = useState<number>(0);
+
+  const ctx = useContext(AppContext);
+
+  const getTotalRewards = async () => {
+    const apy = ctx.contractData
+      ? appName == "stake"
+        ? formatAmount(
+            parseInt(ctx.contractData.normalStakingApy.toString()),
+            1
+          )
+        : formatAmount(
+            parseInt(ctx.contractData.lockedStakingApy.toString()),
+            1
+          )
+      : 0;
+
+    if (amount && duration && apy) {
+      const rewards = amount * (duration / 365) * (Number(apy) / 100);
+      if (appName == "stake") {
+        const newRewards = rewards + amount;
+        setTotalRewards(newRewards);
+      } else {
+        setTotalRewards(rewards);
+      }
+    }
+  };
+
+  const handleChangeApp = (ap: "stake" | "bank") => {
+    setAppName(ap);
+    setAmount(0);
+    setDuration(0);
+    setTotalRewards(0);
+  };
+
   return (
-    <div className="bg-slate-100 md:w-1/2 my-7 rounded-xl p-6">
-      <h2 className="text-lg my-3 text-slate-800">Estimate Your Returns</h2>
+    <div className="w-11/12 mx-auto my-9">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
+        <div className="bg-white  rounded-lg shadow-sm md:col-span-3">
+          <div className="flex md:items-center justify-between p-5  flex-col md:flex-row border-b border-solid">
+            <div className="libra flex items-center gap-3">
+              <h2 className="text-lg my-3 text-slate-800">
+                Estimate Your Returns
+              </h2>
+            </div>
 
-      <div className="flex items-center gap-4 mb-3 justify-between">
-        <label htmlFor="input-group-1 w-3/12">Amount</label>
-        <div className="relative w-9/12 ">
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border text-gray-900 rounded-lg block w-full ps-7 p-2.5 focus:outline-none focus:border-0"
-            placeholder="amount"
-          />
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-slate-600">
-            $LIBRA
+            <div className="right">
+              <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+                <li className="me-2">
+                  <a
+                    href="#"
+                    className={`inline-block px-4 py-3 rounded-lg border-blue-700 ${appName == "bank" ? "active bg-[#0D47A1] text-white" : "hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white"}`}
+                    onClick={() => handleChangeApp("bank")}
+                  >
+                    Bank
+                  </a>
+                </li>
+                <li className="me-2">
+                  <a
+                    href="#"
+                    className={`inline-block px-4 py-3 rounded-lg border-blue-700 ${appName == "stake" ? "active bg-[#0D47A1] text-white" : "hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white"}`}
+                    aria-current="page"
+                    onClick={() => handleChangeApp("stake")}
+                  >
+                    Stake
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="p-5 text-[#222222]">
+            <div className="flex justify-between items-center my-4 gap-4">
+              <p>Fixed APY:</p>
+              <p className=" text-lg text-[#0D47A1] ">
+                {ctx.contractData
+                  ? appName == "stake"
+                    ? formatAmount(
+                        parseInt(ctx.contractData.normalStakingApy.toString()),
+                        1
+                      )
+                    : formatAmount(
+                        parseInt(ctx.contractData.lockedStakingApy.toString()),
+                        1
+                      )
+                  : 0}
+                % / Yr
+              </p>
+            </div>
+
+            <div className="flex justify-between items-center my-4 gap-4">
+              <p className="md:w-2/12">Amount:</p>
+              <input
+                type="number"
+                id="amount"
+                min={0}
+                placeholder="Amount in libra"
+                value={amount}
+                required
+                onChange={(e) => setAmount(parseInt(e.target.value))}
+                className="py-2 px-4 w-full md:w-10/12 rounded bg-opacity-45 bg-[#F2F2F2] "
+              />
+            </div>
+            <div className="flex justify-between items-center my-4 gap-4">
+              <p className="md:w-2/12">Duration:</p>
+              <input
+                type="number"
+                id="amount"
+                value={duration}
+                onChange={(e) => setDuration(parseInt(e.target.value))}
+                min={0}
+                required
+                placeholder="Duration in days"
+                className="py-2 px-4 w-full md:w-10/12 rounded bg-opacity-45 bg-[#F2F2F2] "
+              />
+            </div>
+            {appName == "bank" && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-5 my-4">
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="week1"
+                    className="w-5 h-5"
+                    onChange={() => setDuration(7)}
+                  />
+                  <label htmlFor="week2">1 Week</label>
+                </div>{" "}
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="week2"
+                    className="w-5 h-5"
+                    onChange={() => setDuration(14)}
+                  />
+                  <label htmlFor="week2">2 Weeks</label>
+                </div>{" "}
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="month1"
+                    className="w-5 h-5"
+                    onChange={() => setDuration(30)}
+                  />
+                  <label htmlFor="month1">1 Month</label>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="month6"
+                    className="w-5 h-5"
+                    onChange={() => setDuration(180)}
+                  />
+                  <label htmlFor="month6">6 Months</label>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="year1"
+                    className="w-5 h-5"
+                    onChange={() => setDuration(365)}
+                  />
+                  <label htmlFor="year1">1 Year</label>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="year2"
+                    className="w-5 h-5"
+                    onChange={() => setDuration(730)}
+                  />
+                  <label htmlFor="year2">2 Years</label>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="days"
+                    id="year3"
+                    className="w-5 h-5"
+                    onChange={() => {
+                      setDuration(1460);
+                    }}
+                  />
+                  <label htmlFor="year3">4 years</label>
+                </div>
+              </div>
+            )}
+
+            <button
+              className="text-slate-100 mx-auto bg-[#0D47A1] py-3 w-full text-center px-6 rounded-lg hover:bg-blue-800 flex justify-center gap-3 items-center mt-6"
+              onClick={getTotalRewards}
+            >
+              Calculate Rewards
+            </button>
           </div>
         </div>
-      </div>
-
-      <div className="flex items-center gap-4 my-2 justify-between">
-        <label htmlFor="input-group-1 w-3/12">Starting Balance</label>
-        <div className="relative w-9/12">
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border text-gray-900 rounded-lg block w-full ps-7 p-2.5 focus:outline-none focus:border-0"
-            placeholder="amount"
-          />
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-slate-600">
-            $USD
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-4 my-2 justify-between">
-        <label htmlFor="input-group-1 w-3/12">Price</label>
-        <div className="relative w-9/12">
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border text-gray-900 rounded-lg block w-full ps-7 p-2.5 focus:outline-none focus:border-0"
-            placeholder="amount"
-          />
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-slate-600">
-            $USD
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-4 my-2 justify-between">
-        <label htmlFor="input-group-1 w-3/12">Days</label>
-        <div className="relative w-9/12">
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border text-gray-900 rounded-lg block w-full ps-7 p-2.5 focus:outline-none focus:border-0"
-          />
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-slate-600">
-            Days
-          </div>
-        </div>
-      </div>
-
-      <h2 className="text-lg my-3 mt-5 text-slate-800">Results</h2>
-
-      <div className="flex items-center gap-4 mb-3 justify-between">
-        <label htmlFor="input-group-1 w-3/12">$Libra Balance</label>
-        <div className="relative w-9/12">
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border text-gray-900 rounded-lg block w-full ps-7 p-2.5 focus:outline-none focus:border-0"
-            placeholder="amount"
-          />
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-slate-600">
-            $LIBRA
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-4 my-2 justify-between">
-        <label htmlFor="input-group-1 w-3/12">Total USD Balance</label>
-        <div className="relative w-9/12">
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border text-gray-900 rounded-lg block w-full ps-7 p-2.5 focus:outline-none focus:border-0"
-            placeholder="amount"
-          />
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-slate-600">
-            $USD
+        <div className="bg-white p-5  rounded-lg text-slate-600 md:col-span-2 shadow-sm flex flex-col justify-center text-center gap-2">
+          <h2 className="text-lg text-[#1F242F]">Expected Rewards</h2>
+          <p>You Will Receive(in {appName}):</p>
+          <div>
+            <p className="text-4xl my-2 text-[#0D47A1] ">{`${totalRewards}`}</p>
+            <p className="text-[#0D47A1]">LIBRA</p>
+            <p>After {duration ? duration : 0} days</p>
           </div>
         </div>
       </div>

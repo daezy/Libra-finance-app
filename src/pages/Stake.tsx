@@ -200,7 +200,7 @@ const Stake = () => {
                 <h2 className="my-4 text-xl text-slate-950">Lock for</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -210,7 +210,7 @@ const Stake = () => {
                   />
                   <label htmlFor="week2">1 Week</label>
                 </div>{" "}
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -220,7 +220,7 @@ const Stake = () => {
                   />
                   <label htmlFor="week2">2 Weeks</label>
                 </div>{" "}
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -230,7 +230,7 @@ const Stake = () => {
                   />
                   <label htmlFor="month1">1 Month</label>
                 </div>
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -240,7 +240,7 @@ const Stake = () => {
                   />
                   <label htmlFor="month6">6 Months</label>
                 </div>
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -250,7 +250,7 @@ const Stake = () => {
                   />
                   <label htmlFor="year1">1 Year</label>
                 </div>
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -260,7 +260,7 @@ const Stake = () => {
                   />
                   <label htmlFor="year2">2 Years</label>
                 </div>
-                <div className="flex items-center text-lg gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
