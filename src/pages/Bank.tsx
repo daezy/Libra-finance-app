@@ -97,8 +97,14 @@ const Bank = () => {
         StakeType.NORMAL
       );
       ctx.setSuccess("$LIBRA staked successfully");
+      setTimeout(() => {
+        ctx.setSuccess("");
+      }, 3000);
     } else {
       ctx.setError("Unable to Perform Staking...");
+      setTimeout(() => {
+        ctx.setError("");
+      }, 3000);
     }
     ctx.setLoading(false);
   };
@@ -113,12 +119,21 @@ const Bank = () => {
           ctx.tokenAccount.address
         );
         ctx.setSuccess("Un Stake Success 🚀✅");
+        setTimeout(() => {
+          ctx.setSuccess("");
+        }, 3000);
       } catch (e) {
         console.log(e);
         ctx.setError("An Error Occurred while un staking..");
+        setTimeout(() => {
+          ctx.setError("");
+        }, 3000);
       }
     } else {
       ctx.setError("Unable To Unstake...❌");
+      setTimeout(() => {
+        ctx.setError("");
+      }, 3000);
     }
     setUnstakeLoading(false);
   };

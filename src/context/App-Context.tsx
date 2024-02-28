@@ -114,6 +114,9 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         } catch (error) {
           console.log(error);
           setError("You do not have Libra tokens in your wallet❌");
+          setTimeout(() => {
+            setError("");
+          }, 5000);
         }
         try {
           const userData = await getUserData(connection, provider.publicKey);

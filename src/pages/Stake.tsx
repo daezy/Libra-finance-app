@@ -83,9 +83,15 @@ const Stake = () => {
       } catch (e) {
         console.log(e);
         ctx.setError("An Error Occurred while staking..");
+        setTimeout(() => {
+          ctx.setError("");
+        }, 3000);
       }
     } else {
       ctx.setError("Unable to perform stake..");
+      setTimeout(() => {
+        ctx.setError("");
+      }, 3000);
     }
     ctx.setLoading(false);
   };
@@ -103,9 +109,15 @@ const Stake = () => {
       } catch (e) {
         console.log(e);
         ctx.setError("An Error Occurred while un staking..");
+        setTimeout(() => {
+          ctx.setError("");
+        }, 3000);
       }
     } else {
       ctx.setError("Unable To Unstake...❌");
+      setTimeout(() => {
+        ctx.setError("");
+      }, 3000);
     }
     setUnstakeLoading(false);
   };
