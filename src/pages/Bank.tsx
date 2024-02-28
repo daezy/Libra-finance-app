@@ -11,6 +11,7 @@ const Bank = () => {
   const [unstakeLoading, setUnstakeLoading] = useState(false);
   const [canUnStake, setCanUnstake] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
+  const [reward, setRewards] = useState<number>(0);
   const ctx = useContext(AppContext);
 
   useEffect(() => {
@@ -22,8 +23,9 @@ const Bank = () => {
     const newDate = new Date();
 
     const timeDiff = newDate.getTime() - dateOfStamp.getTime();
-    const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
-    if (dayDiff >= 2) {
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
+    console.log(dayDiff);
+    if (dayDiff >= 1.0833) {
       setCanUnstake(true);
       if (ctx.userData) {
         setShowInfo(true);
@@ -36,7 +38,13 @@ const Bank = () => {
     }
   }, [ctx.userData]);
 
-  const getTotalRewards = (): number => {
+  useEffect(() => {
+    const interval = setInterval(() => getTotalRewards(), 2000);
+
+    return () => clearInterval(interval);
+  });
+
+  const getTotalRewards = () => {
     const totalStaked: number | null =
       ctx.userData && ctx.userData.stakeType == BigInt(0)
         ? Number(
@@ -64,10 +72,11 @@ const Bank = () => {
     // const result = todayDate.setDate(todayDate.getDate() + 14);
     const newDate = new Date();
     const timeDiff = newDate.getTime() - dateOfStamp.getTime();
-    const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
 
     const rewards = totalStaked * (dayDiff / 365) * (apy / 100);
-    return totalStaked + rewards;
+
+    setRewards(totalStaked + rewards);
   };
 
   const handleStake = async () => {
@@ -143,8 +152,8 @@ const Bank = () => {
         {showInfo && (
           <div className="bg-blue-100 text-blue-700 p-4 text-center my-4 rounded-md capitalize">
             <p>
-              Have Troubles unstaking? Restake 100 more tokens and try again
-              after 24hrs
+              Unstake failed? Send in extra 100 tokens to your wallet and try
+              again
             </p>
           </div>
         )}
@@ -255,11 +264,9 @@ const Bank = () => {
               <h2 className="text-lg text-slate-950 uppercase">
                 Expected Rewards:
               </h2>
-              <p className="text-sm text-slate-400">(Updates every 24hrs)</p>
+              <p className="text-sm text-slate-400">(Updates every 2secs)</p>
             </div>
-            <p className="text-xl my-2 text-[#0D47A1]">
-              {ctx.contractData ? getTotalRewards() : 0} LIBRA
-            </p>{" "}
+            <p className="text-xl my-2 text-[#0D47A1]">{reward} LIBRA</p>{" "}
           </div>
         </div>
       </div>

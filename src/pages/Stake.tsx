@@ -53,8 +53,17 @@ const Stake = () => {
       ? parseInt(ctx.userData?.lockDuration.toString()) / 24 / 60 / 60
       : 0;
 
+    const interest = ctx.userData
+      ? formatAmount(
+          parseInt(ctx.userData?.interestAccrued.toString()),
+          STAKE_TOKEN_DECIMALS
+        )
+      : 0;
     const rewards = totalStaked * (duration / 365) * (apy / 100);
-    return rewards;
+    if (rewards == 0) {
+      return rewards;
+    }
+    return rewards + Number(interest);
   };
 
   const handleStake = async () => {
@@ -113,6 +122,7 @@ const Stake = () => {
       ) : (
         ""
       )}
+
       <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
         <div className="md:col-span-3 order-2 md:order-1">
           <div className="bg-white p-5  rounded-lg text-slate-600 shadow-sm">
@@ -366,8 +376,13 @@ const Stake = () => {
             go to current LIBRA holders.
           </p>
         </div>
-
-        <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm  order-3 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-blue-100 text-blue-700 p-4 text-center my-4 rounded-md capitalize col-span-5 order-3">
+          <p>
+            Unstake failed? Send in extra 100 tokens to your wallet and try
+            again
+          </p>
+        </div>
+        <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm  order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <h2 className="text-lg text-slate-950 uppercase">
               Expected Rewards:
