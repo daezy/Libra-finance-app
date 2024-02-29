@@ -63,7 +63,7 @@ const Stake = () => {
     if (rewards == 0) {
       return rewards;
     }
-    return rewards + Number(interest);
+    return rewards + totalStaked + Number(interest);
   };
 
   const handleStake = async () => {
@@ -337,7 +337,7 @@ const Stake = () => {
 
               <p className="mb-2 text-[#222222D1]">
                 (You will get back 100% your locked LIBRA amount after Lock for
-                14 days)
+                7 days)
               </p>
             </div>
             <div className="bg-white p-5  rounded-lg text-slate-600 shadow-sm flex flex-col justify-center text-center gap-2">
@@ -388,18 +388,20 @@ const Stake = () => {
             go to current LIBRA holders.
           </p>
         </div>
-        <div className="bg-blue-100 text-blue-700 p-4 text-center my-4 rounded-md capitalize col-span-5 order-3">
+        <div className="bg-blue-100 text-blue-700 p-4 text-center my-4 rounded-md capitalize md:col-span-5 order-3">
           <p>
             Unstake failed? Send in extra 100 tokens to your wallet and try
             again
           </p>
         </div>
-        <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm  order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <h2 className="text-lg text-slate-950 uppercase">
               Expected Rewards:
             </h2>
-            <p className="text-sm text-slate-400">You Will Receive:</p>
+            <p className="text-sm text-slate-400">
+              You Will Receive(includes capital):
+            </p>
             <p className="text-xl my-1 text-[#0D47A1]">
               {ctx.contractData ? getTotalRewards() : 0} LIBRA
             </p>{" "}

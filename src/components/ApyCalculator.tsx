@@ -25,12 +25,12 @@ const ApyCalculator = () => {
 
     if (amount && duration && apy) {
       const rewards = amount * (duration / 365) * (Number(apy) / 100);
-      if (appName == "stake") {
-        const newRewards = rewards + amount;
-        setTotalRewards(newRewards);
-      } else {
-        setTotalRewards(rewards);
-      }
+      // if (appName == "stake") {
+      const newRewards = rewards + amount;
+      setTotalRewards(newRewards);
+      // } else {
+      //   setTotalRewards(rewards);
+      // }
     }
   };
 

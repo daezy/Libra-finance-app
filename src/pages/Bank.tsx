@@ -12,6 +12,7 @@ const Bank = () => {
   const [canUnStake, setCanUnstake] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [reward, setRewards] = useState<number>(0);
+  const [lockedFor, setLockedFor] = useState<number>(0);
   const ctx = useContext(AppContext);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const Bank = () => {
 
     const timeDiff = newDate.getTime() - dateOfStamp.getTime();
     const dayDiff = timeDiff / (1000 * 3600 * 24);
-    console.log(dayDiff);
+    setLockedFor(Math.floor(dayDiff));
     if (dayDiff >= 1.0833) {
       setCanUnstake(true);
       if (ctx.userData) {
@@ -39,12 +40,12 @@ const Bank = () => {
   }, [ctx.userData]);
 
   useEffect(() => {
-    const interval = setInterval(() => getTotalRewards(), 2000);
+    const interval = setInterval(() => getTotalLiveRewards(), 2000);
 
     return () => clearInterval(interval);
   });
 
-  const getTotalRewards = () => {
+  const getTotalLiveRewards = () => {
     const totalStaked: number | null =
       ctx.userData && ctx.userData.stakeType == BigInt(0)
         ? Number(
@@ -76,7 +77,49 @@ const Bank = () => {
 
     const rewards = totalStaked * (dayDiff / 365) * (apy / 100);
 
-    setRewards(totalStaked + rewards);
+    const newReward = (totalStaked + rewards - getTotalRewards()).toFixed(7);
+
+    setRewards(parseFloat(newReward));
+  };
+
+  const getTotalRewards = (): number => {
+    const totalStaked: number | null =
+      ctx.userData && ctx.userData.stakeType == BigInt(0)
+        ? Number(
+            formatAmount(
+              parseInt(ctx.userData.totalStaked.toString()),
+              STAKE_TOKEN_DECIMALS
+            )
+          )
+        : 0;
+
+    const apy = ctx.contractData
+      ? Number(
+          formatAmount(
+            parseInt(ctx.contractData.normalStakingApy.toString()),
+            1
+          )
+        )
+      : 0;
+    const interest = ctx.userData
+      ? formatAmount(
+          parseInt(ctx.userData?.interestAccrued.toString()),
+          STAKE_TOKEN_DECIMALS
+        )
+      : 0;
+    const dayOfStake = ctx.userData
+      ? parseInt(ctx.userData?.stakeTs.toString()) * 1000
+      : 0;
+    const dateOfStamp = new Date(dayOfStake);
+    // const todayDate = new Date();
+    // const result = todayDate.setDate(todayDate.getDate() + 14);
+    const newDate = new Date();
+    const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+    const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+    const rewards = totalStaked * (dayDiff / 365) * (apy / 100);
+
+    return totalStaked + rewards + Number(interest);
   };
 
   const handleStake = async () => {
@@ -274,14 +317,41 @@ const Bank = () => {
               <p className="text-[#0D47A1]">Per Year</p>
             </div>
           </div>
-          <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 flex md:items-center md:gap-4 shadow-sm flex-col md:flex-row">
-            <div className="flex flex-col justify-center">
+
+          <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm  order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div>
               <h2 className="text-lg text-slate-950 uppercase">
-                Expected Rewards:
+                Today's Rewards:
               </h2>
-              <p className="text-sm text-slate-400">(Updates every 2secs)</p>
+              <p className="text-sm text-slate-400">
+                (Added to expected rewards after each 24hrs)
+              </p>
+              <p className="text-xl my-1 text-[#0D47A1]">
+                {ctx.userData && ctx.contractData ? reward : 0} LIBRA
+              </p>{" "}
             </div>
-            <p className="text-xl my-2 text-[#0D47A1]">{reward} LIBRA</p>{" "}
+            <div>
+              <h2 className="text-lg text-slate-950 uppercase">
+                Expected rewards:
+              </h2>
+              <p className="text-sm text-slate-400">
+                Updates after every 24hrs:
+              </p>
+              <p className="text-xl my-1 text-[#0D47A1]">
+                {ctx.userData && ctx.contractData ? getTotalRewards() : 0} LIBRA
+              </p>{" "}
+            </div>
+            <div>
+              <h2 className="text-lg text-slate-950 uppercase">
+                Days elapsed:
+              </h2>
+              <p className="text-sm text-slate-400">
+                Days libra has been locked for:
+              </p>
+              <p className="text-xl my-1 text-[#0D47A1]">
+                {ctx.userData && ctx.contractData ? lockedFor : 0} Days
+              </p>{" "}
+            </div>
           </div>
         </div>
       </div>

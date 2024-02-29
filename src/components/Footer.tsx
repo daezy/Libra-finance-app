@@ -1,11 +1,26 @@
 const Footer = () => {
   return (
     <div className=" ">
-      <footer className="container mx-auto px-4 py-4 mt-3 text-slate-900">
+      <footer className="w-11/12 mx-auto py-4 mt-2 text-slate-900 flex justify-between items-center gap-2 flex-col md:flex-row">
         <p className="text-slate-900 text-center ] p-5 pt-7">
           Copyright © 2024 LIBRA.FINANCE (
           <span className="text-[#0D47A1]">$LIBRA</span>). All rights reserved.
         </p>
+        <div className="flex items-center gap-3">
+          <div className="bg-slate-900 rounded-md">
+            <img src="./img/alpha.png" alt="" width={35} />
+          </div>
+          <p>
+            Powered by{" "}
+            <a
+              href="https://alphadevelopments.org"
+              target="blank"
+              className="text-blue-800"
+            >
+              Alpha Developments
+            </a>{" "}
+          </p>
+        </div>
       </footer>
     </div>
   );
