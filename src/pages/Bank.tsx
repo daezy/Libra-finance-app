@@ -188,8 +188,8 @@ const Bank = () => {
             formatAmount(
               parseInt(ctx.tokenAccount.amount.toString()),
               STAKE_TOKEN_DECIMALS
-            )
-          )
+            ) 
+          ) - 100
         : 0
     );
   };
@@ -286,7 +286,7 @@ const Bank = () => {
               </div>
               <div className="my-3 flex justify-between flex-col md:flex-row">
                 <p className="text-slate-600 my-2">
-                  (You cannot withdraw for 48hrs after staking)
+                  (You cannot withdraw for 24hrs after staking)
                 </p>
                 <button
                   className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-center gap-3 items-center w-full md:w-fit text-center"

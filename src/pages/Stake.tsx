@@ -5,6 +5,7 @@ import { performStake, performUnStake } from "../solana/services.ts";
 import { formatAmount } from "../solana/utils.ts";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 import { StakeType } from "../solana/types.ts";
+import { Timer } from "../components/Timer.tsx";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
@@ -12,6 +13,16 @@ const Stake = () => {
   const [unstakeLoading, setUnstakeLoading] = useState(false);
 
   const ctx = useContext(AppContext);
+
+  const getTimerDate = (): string => {
+    const date = ctx.userData
+      ? getUnlockDate(
+          parseInt(ctx.userData?.lockDuration.toString()) / 24 / 60 / 60
+        )
+      : new Date().toDateString();
+
+    return date;
+  };
 
   const getLockDate = (days: number): string => {
     const todayDate = new Date();
@@ -182,7 +193,7 @@ const Stake = () => {
                                 parseInt(ctx.tokenAccount.amount.toString()),
                                 STAKE_TOKEN_DECIMALS
                               )
-                            )
+                            ) - 100
                           : 0
                       );
                     }}
@@ -394,7 +405,7 @@ const Stake = () => {
             again
           </p>
         </div>
-        <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm order-4 grid gap-4 grid-cols-1 md:grid-cols-2">
           <div>
             <h2 className="text-lg text-slate-950 uppercase">
               Expected Rewards:
@@ -432,6 +443,19 @@ const Stake = () => {
               Days
             </p>{" "}
           </div>
+          {ctx.userData && (
+            <div>
+              <h2 className="text-lg text-slate-950 uppercase">Unlock Time:</h2>
+              <p className="text-sm text-slate-400">
+                countdown to libra unlock:
+              </p>
+              <Timer
+                deadline={
+                  ctx.userData ? getTimerDate() : new Date().toDateString()
+                }
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
