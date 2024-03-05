@@ -25,26 +25,32 @@ export const Timer = (props: TimerType) => {
     return () => clearInterval(interval);
   }, []);
 
+  const timer = Object.entries({
+    Days: time / DAY,
+    Hours: (time / HOUR) % 24,
+    Mins: (time / MINUTE) % 60,
+    Secs: (time / SECOND) % 60,
+  });
+
   return (
     <div className="timer">
-      <div className="flex gap-2">
-        {Object.entries({
-          Days: time / DAY,
-          Hours: (time / HOUR) % 24,
-          Mins: (time / MINUTE) % 60,
-          Secs: (time / SECOND) % 60,
-        }).map(([label, value]) => (
-          <div
-            key={label}
-            className="box flex gap-2 flex-col items-center text-[#0D47A1]"
-          >
-            <p className="text-xl mt-1 text-[#0D47A1]">
-              {`${Math.floor(value)}`.padStart(2, "0")}{" "}
-            </p>
-            <span className="text">{label}</span>
-          </div>
-        ))}
-      </div>
+      {new Date() >= new Date(props.deadline) ? (
+        <h1 className="text-[#0D47A1] text-lg">Now</h1>
+      ) : (
+        <div className="flex gap-2">
+          {timer.map(([label, value]) => (
+            <div
+              key={label}
+              className="box flex gap-2 flex-col items-center text-[#0D47A1]"
+            >
+              <p className="text-xl mt-1 text-[#0D47A1]">
+                {`${Math.floor(value)}`.padStart(2, "0")}{" "}
+              </p>
+              <span className="text">{label}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

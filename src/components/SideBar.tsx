@@ -5,6 +5,7 @@ import {
   FaCalculator,
   FaCoins,
   FaMoneyBill1Wave,
+  FaPiggyBank,
   FaTwitter,
 } from "react-icons/fa6";
 
@@ -40,7 +41,12 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
           <div className="links text-[#AEAEB1] my-2">
             <NavLink to="/" className="my-1 w-full inline-block pl-3">
               <span className="flex items-center gap-2 px-3 p-2 rounded-md">
-                <FaHome /> Bank
+                <FaHome /> Overview
+              </span>
+            </NavLink>
+            <NavLink to="/bank" className="my-1 w-full inline-block pl-3">
+              <span className="flex items-center gap-2 px-3 p-2 rounded-md">
+                <FaPiggyBank /> Bank
               </span>
             </NavLink>
             <NavLink to="/stake" className="my-1 w-full  inline-block pl-3">

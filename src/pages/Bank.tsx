@@ -26,7 +26,7 @@ const Bank = () => {
     const timeDiff = newDate.getTime() - dateOfStamp.getTime();
     const dayDiff = timeDiff / (1000 * 3600 * 24);
     setLockedFor(Math.floor(dayDiff));
-    if (dayDiff >= 1.0833) {
+    if (dayDiff >= 1.00347) {
       setCanUnstake(true);
       if (ctx.userData) {
         setShowInfo(true);
@@ -44,6 +44,13 @@ const Bank = () => {
 
     return () => clearInterval(interval);
   });
+
+  const displayValue = (func: number): string => {
+    const value = func * ctx.tokenPrice;
+    const fixed = value.toLocaleString();
+
+    return fixed;
+  };
 
   const getTotalLiveRewards = () => {
     const totalStaked: number | null =
@@ -77,9 +84,13 @@ const Bank = () => {
 
     const rewards = totalStaked * (dayDiff / 365) * (apy / 100);
 
-    const newReward = (totalStaked + rewards - getTotalRewards()).toFixed(7);
-
-    setRewards(parseFloat(newReward));
+    if (totalStaked < 2) {
+      const newReward = (totalStaked + rewards).toFixed(7);
+      setRewards(parseFloat(newReward));
+    } else {
+      const newReward = (totalStaked + rewards - getTotalRewards()).toFixed(7);
+      setRewards(parseFloat(newReward));
+    }
   };
 
   const getTotalRewards = (): number => {
@@ -124,6 +135,16 @@ const Bank = () => {
 
   const handleStake = async () => {
     ctx.setLoading(true);
+
+    // if (Math.floor(dayDiff) < 3) {
+    //   ctx.setError("Wait 72hrs after after previous unstake");
+    //   setTimeout(() => {
+    //     ctx.setError("");
+    //   }, 3000);
+    //   ctx.setLoading(false);
+    //   return;
+    // }
+
     if (
       ctx.connection &&
       ctx.provider &&
@@ -188,7 +209,7 @@ const Bank = () => {
             formatAmount(
               parseInt(ctx.tokenAccount.amount.toString()),
               STAKE_TOKEN_DECIMALS
-            ) 
+            )
           ) - 100
         : 0
     );
@@ -327,7 +348,9 @@ const Bank = () => {
                 (Added to expected rewards after each 24hrs)
               </p>
               <p className="text-xl my-1 text-[#0D47A1]">
-                {ctx.userData && ctx.contractData ? reward : 0} LIBRA
+                {ctx.userData && ctx.contractData ? reward.toLocaleString() : 0}{" "}
+                LIBRA ($
+                {displayValue(reward)})
               </p>{" "}
             </div>
             <div>
@@ -338,7 +361,10 @@ const Bank = () => {
                 Updates after every 24hrs:
               </p>
               <p className="text-xl my-1 text-[#0D47A1]">
-                {ctx.userData && ctx.contractData ? getTotalRewards() : 0} LIBRA
+                {ctx.userData && ctx.contractData
+                  ? getTotalRewards().toLocaleString()
+                  : 0}{" "}
+                LIBRA (${displayValue(getTotalRewards())})
               </p>{" "}
             </div>
             <div>

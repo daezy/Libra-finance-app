@@ -16,6 +16,7 @@ export type AppContextType = {
   tokenAccount: TokenAccount | null;
   successMsg: string | null;
   loading: boolean;
+  tokenPrice: number;
   errorMsg: string | null;
   setNetwork: (name: "localnet" | "devnet" | "mainnet") => void;
   setSuccess: (message: string) => void;
@@ -73,3 +74,11 @@ export interface UserDataInterface {
   lastClaimTs: bigint;
   lastUnstakeTs: bigint;
 }
+
+export type TokenData = {
+  id: string;
+  mintSymbol: string;
+  vsToken: string;
+  vsTokenSymbol: string;
+  price: number;
+};

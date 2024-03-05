@@ -19,7 +19,7 @@ const Stake = () => {
       ? getUnlockDate(
           parseInt(ctx.userData?.lockDuration.toString()) / 24 / 60 / 60
         )
-      : new Date().toDateString();
+      : new Date().toUTCString();
 
     return date;
   };
@@ -38,7 +38,7 @@ const Stake = () => {
     const dateOfStamp = new Date(dayOfStake);
     const result = dateOfStamp.setDate(dateOfStamp.getDate() + days);
     const newDate = new Date(result);
-    return newDate.toDateString();
+    return newDate.toUTCString();
   };
 
   const getTotalRewards = (): number => {
@@ -77,8 +77,37 @@ const Stake = () => {
     return rewards + totalStaked + Number(interest);
   };
 
+  const displayValue = (func: number): string => {
+    const value = func * ctx.tokenPrice;
+    const fixed = value.toLocaleString();
+
+    return fixed;
+  };
+
   const handleStake = async () => {
     ctx.setLoading(true);
+
+    // const dayOfStake = ctx.userData
+    //   ? parseInt(ctx.userData?.lastUnstakeTs.toString()) * 1000
+    //   : 0;
+    // console.log(dayOfStake);
+
+    // const dateOfStamp = new Date(dayOfStake);
+    // console.log(dateOfStamp.toDateString());
+    // const newDate = new Date();
+
+    // const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+    // const dayDiff = timeDiff / (1000 * 3600 * 24);
+    // console.log(Math.floor(dayDiff));
+
+    // if (Math.floor(dayDiff) > 3) {
+    //   ctx.setError("Wait 72hrs after after previous unstake");
+    //   setTimeout(() => {
+    //     ctx.setError("");
+    //   }, 3000);
+    //   ctx.setLoading(false);
+    //   return;
+    // }
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
         const duration = days * 24 * 60 * 60;
@@ -233,7 +262,7 @@ const Stake = () => {
                 <h2 className="my-4 text-xl text-slate-950">Lock for</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                <div className="flex items-center gap-3">
+                {/* <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -242,7 +271,7 @@ const Stake = () => {
                     onChange={() => setDays(7)}
                   />
                   <label htmlFor="week2">1 Week</label>
-                </div>{" "}
+                </div>{" "} */}
                 <div className="flex items-center gap-3">
                   <input
                     type="radio"
@@ -320,7 +349,7 @@ const Stake = () => {
                 {ctx.loading ? (
                   <FaSpinner className="animate-spin" />
                 ) : (
-                  "Lock LIBRA"
+                  "Deposit LIBRA"
                 )}
               </button>
             </div>
@@ -373,7 +402,7 @@ const Stake = () => {
                 {unstakeLoading ? (
                   <FaSpinner className="animate-spin" />
                 ) : (
-                  "UnLock LIBRA"
+                  "Withdraw LIBRA"
                 )}
               </button>
             </div>
@@ -414,7 +443,8 @@ const Stake = () => {
               You Will Receive(includes capital):
             </p>
             <p className="text-xl my-1 text-[#0D47A1]">
-              {ctx.contractData ? getTotalRewards() : 0} LIBRA
+              {ctx.contractData ? getTotalRewards().toLocaleString() : 0} ($
+              {displayValue(getTotalRewards())}) LIBRA
             </p>{" "}
           </div>
           <div>
@@ -451,7 +481,7 @@ const Stake = () => {
               </p>
               <Timer
                 deadline={
-                  ctx.userData ? getTimerDate() : new Date().toDateString()
+                  ctx.userData ? getTimerDate() : new Date().toUTCString()
                 }
               />
             </div>

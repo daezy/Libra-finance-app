@@ -3,6 +3,7 @@ import {
   AppContextType,
   ContractDataInterface,
   PhantomProvider,
+  TokenData,
   UserDataInterface,
   WindowWithSolana,
 } from "../types";
@@ -28,6 +29,7 @@ export const AppContext = createContext<AppContextType>({
   contractData: null,
   userData: null,
   tokenAccount: null,
+  tokenPrice: 0,
   successMsg: "",
   network: "mainnet",
   errorMsg: "",
@@ -55,6 +57,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [network, setNetwork] = useState<"localnet" | "devnet" | "mainnet">(
     "mainnet"
   );
+  const [libraPrice, setLibraPrice] = useState<number>(0);
 
   useEffect(() => {
     // logic to fetch any data or connect to wallet once app launches
@@ -126,8 +129,22 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         }
       }
     };
+
+      fetch(
+        "https://price.jup.ag/v4/price?ids=Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const authors: TokenData =
+            data.data["Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"];
+          setLibraPrice(authors.price);
+        });
     setUp().then((val) => val);
   }, [connection, provider, success]);
+
+
 
   const handleConnectWallet = (): void => {
     provider?.connect().catch(() => {
@@ -162,6 +179,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         setLoading,
         setError,
         setSuccess,
+        tokenPrice: libraPrice,
         connection,
         contractData,
         userData,

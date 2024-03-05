@@ -123,7 +123,7 @@ const ApyCalculator = () => {
             </div>
             {appName == "bank" && (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-5 my-4">
-                <div className="flex items-center gap-3">
+                {/* <div className="flex items-center gap-3">
                   <input
                     type="radio"
                     name="days"
@@ -132,7 +132,7 @@ const ApyCalculator = () => {
                     onChange={() => setDuration(7)}
                   />
                   <label htmlFor="week2">1 Week</label>
-                </div>{" "}
+                </div>{" "} */}
                 <div className="flex items-center gap-3">
                   <input
                     type="radio"
@@ -210,7 +210,7 @@ const ApyCalculator = () => {
           <h2 className="text-lg text-[#1F242F]">Expected Rewards</h2>
           <p>You Will Receive(in {appName}):</p>
           <div>
-            <p className="text-4xl my-2 text-[#0D47A1] ">{`${totalRewards}`}</p>
+            <p className="text-4xl my-2 text-[#0D47A1] ">{`${totalRewards.toLocaleString()}`}</p>
             <p className="text-[#0D47A1]">LIBRA</p>
             <p>After {duration ? duration : 0} days</p>
           </div>

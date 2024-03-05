@@ -12,6 +12,7 @@ import RevShare from "./components/RevShare/RevShare";
 import SideBar from "./components/SideBar";
 import Overlay from "./components/Overlay";
 import ApyCalculator from "./components/ApyCalculator";
+import OverView from "./components/OverView";
 // import LiveSoon from "./components/LiveSoon";
 // import Init from "./components/RevShare/Init";
 
@@ -33,7 +34,8 @@ const App = () => {
           <div className="">
             <Routes>
               {/* <Route path="/" element={<MainApp />} /> */}
-              <Route path="/" element={<Stake />} />
+              <Route path="/" element={<OverView />} />
+              <Route path="/bank" element={<Stake />} />
               <Route path="/stake" element={<Bank />} />
               <Route path="/revShare" element={<RevShare />} />
               <Route path="/apyCalculator" element={<ApyCalculator />} />
