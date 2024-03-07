@@ -20,6 +20,7 @@ import {
   getTokenAccount,
   getUserData,
 } from "../solana/utils.ts";
+import { supabase } from "../supabaseClient.ts";
 
 export const AppContext = createContext<AppContextType>({
   isWalletConnected: false,
@@ -31,6 +32,7 @@ export const AppContext = createContext<AppContextType>({
   tokenAccount: null,
   tokenPrice: 0,
   successMsg: "",
+  lastUnstakeTime: null,
   network: "mainnet",
   errorMsg: "",
   setNetwork: () => {},
@@ -58,6 +60,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
     "mainnet"
   );
   const [libraPrice, setLibraPrice] = useState<number>(0);
+  const [lastUnstake, setLastUnstake] = useState<string | null | undefined>();
 
   useEffect(() => {
     // logic to fetch any data or connect to wallet once app launches
@@ -124,27 +127,41 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         try {
           const userData = await getUserData(connection, provider.publicKey);
           setUserData(userData);
+          await fetchStakeData();
         } catch {
           console.log("User data not setup");
         }
       }
     };
 
-      fetch(
-        "https://price.jup.ag/v4/price?ids=Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          const authors: TokenData =
-            data.data["Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"];
-          setLibraPrice(authors.price);
-        });
+    fetch(
+      "https://price.jup.ag/v4/price?ids=Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const authors: TokenData =
+          data.data["Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"];
+        setLibraPrice(authors.price);
+      });
     setUp().then((val) => val);
   }, [connection, provider, success]);
 
+  const fetchStakeData = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("stakes")
+        .select("*")
+        .eq("address", `${provider?.publicKey.toString()}`)
+        .limit(1);
 
+      if (error) throw error;
+      setLastUnstake(data[0].lastunstake);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleConnectWallet = (): void => {
     provider?.connect().catch(() => {
@@ -189,6 +206,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         successMsg: success,
         errorMsg: error,
         disconnectWallet: handleDisconnectWallet,
+        lastUnstakeTime: lastUnstake,
       }}
     >
       {props.children}

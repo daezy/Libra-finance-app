@@ -24,6 +24,7 @@ export type AppContextType = {
   setLoading: (val: boolean) => void;
   connectWallet: () => void;
   disconnectWallet: () => void;
+  lastUnstakeTime: string | null | undefined;
 };
 
 export type PhantomEvent = "disconnect" | "connect" | "accountChanged";

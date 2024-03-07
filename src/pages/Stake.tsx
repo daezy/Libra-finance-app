@@ -6,6 +6,7 @@ import { formatAmount } from "../solana/utils.ts";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 import { StakeType } from "../solana/types.ts";
 import { Timer } from "../components/Timer.tsx";
+import { createStake, deleteStake } from "../supabaseClient.ts";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
@@ -87,27 +88,26 @@ const Stake = () => {
   const handleStake = async () => {
     ctx.setLoading(true);
 
-    // const dayOfStake = ctx.userData
-    //   ? parseInt(ctx.userData?.lastUnstakeTs.toString()) * 1000
-    //   : 0;
+    const dayOfStake = ctx.lastUnstakeTime;
     // console.log(dayOfStake);
 
-    // const dateOfStamp = new Date(dayOfStake);
+    const dateOfStamp = new Date(String(dayOfStake));
     // console.log(dateOfStamp.toDateString());
-    // const newDate = new Date();
+    const newDate = new Date();
 
-    // const timeDiff = newDate.getTime() - dateOfStamp.getTime();
-    // const dayDiff = timeDiff / (1000 * 3600 * 24);
+    const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
     // console.log(Math.floor(dayDiff));
 
-    // if (Math.floor(dayDiff) > 3) {
-    //   ctx.setError("Wait 72hrs after after previous unstake");
-    //   setTimeout(() => {
-    //     ctx.setError("");
-    //   }, 3000);
-    //   ctx.setLoading(false);
-    //   return;
-    // }
+    const cooldown = 7;
+    if (Math.floor(dayDiff) < cooldown) {
+      ctx.setError(`${cooldown - Math.floor(dayDiff)} days cooldown left`);
+      setTimeout(() => {
+        ctx.setError("");
+      }, 3000);
+      ctx.setLoading(false);
+      return;
+    }
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
         const duration = days * 24 * 60 * 60;
@@ -119,6 +119,7 @@ const Stake = () => {
           ctx.tokenAccount.address,
           StakeType.LOCKED
         );
+        await deleteStake(ctx.provider?.publicKey.toString());
         ctx.setSuccess("Stake Success 🚀✅");
       } catch (e) {
         console.log(e);
@@ -144,6 +145,10 @@ const Stake = () => {
           ctx.connection,
           ctx.provider,
           ctx.tokenAccount.address
+        );
+        await createStake(
+          ctx.provider?.publicKey.toString(),
+          new Date().toUTCString()
         );
         ctx.setSuccess("Un Stake Success 🚀✅");
       } catch (e) {

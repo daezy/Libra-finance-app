@@ -5,6 +5,7 @@ import { performStake, performUnStake } from "../solana/services.ts";
 import { StakeType } from "../solana/types.ts";
 import { FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
+import { createStake, deleteStake } from "../supabaseClient.ts";
 
 const Bank = () => {
   const [amount, setAmount] = useState<number>();
@@ -136,15 +137,26 @@ const Bank = () => {
   const handleStake = async () => {
     ctx.setLoading(true);
 
-    // if (Math.floor(dayDiff) < 3) {
-    //   ctx.setError("Wait 72hrs after after previous unstake");
-    //   setTimeout(() => {
-    //     ctx.setError("");
-    //   }, 3000);
-    //   ctx.setLoading(false);
-    //   return;
-    // }
+    const dayOfStake = ctx.lastUnstakeTime;
+    // console.log(dayOfStake);
 
+    const dateOfStamp = new Date(String(dayOfStake));
+    // console.log(dateOfStamp.toDateString());
+    const newDate = new Date();
+
+    const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
+    // console.log(Math.floor(dayDiff));
+
+    const cooldown = 3;
+    if (Math.floor(dayDiff) < cooldown) {
+      ctx.setError(`${cooldown - Math.floor(dayDiff)} days cooldown left`);
+      setTimeout(() => {
+        ctx.setError("");
+      }, 3000);
+      ctx.setLoading(false);
+      return;
+    }
     if (
       ctx.connection &&
       ctx.provider &&
@@ -160,6 +172,7 @@ const Bank = () => {
         ctx.tokenAccount.address,
         StakeType.NORMAL
       );
+      await deleteStake(ctx.provider?.publicKey.toString());
       ctx.setSuccess("$LIBRA staked successfully");
       setTimeout(() => {
         ctx.setSuccess("");
@@ -181,6 +194,10 @@ const Bank = () => {
           ctx.connection,
           ctx.provider,
           ctx.tokenAccount.address
+        );
+        await createStake(
+          ctx.provider?.publicKey.toString(),
+          new Date().toUTCString()
         );
         ctx.setSuccess("Un Stake Success 🚀✅");
         setTimeout(() => {
