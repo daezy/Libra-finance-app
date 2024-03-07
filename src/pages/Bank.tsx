@@ -136,27 +136,28 @@ const Bank = () => {
 
   const handleStake = async () => {
     ctx.setLoading(true);
-
     const dayOfStake = ctx.lastUnstakeTime;
     // console.log(dayOfStake);
+    if (dayOfStake != null || dayOfStake != undefined) {
+      const dateOfStamp = new Date(String(dayOfStake));
+      // console.log(dateOfStamp.toDateString());
+      const newDate = new Date();
 
-    const dateOfStamp = new Date(String(dayOfStake));
-    // console.log(dateOfStamp.toDateString());
-    const newDate = new Date();
+      const timeDiff = newDate.getTime() - dateOfStamp.getTime();
+      const dayDiff = timeDiff / (1000 * 3600 * 24);
+      // console.log(Math.floor(dayDiff));
 
-    const timeDiff = newDate.getTime() - dateOfStamp.getTime();
-    const dayDiff = timeDiff / (1000 * 3600 * 24);
-    // console.log(Math.floor(dayDiff));
-
-    const cooldown = 3;
-    if (Math.floor(dayDiff) < cooldown) {
-      ctx.setError(`${cooldown - Math.floor(dayDiff)} days cooldown left`);
-      setTimeout(() => {
-        ctx.setError("");
-      }, 3000);
-      ctx.setLoading(false);
-      return;
+      const cooldown = 3;
+      if (Math.floor(dayDiff) < cooldown) {
+        ctx.setError(`${cooldown - Math.floor(dayDiff)} days cooldown left`);
+        setTimeout(() => {
+          ctx.setError("");
+        }, 3000);
+        ctx.setLoading(false);
+        return;
+      }
     }
+
     if (
       ctx.connection &&
       ctx.provider &&
