@@ -25,6 +25,25 @@ const Stake = () => {
     return date;
   };
 
+  const getUnstakeDate = (): string => {
+    // const date = ctx.lastUnstakeTime.lastunstake
+    //   ? getUnlockDate(ctx.lastUnstakeTime.lastunstake)
+    //   : new Date().toUTCString();
+
+    if (ctx.lastUnstakeTime.lastunstake) {
+      const todayDate = new Date(ctx.lastUnstakeTime.lastunstake);
+      const cooldown = ctx.lastUnstakeTime.appType == "stake" ? 3 : 7;
+      const result = todayDate.setDate(
+        todayDate.getDate() + (cooldown + 0.04166)
+      );
+      const newDate = new Date(result);
+
+      return newDate.toUTCString();
+    } else {
+      return new Date().toUTCString();
+    }
+  };
+
   const getLockDate = (days: number): string => {
     const todayDate = new Date();
     const result = todayDate.setDate(todayDate.getDate() + days);
@@ -88,7 +107,7 @@ const Stake = () => {
   const handleStake = async () => {
     ctx.setLoading(true);
 
-    const dayOfStake = ctx.lastUnstakeTime;
+    const dayOfStake = ctx.lastUnstakeTime.lastunstake;
     // console.log(dayOfStake);
     if (dayOfStake != null || dayOfStake != undefined) {
       const dateOfStamp = new Date(String(dayOfStake));
@@ -99,7 +118,7 @@ const Stake = () => {
       const dayDiff = timeDiff / (1000 * 3600 * 24);
       // console.log(Math.floor(dayDiff));
 
-      const cooldown = 7;
+      const cooldown = ctx.lastUnstakeTime.appType == "stake" ? 3 : 7;
       if (Math.floor(dayDiff) < cooldown) {
         ctx.setError(`${cooldown - Math.floor(dayDiff)} days cooldown left`);
         setTimeout(() => {
@@ -122,6 +141,7 @@ const Stake = () => {
         );
         await deleteStake(ctx.provider?.publicKey.toString());
         ctx.setSuccess("Stake Success 🚀✅");
+        window.location.reload();
       } catch (e) {
         console.log(e);
         ctx.setError("An Error Occurred while staking..");
@@ -149,9 +169,11 @@ const Stake = () => {
         );
         await createStake(
           ctx.provider?.publicKey.toString(),
-          new Date().toUTCString()
+          new Date().toUTCString(),
+          "bank"
         );
         ctx.setSuccess("Un Stake Success 🚀✅");
+        window.location.reload();
       } catch (e) {
         console.log(e);
         ctx.setError("An Error Occurred while un staking..");
@@ -479,6 +501,21 @@ const Stake = () => {
               Days
             </p>{" "}
           </div>
+          {ctx.lastUnstakeTime.lastunstake && (
+            <div>
+              <h2 className="text-lg text-slate-950 uppercase">
+                Cooldown Time
+              </h2>
+              <p className="text-sm text-slate-400">countdown to next stake:</p>
+              <Timer
+                deadline={
+                  ctx.lastUnstakeTime.lastunstake
+                    ? getUnstakeDate()
+                    : new Date().toUTCString()
+                }
+              />
+            </div>
+          )}
           {ctx.userData && (
             <div>
               <h2 className="text-lg text-slate-950 uppercase">Unlock Time:</h2>

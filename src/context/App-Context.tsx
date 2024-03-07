@@ -32,7 +32,7 @@ export const AppContext = createContext<AppContextType>({
   tokenAccount: null,
   tokenPrice: 0,
   successMsg: "",
-  lastUnstakeTime: null,
+  lastUnstakeTime: { lastunstake: null, appType: null },
   network: "mainnet",
   errorMsg: "",
   setNetwork: () => {},
@@ -61,6 +61,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
   );
   const [libraPrice, setLibraPrice] = useState<number>(0);
   const [lastUnstake, setLastUnstake] = useState<string | null | undefined>();
+  const [lastUnstakeApp, setLastUnstakeApp] = useState<string | null>();
 
   useEffect(() => {
     // logic to fetch any data or connect to wallet once app launches
@@ -158,6 +159,13 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
 
       if (error) throw error;
       setLastUnstake(data[0].lastunstake);
+      if (!data[0].appType) {
+        setLastUnstakeApp("stake");
+        console.log(data[0]);
+      } else {
+        setLastUnstakeApp(data[0].appType);
+        console.log(data[0]);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -206,7 +214,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         successMsg: success,
         errorMsg: error,
         disconnectWallet: handleDisconnectWallet,
-        lastUnstakeTime: lastUnstake,
+        lastUnstakeTime: { lastunstake: lastUnstake, appType: lastUnstakeApp },
       }}
     >
       {props.children}

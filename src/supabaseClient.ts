@@ -6,13 +6,18 @@ const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFucHNsaG9hY3Frb3l4dGl3aW5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk3NTY1OTAsImV4cCI6MjAyNTMzMjU5MH0.iy-HNSyZsAot56ZIuFki2yP_uVvqZyLzmiOlQFVpabA";
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
-export async function createStake(address: string, lastunstake: string) {
+export async function createStake(
+  address: string,
+  lastunstake: string,
+  appType: string
+) {
   try {
     const { error } = await supabase
       .from("stakes")
       .insert({
         address,
         lastunstake,
+        appType,
       })
       .single();
     if (error) return error;
