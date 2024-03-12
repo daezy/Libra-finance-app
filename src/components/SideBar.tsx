@@ -67,6 +67,8 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
                 <FaCalculator /> Apy Calculator
               </span>
             </NavLink>
+
+           
           </div>
         </div>
         <div className="absolute bottom-0 w-full right-0 p-4 text-xl text-[#0D47A1]">
@@ -84,7 +86,7 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
               <FaTwitter />
             </a>
             <a
-              href="https://librafinance.gitbook.io/"
+              href="https://librafinance.gitbook.io/libra-finance"
               className="hover:scale-125 transition-all"
             >
               <FaBook />

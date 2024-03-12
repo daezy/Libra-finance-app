@@ -92,6 +92,12 @@ const Bank = () => {
           )
         )
       : 0;
+    const interest = ctx.userData
+      ? formatAmount(
+          parseInt(ctx.userData?.interestAccrued.toString()),
+          STAKE_TOKEN_DECIMALS
+        )
+      : 0;
 
     const dayOfStake = ctx.userData
       ? parseInt(ctx.userData?.stakeTs.toString()) * 1000
@@ -109,7 +115,11 @@ const Bank = () => {
       const newReward = (totalStaked + rewards).toFixed(7);
       setRewards(parseFloat(newReward));
     } else {
-      const newReward = (totalStaked + rewards - getTotalRewards()).toFixed(7);
+      const newReward = (
+        totalStaked +
+        rewards -
+        (getTotalRewards() - Number(interest))
+      ).toFixed(7);
       setRewards(parseFloat(newReward));
     }
   };

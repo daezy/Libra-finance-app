@@ -1,20 +1,17 @@
-import { useState } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-// import MainApp from "./components/MainApp";
 import { Routes, Route } from "react-router-dom";
 import Stake from "./pages/Stake";
 import Bank from "./pages/Bank";
-import SuccessPopup from "./components/SuccessPopup";
-import ErrorPopup from "./components/ErrorPopup";
 import RevShare from "./components/RevShare/RevShare";
-import SideBar from "./components/SideBar";
-import Overlay from "./components/Overlay";
 import ApyCalculator from "./components/ApyCalculator";
 import OverView from "./components/OverView";
-// import LiveSoon from "./components/LiveSoon";
-// import Init from "./components/RevShare/Init";
+import { useState } from "react";
+import Overlay from "./components/Overlay";
+import SideBar from "./components/SideBar";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import ErrorPopup from "./components/ErrorPopup";
+import SuccessPopup from "./components/SuccessPopup";
 
 const App = () => {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
@@ -33,13 +30,13 @@ const App = () => {
           <Navbar handleSidebar={toggleSideBar} />
           <div className="">
             <Routes>
-              {/* <Route path="/" element={<MainApp />} /> */}
               <Route path="/" element={<OverView />} />
               <Route path="/bank" element={<Stake />} />
               <Route path="/stake" element={<Bank />} />
               <Route path="/revShare" element={<RevShare />} />
               <Route path="/apyCalculator" element={<ApyCalculator />} />
             </Routes>
+
             <SuccessPopup />
             <ErrorPopup />
 

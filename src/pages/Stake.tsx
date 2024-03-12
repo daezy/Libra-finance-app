@@ -58,7 +58,9 @@ const Stake = () => {
     const dateOfStamp = new Date(dayOfStake);
     const result = dateOfStamp.setDate(dateOfStamp.getDate() + days);
     const newDate = new Date(result);
-    return newDate.toUTCString();
+    const result2 = newDate.setTime(newDate.getTime() + 1 * 60 * 60 * 1000);
+    const newDate2 = new Date(result2);
+    return newDate2.toUTCString();
   };
 
   const getTotalRewards = (): number => {
