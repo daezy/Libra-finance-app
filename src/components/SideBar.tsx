@@ -23,10 +23,10 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
           showSideBar ? "translate-x-0 " : "-translate-x-full"
         }`}
       >
-        <div className="brand">
+        <div className="brand pb-6 ">
           <a
             href="https://www.libra-finance.com"
-            className="brand flex items-center justify-between ml-[-20px]"
+            className="brand flex items-center justify-center ml-[20px]"
           >
             <img src="./img/logo.png" width={70} alt="" />
             &nbsp;
@@ -36,8 +36,8 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
           </a>
         </div>
 
-        <div className="mt-5 border-b border-solid">
-          <h2 className="text-lg text-[#3C3E43]">Menu</h2>
+        <div className="mt-0 border-b border-solid">
+          {/* <h2 className="text-lg text-[#3C3E43]">Menu</h2> */}
           <div className="links text-[#AEAEB1] my-2">
             <NavLink to="/" className="my-1 w-full inline-block pl-3">
               <span className="flex items-center gap-2 px-3 p-2 rounded-md">
@@ -67,8 +67,6 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
                 <FaCalculator /> Apy Calculator
               </span>
             </NavLink>
-
-           
           </div>
         </div>
         <div className="absolute bottom-0 w-full right-0 p-4 text-xl text-[#0D47A1]">

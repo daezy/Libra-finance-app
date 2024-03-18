@@ -12,6 +12,48 @@
   background-color: #2980b9;
 }
 
+.border-gradient {
+  border-image: linear-gradient(
+    to right,
+    rgb(78, 107, 244, 0.8),
+    rgb(78, 107, 244, 0.2)
+  );
+  border-image-slice: 1;
+}
+
+.border-gradient1 {
+  border-image: linear-gradient(
+    to right,
+    rgb(119, 83, 185, 0.8),
+    rgb(119, 83, 185, 0.2)
+  );
+  border-image-slice: 1;
+}
+.border-gradient2 {
+  border-image: linear-gradient(
+    to right,
+    rgb(184, 128, 185, 0.8),
+    rgb(184, 128, 185, 0.2)
+  );
+  border-image-slice: 1;
+}
+.border-gradient3 {
+  border-image: linear-gradient(
+    to right,
+    rgb(119, 83, 185, 0.8),
+    rgb(119, 83, 185, 0.2)
+  );
+  border-image-slice: 1;
+}
+.border-gradient4 {
+  border-image: linear-gradient(
+    to right,
+    rgb(78, 107, 244, 0.8),
+    rgb(78, 107, 244, 0.2)
+  );
+  border-image-slice: 1;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
