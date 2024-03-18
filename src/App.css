@@ -85,11 +85,17 @@
   display: block;
 }
 .active {
-  border-left: 3px solid #0d47a1;
-  border-radius: 3px;
+  /* border-left: 3px solid #0d47a1;
+  border-radius: 3px; */
 }
 
 .active span {
-  background-color: #0d47a142;
-  color: #0d47a1;
+  background: linear-gradient(
+    86.16deg,
+    rgba(104, 149, 255, 0) 3.14%,
+    rgba(104, 149, 255, 0.7) 99.61%,
+    rgba(35, 98, 245, 0.7) 114.63%
+  );
+
+  color: #2362F5;
 }
