@@ -535,8 +535,6 @@ const Stake = () => {
     //   </div>
     // </div>
 
-    // divided
-
     <div className="w-11/12 mx-auto my-9">
       <h2 className="text-2xl my-4 mb-8 text-blue-800">Bank</h2>
       <div className="flex lg:flex-row flex-col gap-5 items-center">
