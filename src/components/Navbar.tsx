@@ -16,7 +16,7 @@ const Navbar: React.FC<propType> = ({ handleSidebar }) => {
   };
   return (
     <>
-      <nav className="bg-white shadow w-full left-0 top-0 z-10">
+      <nav className="bg-[#F6F9FF] shadow-sm w-full left-0 top-0 z-10 border-b border-solid border-[#7F9ECF4D]">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
           <a
             href="https://www.libra-finance.com"
@@ -25,7 +25,7 @@ const Navbar: React.FC<propType> = ({ handleSidebar }) => {
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
             <div className="dropdown">
               <button
-                className="text-slate-800 border border-solid border-[#0D47A1] py-3 px-3 rounded-xl  flex justify-between gap-3 items-center mr-3 capitalize"
+                className="text-slate-800 border border-solid border-[#0D47A1] py-3 px-3 rounded  flex justify-between gap-3 items-center mr-3 capitalize"
                 onClick={() => toggleDropdown()}
               >
                 <img
@@ -72,7 +72,7 @@ const Navbar: React.FC<propType> = ({ handleSidebar }) => {
               </div>
             </div>
             <button
-              className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-between gap-3 items-center"
+              className="text-slate-100 bg-gradient-to-r from-[#4E6BF4] to-[#0D47A1] py-3 px-6 rounded hover:bg-blue-800 flex justify-between gap-3 items-center"
               onClick={() => {
                 if (!ctx.isWalletConnected) {
                   return ctx.connectWallet();

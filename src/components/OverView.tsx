@@ -4,7 +4,6 @@ import { formatAmount } from "../solana/utils";
 import { STAKE_TOKEN_DECIMALS, STAKE_TOKEN_MINT } from "../solana/constants";
 // import { TokenAccount } from "../solana/types";
 import { PublicKey } from "@solana/web3.js";
-import icon1 from "./img/alpha.png";
 
 const OverView = () => {
   const ctx = useContext(AppContext);
@@ -35,7 +34,7 @@ const OverView = () => {
 
     getTokenSupply();
     getTokenData();
-  }, [ctx.contractData]);
+  }, [ctx.contractData, ctx.connection]);
 
   const displayValue = (func: number): string => {
     const value = func * ctx.tokenPrice;
@@ -45,135 +44,10 @@ const OverView = () => {
   };
 
   return (
-    // <div className="w-11/12 mx-auto my-9">
-    //   <div className="bg-white p-5  rounded-lg text-slate-600 shadow-sm">
-    //     <h2 className="text-2xl my-4 mb-8 text-slate-800">Libra Overview</h2>
-    //     <div className="grid gap-3 gap-y-8 grid-cols-1 md:grid-cols-2">
-    //       <div>
-    //         <h2 className="text-lg text-slate-950 uppercase">Libra Price:</h2>
-    //         <p className="text-xl my-1 text-[#0D47A1]">
-    //           ${ctx.contractData ? ctx.tokenPrice : 0}{" "}
-    //         </p>{" "}
-    //       </div>
-    //       <div>
-    //         <h2 className="text-lg text-slate-950 uppercase">Libra Supply:</h2>
-    //         <p className="text-xl my-1 text-[#0D47A1]">
-    //           {ctx.contractData
-    //             ? Math.round(
-    //                 Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
-    //               ).toLocaleString()
-    //             : 0}{" "}
-    //           LIBRA{" "}
-    //         </p>{" "}
-    //       </div>
-    //       <div>
-    //         <h2 className="text-lg text-slate-950 uppercase">Libra Burnt:</h2>
-    //         <p className="text-xl my-1 text-[#0D47A1]">
-    //           {ctx.contractData
-    //             ? (
-    //                 1000000000 -
-    //                 Math.round(
-    //                   Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
-    //                 )
-    //               ).toLocaleString()
-    //             : 0}{" "}
-    //           LIBRA ($
-    //           {displayValue(
-    //             ctx.contractData
-    //               ? 1000000000 -
-    //                   Math.round(
-    //                     Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
-    //                   )
-    //               : 0
-    //           )}
-    //           )
-    //         </p>{" "}
-    //         <p>
-    //           ({" "}
-    //           {ctx.contractData
-    //             ? (
-    //                 ((1000000000 -
-    //                   Math.round(
-    //                     Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
-    //                   )) /
-    //                   1000000000) *
-    //                 100
-    //               ).toLocaleString()
-    //             : 0}
-    //           % total supply )
-    //         </p>
-    //       </div>
-    //       <div>
-    //         <h2 className="text-lg text-slate-950 uppercase">
-    //           Total Deposited:
-    //         </h2>
-    //         <p className="text-sm text-slate-400">
-    //           (Amount staked across bank and stake)
-    //         </p>
-    //         <p className="text-xl my-1 text-[#0D47A1]">
-    //           {ctx.contractData
-    //             ? Math.round(
-    //                 Number(
-    //                   formatAmount(
-    //                     parseInt(ctx.contractData.totalStaked.toString()),
-    //                     STAKE_TOKEN_DECIMALS
-    //                   )
-    //                 )
-    //               ).toLocaleString()
-    //             : 0}{" "}
-    //           LIBRA ($
-    //           {displayValue(
-    //             ctx.contractData
-    //               ? Math.round(
-    //                   Number(
-    //                     formatAmount(
-    //                       parseInt(ctx.contractData.totalStaked.toString()),
-    //                       STAKE_TOKEN_DECIMALS
-    //                     )
-    //                   )
-    //                 )
-    //               : 0
-    //           )}
-    //           )
-    //         </p>{" "}
-    //       </div>
-    //       <div>
-    //         <h2 className="text-lg text-slate-950 uppercase">Total Payouts:</h2>
-    //         <p className="text-sm text-slate-400">(Amount paid out to users)</p>
-    //         <p className="text-xl my-1 text-[#0D47A1]">
-    //           {ctx.contractData
-    //             ? Math.round(
-    //                 Number(
-    //                   formatAmount(
-    //                     parseInt(ctx.contractData.totalEarned.toString()),
-    //                     STAKE_TOKEN_DECIMALS
-    //                   )
-    //                 )
-    //               ).toLocaleString()
-    //             : 0}{" "}
-    //           LIBRA ($
-    //           {displayValue(
-    //             ctx.contractData
-    //               ? Math.round(
-    //                   Number(
-    //                     formatAmount(
-    //                       parseInt(ctx.contractData.totalEarned.toString()),
-    //                       STAKE_TOKEN_DECIMALS
-    //                     )
-    //                   )
-    //                 )
-    //               : 0
-    //           )}
-    //           )
-    //         </p>{" "}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="w-11/12 mx-auto my-9">
       <h2 className="text-2xl my-4 mb-8 text-blue-800">Overview</h2>
-      <div className="flex flex-wrap gap-3">
-        <div className="bg-white border border-gradient   p-5 lg:w-[32%] sm:w-[45%] w-full  rounded-lg text-slate-600 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-9 gap-3">
+        <div className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(78,107,244,0.8)] to-[rgb(78,107,244,0.2)]   rounded-full">
               <img src="./img/logoLibra 1.png" alt="" width={22} />
@@ -192,7 +66,7 @@ const OverView = () => {
             </div> */}
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient1  lg:w-[32%] sm:w-[45%] w-full rounded-lg text-slate-600 shadow-sm">
+        <div className="bg-white p-5 border border-gradient1  md:col-span-3 rounded-lg text-slate-600 shadow-sm">
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(119,83,185,0.8)] to-[rgb(119,83,185,0.2)] rounded-full">
               <img src="./img/Vector.png" alt="" width={22} />
@@ -216,7 +90,7 @@ const OverView = () => {
             </div> */}
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient2 lg:w-[32%] sm:w-[45%] w-full  rounded-lg text-slate-600 shadow-sm">
+        <div className="bg-white p-5 border border-gradient2 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(184,128,185,0.8)] to-[rgb(184,128,185,0.2)] rounded-full">
               <img src="./img/Vector-1.png" alt="" width={22} />
@@ -249,7 +123,6 @@ const OverView = () => {
             </p>
             <div className="py-[2px] px-[4px]  bg-gradient-to-r from-[rgba(184,128,185,0.5)] to-[rgba(184,128,185,0.1)] ">
               <p className="text-[rgb(184,128,185)] font-light">
-                +
                 {ctx.contractData
                   ? (
                       ((1000000000 -
@@ -265,7 +138,7 @@ const OverView = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient3 lg:w-[32%] sm:w-[45%] w-full  rounded-lg text-slate-600 shadow-sm">
+        <div className="bg-white p-5 border border-gradient3 md:col-span-5  rounded-lg text-slate-600 shadow-sm">
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(119,83,185,0.8)] to-[rgb(119,83,185,0.2)] rounded-full">
               <img src="./img/Vector-2 2.png" alt="" width={22} />
@@ -313,7 +186,7 @@ const OverView = () => {
             </div> */}
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient4 lg:w-[32%] sm:w-[45%] w-full  rounded-lg text-slate-600 shadow-sm">
+        <div className="bg-white p-5 border border-gradient4 md:col-span-4  rounded-lg text-slate-600 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(78,107,244,0.8)] to-[rgb(78,107,244,0.2)] rounded-full">
               <img src="./img/Vector-2.png" alt="" width={22} />

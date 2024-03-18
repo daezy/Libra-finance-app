@@ -19,11 +19,11 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
   return (
     <div className="">
       <div
-        className={`fixed shadow md:w-2/12 w-9/12 h-screen bg-white flex flex-col items-start p-3 z-30 ease-in-out duration-300 md:translate-x-0 ${
+        className={`fixed shadow md:w-2/12 w-9/12 h-screen bg-[#F6F9FF] flex flex-col items-start p-3 z-30 ease-in-out duration-300 md:translate-x-0 ${
           showSideBar ? "translate-x-0 " : "-translate-x-full"
         }`}
       >
-        <div className="brand pb-6 ">
+        <div className="brand pb-6">
           <a
             href="https://www.libra-finance.com"
             className="brand flex items-center justify-center ml-[20px]"
@@ -39,53 +39,65 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
         <div className="mt-0 border-b border-solid">
           {/* <h2 className="text-lg text-[#3C3E43]">Menu</h2> */}
           <div className="links text-[#AEAEB1] my-2">
-            <NavLink to="/" className="my-1 w-full inline-block pl-3">
+            <NavLink
+              to="/"
+              className="my-1 w-full inline-block pl-3 text-[#7F9ECF]"
+            >
               <span className="flex items-center gap-2 px-3 p-2 rounded-md">
-                <FaHome /> Overview
+                <FaHome className="w-5 h-5" /> Overview
               </span>
             </NavLink>
-            <NavLink to="/bank" className="my-1 w-full inline-block pl-3">
+            <NavLink
+              to="/bank"
+              className="my-1 w-full inline-block pl-3 text-[#7F9ECF]"
+            >
               <span className="flex items-center gap-2 px-3 p-2 rounded-md">
-                <FaPiggyBank /> Bank
+                <FaPiggyBank className="w-5 h-5" /> Bank
               </span>
             </NavLink>
-            <NavLink to="/stake" className="my-1 w-full  inline-block pl-3">
+            <NavLink
+              to="/stake"
+              className="my-1 w-full  inline-block pl-3 text-[#7F9ECF]"
+            >
               <span className="flex items-center gap-2 rounded-md  p-2 px-3 ">
-                <FaCoins /> Stake
+                <FaCoins className="w-5 h-5" /> Stake
               </span>
             </NavLink>
-            <NavLink to="/revShare" className="my-1 w-full inline-block pl-3">
+            <NavLink
+              to="/revShare"
+              className="my-1 w-full inline-block pl-3 text-[#7F9ECF]"
+            >
               <span className="flex items-center gap-2 rounded-md p-2 px-3">
-                <FaMoneyBill1Wave /> AutoStake
+                <FaMoneyBill1Wave className="w-5 h-5" /> AutoStake
               </span>
             </NavLink>
             <NavLink
               to="/apyCalculator"
-              className="my-1 w-full inline-block pl-3"
+              className="my-1 w-full inline-block pl-3 text-[#7F9ECF]"
             >
               <span className="flex items-center gap-2 rounded-md p-2 px-3">
-                <FaCalculator /> Apy Calculator
+                <FaCalculator className="w-5 h-5" /> Apy Calculator
               </span>
             </NavLink>
           </div>
         </div>
-        <div className="absolute bottom-0 w-full right-0 p-4 text-xl text-[#0D47A1]">
+        <div className="absolute bottom-0 w-full right-0 p-4 text-xl text-white">
           <div className="flex items-center justify-around">
             <a
               href="https://t.me/libraprotocolsol"
-              className="hover:scale-125 transition-all"
+              className="hover:scale-125 transition-all text-sm p-2 rounded-full  bg-[#7983DC] flex items-center justify-center"
             >
               <FaTelegramPlane />
             </a>
             <a
               href="https://twitter.com/librafinanceSol"
-              className="hover:scale-125 transition-all"
+              className="hover:scale-125 transition-all text-sm p-2 rounded-full  bg-[#7983DC] flex items-center justify-center"
             >
               <FaTwitter />
             </a>
             <a
               href="https://librafinance.gitbook.io/libra-finance"
-              className="hover:scale-125 transition-all"
+              className="hover:scale-125 transition-all text-sm p-2 rounded-full  bg-[#7983DC] flex items-center justify-center"
             >
               <FaBook />
             </a>
