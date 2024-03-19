@@ -44,7 +44,7 @@ const ApyCalculator = () => {
   return (
     <div className="w-11/12 mx-auto my-9">
       <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
-        <div className="bg-white  rounded-lg shadow-sm md:col-span-3">
+        <div className="bg-white border border-gradient md:col-span-3  rounded-lg text-slate-600 shadow-sm">
           <div className="flex md:items-center justify-between p-5  flex-col md:flex-row border-b border-solid">
             <div className="libra flex items-center gap-3">
               <h2 className="text-lg my-3 text-slate-800">
@@ -105,7 +105,7 @@ const ApyCalculator = () => {
                 value={amount}
                 required
                 onChange={(e) => setAmount(parseInt(e.target.value))}
-                className="py-2 px-4 w-full md:w-10/12 rounded bg-opacity-45 bg-[#F2F2F2] "
+                className="py-2 px-4 w-full outline-none rounded-sm border border-solid border-[#0D47A133] bg-transparent text-[#0D47A1] placeholder:text-[#0D47A1]"
               />
             </div>
             <div className="flex justify-between items-center my-4 gap-4">
@@ -118,7 +118,7 @@ const ApyCalculator = () => {
                 min={0}
                 required
                 placeholder="Duration in days"
-                className="py-2 px-4 w-full md:w-10/12 rounded bg-opacity-45 bg-[#F2F2F2] "
+                className="py-2 px-4 w-full outline-none rounded-sm border border-solid border-[#0D47A133] bg-transparent text-[#0D47A1] placeholder:text-[#0D47A1]"
               />
             </div>
             {appName == "bank" && (
@@ -199,7 +199,7 @@ const ApyCalculator = () => {
             )}
 
             <button
-              className="text-slate-100 mx-auto bg-[#0D47A1] py-3 w-full text-center px-6 rounded-lg hover:bg-blue-800 flex justify-center gap-3 items-center mt-6"
+              className="py-3 px-6 bg-gradient-to-r from-[#4E6BF4] to-[#0D47A1] w-full rounded flex justify-center items-center text-white mt-6"
               onClick={getTotalRewards}
             >
               Calculate Rewards

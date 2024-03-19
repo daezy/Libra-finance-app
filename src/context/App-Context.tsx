@@ -13,6 +13,7 @@ import {
   DEVNET_CONNECTION_URL,
   LOCALNET_CONNECTION_URL,
   MAINNET_CONNECTION_URL,
+  STAKE_TOKEN_MINT,
 } from "../solana/constants.ts";
 import { TokenAccount } from "../solana/types.ts";
 import {
@@ -27,6 +28,7 @@ export const AppContext = createContext<AppContextType>({
   loading: false,
   provider: null,
   connection: null,
+  supply: 0,
   contractData: null,
   userData: null,
   tokenAccount: null,
@@ -62,6 +64,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [libraPrice, setLibraPrice] = useState<number>(0);
   const [lastUnstake, setLastUnstake] = useState<string | null | undefined>();
   const [lastUnstakeApp, setLastUnstakeApp] = useState<string | null>();
+  const [supply, setSupply] = useState<number>(0);
 
   useEffect(() => {
     // logic to fetch any data or connect to wallet once app launches
@@ -146,7 +149,17 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
           data.data["Hz1XePA2vukqFBcf9P7VJ3AsMKoTXyPn3s21dNvGrHnd"];
         setLibraPrice(authors.price);
       });
+    const getTokenSupply = async () => {
+      if (contractData && connection) {
+        const supply = await connection.getTokenSupply(
+          new PublicKey(STAKE_TOKEN_MINT)
+        );
+        setSupply(Number(supply.value.amount));
+      }
+    };
+
     setUp().then((val) => val);
+    getTokenSupply();
   }, [connection, provider, success]);
 
   const fetchStakeData = async () => {
@@ -198,6 +211,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
     <AppContext.Provider
       value={{
         isWalletConnected: connected,
+        supply,
         setNetwork: handleSetNetwork,
         network,
         loading,

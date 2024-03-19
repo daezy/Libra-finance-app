@@ -8,6 +8,7 @@ import { TokenAccount } from "./solana/types.ts";
 
 export type AppContextType = {
   isWalletConnected: boolean;
+  supply: number;
   network: "localnet" | "devnet" | "mainnet";
   provider: PhantomProvider | null;
   connection: Connection | null;

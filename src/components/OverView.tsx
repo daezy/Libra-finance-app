@@ -1,40 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/App-Context";
 import { formatAmount } from "../solana/utils";
-import { STAKE_TOKEN_DECIMALS, STAKE_TOKEN_MINT } from "../solana/constants";
+import { STAKE_TOKEN_DECIMALS } from "../solana/constants";
 // import { TokenAccount } from "../solana/types";
-import { PublicKey } from "@solana/web3.js";
 
 const OverView = () => {
   const ctx = useContext(AppContext);
-
-  //   const [tokenAccount, setTokenAccount] = useState<TokenAccount | null>(null);
-  const [supply, setSupply] = useState<number>(0);
-
-  useEffect(() => {
-    const getTokenData = async () => {
-      if (ctx.contractData && ctx.connection) {
-        // const tokenAccount = await getTokenAccount(
-        //   ctx.connection,
-        //   new PublicKey("994NbZhmVGDAvXHWW8VMA4kBgeHpKF8xebncag4KnRVE"),
-        //   ctx.contractData.stakeTokenMint
-        // );
-        // setTokenAccount(tokenAccount);
-        // console.log(tokenAccount);
-      }
-    };
-    const getTokenSupply = async () => {
-      if (ctx.contractData && ctx.connection) {
-        const supply = await ctx.connection.getTokenSupply(
-          new PublicKey(STAKE_TOKEN_MINT)
-        );
-        setSupply(Number(supply.value.amount));
-      }
-    };
-
-    getTokenSupply();
-    getTokenData();
-  }, [ctx.contractData, ctx.connection]);
 
   const displayValue = (func: number): string => {
     const value = func * ctx.tokenPrice;
@@ -80,7 +51,7 @@ const OverView = () => {
             <p className="font-extrabold text-blue-800">
               {ctx.contractData
                 ? Math.round(
-                    Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
+                    Number(formatAmount(ctx.supply, STAKE_TOKEN_DECIMALS))
                   ).toLocaleString()
                 : 0}{" "}
               LIBRA
@@ -106,7 +77,7 @@ const OverView = () => {
                 ? (
                     1000000000 -
                     Math.round(
-                      Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
+                      Number(formatAmount(ctx.supply, STAKE_TOKEN_DECIMALS))
                     )
                   ).toLocaleString()
                 : 0}{" "}
@@ -115,7 +86,7 @@ const OverView = () => {
                 ctx.contractData
                   ? 1000000000 -
                       Math.round(
-                        Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
+                        Number(formatAmount(ctx.supply, STAKE_TOKEN_DECIMALS))
                       )
                   : 0
               )}
@@ -127,7 +98,7 @@ const OverView = () => {
                   ? (
                       ((1000000000 -
                         Math.round(
-                          Number(formatAmount(supply, STAKE_TOKEN_DECIMALS))
+                          Number(formatAmount(ctx.supply, STAKE_TOKEN_DECIMALS))
                         )) /
                         1000000000) *
                       100
