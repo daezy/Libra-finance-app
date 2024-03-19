@@ -3,7 +3,7 @@ import { AppContext } from "../context/App-Context";
 import { formatAmount } from "../solana/utils";
 import { performStake, performUnStake } from "../solana/services.ts";
 import { StakeType } from "../solana/types.ts";
-import { FaSpinner } from "react-icons/fa6";
+import { FaCoins, FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 import { createStake, deleteStake } from "../supabaseClient.ts";
 import { Timer } from "../components/Timer.tsx";
@@ -269,6 +269,7 @@ const Bank = () => {
   return (
     <>
       <div className="w-11/12 mx-auto my-9">
+        <h2 className="text-2xl my-4 mb-8 text-blue-800">Stake</h2>
         {ctx.userData?.stakeType == BigInt(1) ? (
           <div className="bg-red-200 text-red-700 p-4 text-center my-4 rounded-md">
             <p>
@@ -288,40 +289,41 @@ const Bank = () => {
           </div>
         )}
         <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
-          <div className="bg-white  rounded-lg shadow-sm md:col-span-3">
-            <div className="flex md:items-center justify-between  flex-col md:flex-row p-4 border-b border-solid">
-              <div className="libra flex items-center gap-3">
-                <img
-                  src="./img/logo.png"
-                  className="max-w-full"
-                  width={70}
-                  alt=""
-                />
-                <div>
-                  <p>
-                    Balance:{" "}
-                    {ctx.tokenAccount
-                      ? formatAmount(
-                          parseInt(ctx.tokenAccount.amount.toString()),
-                          STAKE_TOKEN_DECIMALS
-                        )
-                      : 0}
-                  </p>
-                  <p>
-                    Total Staked:{" "}
-                    {ctx.userData && ctx.userData.stakeType == BigInt(0)
-                      ? formatAmount(
-                          parseInt(ctx.userData.totalStaked.toString()),
-                          STAKE_TOKEN_DECIMALS
-                        )
-                      : 0}
-                  </p>
+          <div className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div className="balances">
+                <div className="flex  items-center gap-3">
+                  <div className="p-3 bg-gradient-to-r from-[rgb(78,107,244,0.8)] to-[rgb(78,107,244,0.2)]   rounded-full">
+                    <FaCoins className="text-[#0D47A1] w-5 h-5" />
+                  </div>
+                  <p className="text-[18px] text-[#7F9ECF]">STAKE</p>
                 </div>
-              </div>
-
-              <div className="right">
+                <div className="flex items-center my-4">
+                  <div className="w-1/2 p-2">
+                    <p className="text-[#7F9ECF] mb-1">Balance</p>
+                    <p className="text-[#0D47A1] font-semibold">
+                      {ctx.tokenAccount
+                        ? formatAmount(
+                            parseInt(ctx.tokenAccount.amount.toString()),
+                            STAKE_TOKEN_DECIMALS
+                          )
+                        : 0}
+                    </p>
+                  </div>
+                  <div className="w-1/2 bg-[#2E7FFC33] p-2 text-center rounded-sm">
+                    <p className="text-[#7F9ECF] mb-1">Total Staked</p>
+                    <p className="text-[#0D47A1] font-semibold">
+                      {ctx.userData && ctx.userData.stakeType == BigInt(0)
+                        ? formatAmount(
+                            parseInt(ctx.userData.totalStaked.toString()),
+                            STAKE_TOKEN_DECIMALS
+                          )
+                        : 0}
+                    </p>
+                  </div>
+                </div>
                 <button
-                  className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-between gap-3 items-center w-full md:w-fit disabled:bg-slate-400"
+                  className="text-white bg-[#0D47A1] py-3 px-6 rounded hover:bg-blue-800 w-full disabled:bg-[#cedbf3] text-center"
                   disabled={ctx.userData?.stakeType != BigInt(0) || !canUnStake}
                   onClick={handleUnstake}
                 >
@@ -332,36 +334,35 @@ const Bank = () => {
                   )}
                 </button>
               </div>
-            </div>
-            <div className="p-4">
-              <div className="flex items-center gap-3">
-                <label htmlFor="amount" className="text-lg text-slate-950 my-4">
-                  STAKE:
+
+              <div>
+                <label htmlFor="amount" className="text-[#7F9ECF]">
+                  Enter amount to stake
                 </label>
-                <input
-                  type="number"
-                  id="amount"
-                  value={amount}
-                  min={0}
-                  onChange={(e) => setAmount(Number(e.target.value))}
-                  placeholder="Amount"
-                  className="py-2 px-4 w-full rounded bg-opacity-45 bg-[#F2F2F2] "
-                />
-                <button
-                  className="bg-transparent border border-solid border-[#0D47A1] rounded-lg p-2 px-3 hover:bg-slate-300"
-                  onClick={() => {
-                    setMaxAmount();
-                  }}
-                >
-                  Max
-                </button>
-              </div>
-              <div className="my-3 flex justify-between flex-col md:flex-row">
-                <p className="text-slate-600 my-2">
-                  (You cannot withdraw for 24hrs after staking)
+                <div className="flex items-center gap-2 mt-2">
+                  <input
+                    type="number"
+                    id="amount"
+                    value={amount}
+                    min={0}
+                    onChange={(e) => setAmount(Number(e.target.value))}
+                    placeholder="0"
+                    className="py-2 px-4 w-full outline-none rounded-sm border border-solid border-[#0D47A133] bg-transparent text-[#0D47A1] placeholder:text-[#0D47A1]"
+                  />
+                  <button
+                    className="border border-solid border-[#0D47A133] bg-transparent text-[#7F9ECF] p-2 px-3 hover:bg-slate-300"
+                    onClick={() => {
+                      setMaxAmount();
+                    }}
+                  >
+                    MAX
+                  </button>
+                </div>
+                <p className="text-[#7F9ECF] text-xs text-center my-3 p-2 bg-[#E4EBF8]">
+                  You cannot withdraw for 24hrs after staking
                 </p>
                 <button
-                  className="text-slate-100 bg-[#0D47A1] py-3 px-6 rounded-xl hover:bg-blue-800 flex justify-center gap-3 items-center w-full md:w-fit text-center"
+                  className="text-white bg-[#0D47A1] py-3 px-6 rounded hover:bg-blue-800 w-full disabled:bg-[#cedbf3] text-center"
                   // disabled={ctx.userData?.stakeType != BigInt(0)}
                   onClick={handleStake}
                 >
@@ -374,10 +375,14 @@ const Bank = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white p-5  rounded-lg text-slate-600 md:col-span-2 shadow-sm flex flex-col justify-center text-center gap-2">
-            <h2 className="text-lg text-[#1F242F] my-1">$LIBRA APY</h2>
+
+          <div className="bg-white p-5 border border-gradient1  md:col-span-2 rounded-lg text-slate-600 shadow-sm flex items-center justify-center gap-3 flex-col">
+            <div className="p-5 bg-gradient-to-r from-[rgb(119,83,185,0.8)] to-[rgb(119,83,185,0.2)] rounded-full">
+              <img src="./img/apy.svg" alt="" width={22} />
+            </div>
+            <h2 className="text-[#7F9ECF]">LIBRA APY</h2>
             <div>
-              <p className="text-4xl my-2 text-[#0D47A1] ">
+              <p className="text-4xl text-[#0D47A1] ">
                 {ctx.contractData
                   ? formatAmount(
                       parseInt(ctx.contractData.normalStakingApy.toString()),
@@ -386,64 +391,73 @@ const Bank = () => {
                   : 0}
                 %
               </p>
-              <p className="text-[#0D47A1]">Per Year</p>
+              <p className="text-[#0D47A1] text-center">Per Year</p>
             </div>
           </div>
 
-          <div className="bg-white p-5  rounded-lg text-[#222222] md:col-span-5 shadow-sm  order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <div>
-              <h2 className="text-lg text-slate-950 uppercase">
-                Today's Rewards:
-              </h2>
-              <p className="text-sm text-slate-400">
-                (Added to expected rewards after each 24hrs)
-              </p>
-              <p className="text-xl my-1 text-[#0D47A1]">
-                {ctx.userData && ctx.contractData ? reward.toLocaleString() : 0}{" "}
-                LIBRA ($
-                {displayValue(reward)})
-              </p>{" "}
-            </div>
-            <div>
-              <h2 className="text-lg text-slate-950 uppercase">
-                Expected rewards:
-              </h2>
-              <p className="text-sm text-slate-400">
-                Updates after every 24hrs:
-              </p>
-              <p className="text-xl my-1 text-[#0D47A1]">
-                {ctx.userData && ctx.contractData
-                  ? getTotalRewards().toLocaleString()
-                  : 0}{" "}
-                LIBRA (${displayValue(getTotalRewards())})
-              </p>{" "}
-            </div>
-            <div>
-              <h2 className="text-lg text-slate-950 uppercase">
-                Days elapsed:
-              </h2>
-              <p className="text-sm text-slate-400">
-                Days libra has been locked for:
-              </p>
-              <p className="text-xl my-1 text-[#0D47A1]">
-                {ctx.userData && ctx.contractData ? lockedFor : 0} Days
-              </p>{" "}
-            </div>
-            {ctx.lastUnstakeTime.lastunstake && (
+          <div className="md:col-span-5 order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-3">
+            <div className="bg-white  border border-gradient p-4 rounded-md">
               <div>
-                <h2 className="text-lg text-slate-950 uppercase">
-                  Cooldown Time
-                </h2>
-                <p className="text-sm text-slate-400">
-                  countdown to next stake:
+                <p className="text-[#032E70] text-[15px] py-2">
+                  Today's Rewards:
                 </p>
-                <Timer
-                  deadline={
-                    ctx.lastUnstakeTime.lastunstake
-                      ? getUnstakeDate()
-                      : new Date().toUTCString()
-                  }
-                />
+                <p className="text-[#7F9ECF] text-[12px] pb-2">
+                  Added to expected rewards after each 24hrs
+                </p>
+                <p className="text-[#0D47A1] text-[20px] pb-2">
+                  {ctx.userData && ctx.contractData
+                    ? reward.toLocaleString()
+                    : 0}{" "}
+                  LIBRA ($
+                  {displayValue(reward)})
+                </p>
+              </div>
+            </div>
+            <div className="bg-white  border border-gradient p-4 rounded-md">
+              <div>
+                <p className="text-[#032E70] text-[15px] py-2">
+                  EXPECTED REWARDS:
+                </p>
+                <p className="text-[#7F9ECF] text-[12px] pb-2">
+                  Updates after every 24hrs:
+                </p>
+                <p className="text-[#0D47A1] text-[20px] pb-2">
+                  {ctx.userData && ctx.contractData
+                    ? getTotalRewards().toLocaleString()
+                    : 0}{" "}
+                  LIBRA (${displayValue(getTotalRewards())})
+                </p>
+              </div>
+            </div>
+            <div className="bg-white  border border-gradient p-4 rounded-md">
+              <div>
+                <p className="text-[#032E70] text-[15px] py-2">Days elapsed:</p>
+                <p className="text-[#7F9ECF] text-[12px] pb-2">
+                  Days libra has been locked for:
+                </p>
+                <p className="text-[#0D47A1] text-[20px] pb-2">
+                  {ctx.userData && ctx.contractData ? lockedFor : 0} Days
+                </p>
+              </div>
+            </div>
+
+            {ctx.lastUnstakeTime.lastunstake && (
+              <div className="bg-white  border border-gradient p-4 rounded-md">
+                <div>
+                  <p className="text-[#032E70] text-[15px] py-2">
+                    Cooldown Time
+                  </p>
+                  <p className="text-[#7F9ECF] text-[12px] pb-2">
+                    countdown to next stake:
+                  </p>
+                  <Timer
+                    deadline={
+                      ctx.lastUnstakeTime.lastunstake
+                        ? getUnstakeDate()
+                        : new Date().toUTCString()
+                    }
+                  />
+                </div>
               </div>
             )}
           </div>

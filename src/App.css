@@ -89,6 +89,7 @@
   border-radius: 3px; */
 }
 
+.active,
 .active span {
   background: linear-gradient(
     86.16deg,
@@ -97,5 +98,5 @@
     rgba(35, 98, 245, 0.7) 114.63%
   );
 
-  color: #2362F5;
+  color: #2362f5;
 }
