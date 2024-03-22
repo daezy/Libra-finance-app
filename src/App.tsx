@@ -12,8 +12,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ErrorPopup from "./components/ErrorPopup";
 import SuccessPopup from "./components/SuccessPopup";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const App = () => {
+  AOS.init({ duration: 700 });
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
 
   const toggleSideBar = () => {

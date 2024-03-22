@@ -18,7 +18,7 @@ const RevShare = () => {
           <p>{ctx.errorMsg}</p>
         </div>
       )}
-      <div className=" bg-white p-5 rounded">
+      <div className=" bg-white p-5 rounded" data-aos="zoom-in">
         <div className="p-4 text-center text-slate-600">
           <p>
             You must hold at least{" "}

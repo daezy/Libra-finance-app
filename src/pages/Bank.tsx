@@ -289,7 +289,10 @@ const Bank = () => {
           </div>
         )}
         <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
-          <div className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
+          <div
+            data-aos="zoom-in"
+            className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
               <div className="balances">
                 <div className="flex  items-center gap-3">
@@ -376,7 +379,10 @@ const Bank = () => {
             </div>
           </div>
 
-          <div className="bg-white p-5 border border-gradient1  md:col-span-2 rounded-lg text-slate-600 shadow-sm flex items-center justify-center gap-3 flex-col">
+          <div
+            data-aos="fade-left"
+            className="bg-white p-5 border border-gradient1  md:col-span-2 rounded-lg text-slate-600 shadow-sm flex items-center justify-center gap-3 flex-col"
+          >
             <div className="p-5 bg-gradient-to-r from-[rgb(119,83,185,0.8)] to-[rgb(119,83,185,0.2)] rounded-full">
               <img src="./img/apy.svg" alt="" width={22} />
             </div>
@@ -396,7 +402,10 @@ const Bank = () => {
           </div>
 
           <div className="md:col-span-5 order-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-3">
-            <div className="bg-white  border border-gradient p-4 rounded-md">
+            <div
+              className="bg-white  border border-gradient p-4 rounded-md"
+              data-aos="fade-up"
+            >
               <div>
                 <p className="text-[#032E70] text-[15px] py-2">
                   Today's Rewards:
@@ -413,7 +422,10 @@ const Bank = () => {
                 </p>
               </div>
             </div>
-            <div className="bg-white  border border-gradient p-4 rounded-md">
+            <div
+              className="bg-white  border border-gradient p-4 rounded-md"
+              data-aos="fade-up"
+            >
               <div>
                 <p className="text-[#032E70] text-[15px] py-2">
                   EXPECTED REWARDS:
@@ -429,7 +441,10 @@ const Bank = () => {
                 </p>
               </div>
             </div>
-            <div className="bg-white  border border-gradient p-4 rounded-md">
+            <div
+              className="bg-white  border border-gradient p-4 rounded-md"
+              data-aos="fade-up"
+            >
               <div>
                 <p className="text-[#032E70] text-[15px] py-2">Days elapsed:</p>
                 <p className="text-[#7F9ECF] text-[12px] pb-2">

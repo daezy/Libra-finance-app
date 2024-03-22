@@ -196,7 +196,10 @@ const Stake = () => {
     <div className="w-11/12 mx-auto my-9">
       <h2 className="text-2xl my-4 mb-8 text-blue-800">Bank</h2>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-        <div className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
+        <div
+          className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm"
+          data-aos="zoom-in"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4  ">
             <div>
               <div className="flex  items-center gap-3">
@@ -368,13 +371,16 @@ const Stake = () => {
           </div>
         </div>
 
-        <div className="bg-[#E4EBF8] p-7 md:col-span-2 h-full">
+        <div
+          className="bg-[#E4EBF8] p-7 md:col-span-2 h-full"
+          data-aos="fade-left"
+        >
           <p className="text-[25px] text-[#032E70] mb-7">What is Libra Bank</p>
           <div>
             <p className="text-[#032E70] text-[15px]">
-              - By staking LIBRA, you get LIBRA interest (auto-compound to
-              6057% APY for you). You will get back your locked amount after 14
-              days if you lock for a month.
+              - By staking LIBRA, you get LIBRA interest (auto-compound to 6057%
+              APY for you). You will get back your locked amount after 14 days
+              if you lock for a month.
             </p>
             <br />
             <p className="text-[#032E70] text-[15px]">
@@ -390,7 +396,10 @@ const Stake = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-        <div className="bg-white  border border-gradient1 mt-5 p-4 rounded-md">
+        <div
+          className="bg-white  border border-gradient1 mt-5 p-4 rounded-md"
+          data-aos="fade-up"
+        >
           <div className="flex items-center justify-between">
             <div>
               <div className="flex  items-center gap-3">
@@ -419,7 +428,10 @@ const Stake = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white  border border-gradient mt-5 p-4 rounded-md">
+        <div
+          className="bg-white  border border-gradient mt-5 p-4 rounded-md"
+          data-aos="fade-up"
+        >
           <div className="flex items-center justify-between">
             <div>
               <div className="flex  items-center gap-3">
@@ -460,12 +472,18 @@ const Stake = () => {
           </div>
         </div>
       </div>
-      <div className="p-3 bg-[#2E7FFC29] mt-6 text-[#0D47A1]">
+      <div
+        className="p-3 bg-[#2E7FFC29] mt-6 text-[#0D47A1]"
+        data-aos="fade-down"
+      >
         <p className="text-center lg:text-[14px] text-[11px] ">
           Unstake Failed? Send In Extra 100 Tokens To Your Wallet And Try Again
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        data-aos="fade-up"
+      >
         <div className="bg-white  border border-gradient1 mt-5 p-4 rounded-md">
           <div>
             <p className="text-[#032E70] text-[15px] py-2">EXPECTED REWARDS:</p>

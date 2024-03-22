@@ -18,7 +18,10 @@ const OverView = () => {
     <div className="w-11/12 mx-auto my-9">
       <h2 className="text-2xl my-4 mb-8 text-blue-800">Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-9 gap-3">
-        <div className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
+        <div
+          className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm"
+          data-aos="fade-up"
+        >
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(78,107,244,0.8)] to-[rgb(78,107,244,0.2)]   rounded-full">
               <img src="./img/logoLibra 1.png" alt="" width={22} />
@@ -37,7 +40,10 @@ const OverView = () => {
             </div> */}
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient1  md:col-span-3 rounded-lg text-slate-600 shadow-sm">
+        <div
+          className="bg-white p-5 border border-gradient1  md:col-span-3 rounded-lg text-slate-600 shadow-sm"
+          data-aos="fade-up"
+        >
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(119,83,185,0.8)] to-[rgb(119,83,185,0.2)] rounded-full">
               <img src="./img/Vector.png" alt="" width={22} />
@@ -61,7 +67,10 @@ const OverView = () => {
             </div> */}
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient2 md:col-span-3  rounded-lg text-slate-600 shadow-sm">
+        <div
+          className="bg-white p-5 border border-gradient2 md:col-span-3  rounded-lg text-slate-600 shadow-sm"
+          data-aos="fade-up"
+        >
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(184,128,185,0.8)] to-[rgb(184,128,185,0.2)] rounded-full">
               <img src="./img/Vector-1.png" alt="" width={22} />
@@ -109,7 +118,10 @@ const OverView = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient3 md:col-span-5  rounded-lg text-slate-600 shadow-sm">
+        <div
+          className="bg-white p-5 border border-gradient3 md:col-span-5  rounded-lg text-slate-600 shadow-sm"
+          data-aos="fade-right"
+        >
           <div className="flex  items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(119,83,185,0.8)] to-[rgb(119,83,185,0.2)] rounded-full">
               <img src="./img/Vector-2 2.png" alt="" width={22} />
@@ -157,7 +169,10 @@ const OverView = () => {
             </div> */}
           </div>
         </div>
-        <div className="bg-white p-5 border border-gradient4 md:col-span-4  rounded-lg text-slate-600 shadow-sm">
+        <div
+          className="bg-white p-5 border border-gradient4 md:col-span-4  rounded-lg text-slate-600 shadow-sm"
+          data-aos="fade-left"
+        >
           <div className="flex items-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[rgb(78,107,244,0.8)] to-[rgb(78,107,244,0.2)] rounded-full">
               <img src="./img/Vector-2.png" alt="" width={22} />
