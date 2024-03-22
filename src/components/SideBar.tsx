@@ -1,4 +1,5 @@
 import React from "react";
+import { BiSolidDiamond } from "react-icons/bi";
 import { FaHome, FaTelegramPlane } from "react-icons/fa";
 import {
   FaBook,
@@ -77,6 +78,14 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
             >
               <span className="flex items-center gap-2 rounded-md p-2 px-3">
                 <FaCalculator className="w-5 h-5" /> Apy Calculator
+              </span>
+            </NavLink>
+            <NavLink
+              to="https://miner.libra-finance.app"
+              className="my-1 w-full inline-block pl-3 text-[#7F9ECF]"
+            >
+              <span className="flex items-center gap-2 rounded-md p-2 px-3">
+                <BiSolidDiamond className="w-5 h-5" /> Miner
               </span>
             </NavLink>
           </div>

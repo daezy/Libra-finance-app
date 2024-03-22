@@ -372,7 +372,7 @@ const Stake = () => {
           <p className="text-[25px] text-[#032E70] mb-7">What is Libra Bank</p>
           <div>
             <p className="text-[#032E70] text-[15px]">
-              - By just holding LIBRA, you get LIBRA interest (auto-compound to
+              - By staking LIBRA, you get LIBRA interest (auto-compound to
               6057% APY for you). You will get back your locked amount after 14
               days if you lock for a month.
             </p>
