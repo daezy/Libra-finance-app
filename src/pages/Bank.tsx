@@ -290,7 +290,7 @@ const Bank = () => {
         )}
         <div className="grid gap-4 grid-cols-1 md:grid-cols-5">
           <div
-            data-aos="zoom-in"
+            data-aos="fade-right"
             className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">

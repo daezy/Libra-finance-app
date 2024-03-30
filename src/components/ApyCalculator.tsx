@@ -3,10 +3,12 @@ import { formatAmount } from "../solana/utils";
 import { AppContext } from "../context/App-Context";
 
 const ApyCalculator = () => {
-  const [appName, setAppName] = useState<"stake" | "bank">("bank");
+  const [appName, setAppName] = useState<"stake" | "bank" | "miner">("bank");
   const [amount, setAmount] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [totalRewards, setTotalRewards] = useState<number>(0);
+  const minerApy = 2120;
+  const devFee = 400;
 
   const ctx = useContext(AppContext);
 
@@ -23,6 +25,14 @@ const ApyCalculator = () => {
           )
       : 0;
 
+    if (appName == "miner" && amount && duration) {
+      const rewards = amount * (duration / 365) * (minerApy / 100);
+      // if (appName == "stake") {
+      const newRewards = rewards * ((10000 - devFee) / 10000);
+      setTotalRewards(newRewards);
+      return;
+    }
+
     if (amount && duration && apy) {
       const rewards = amount * (duration / 365) * (Number(apy) / 100);
       // if (appName == "stake") {
@@ -34,7 +44,7 @@ const ApyCalculator = () => {
     }
   };
 
-  const handleChangeApp = (ap: "stake" | "bank") => {
+  const handleChangeApp = (ap: "stake" | "bank" | "miner") => {
     setAppName(ap);
     setAmount(0);
     setDuration(0);
@@ -73,6 +83,16 @@ const ApyCalculator = () => {
                     Stake
                   </a>
                 </li>
+                <li className="me-2">
+                  <a
+                    href="#"
+                    className={`inline-block px-4 py-3 rounded-lg border-blue-700 ${appName == "miner" ? "active bg-[#0D47A1] text-white" : "hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white"}`}
+                    aria-current="page"
+                    onClick={() => handleChangeApp("miner")}
+                  >
+                    Miner
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -86,10 +106,14 @@ const ApyCalculator = () => {
                         parseInt(ctx.contractData.normalStakingApy.toString()),
                         1
                       )
-                    : formatAmount(
-                        parseInt(ctx.contractData.lockedStakingApy.toString()),
-                        1
-                      )
+                    : appName == "bank"
+                      ? formatAmount(
+                          parseInt(
+                            ctx.contractData.lockedStakingApy.toString()
+                          ),
+                          1
+                        )
+                      : minerApy
                   : 0}
                 % / Yr
               </p>
@@ -101,7 +125,7 @@ const ApyCalculator = () => {
                 type="number"
                 id="amount"
                 min={0}
-                placeholder="Amount in libra"
+                placeholder={`Amount in ${appName == "miner" ? "SOL" : "Libra"}`}
                 value={amount}
                 required
                 onChange={(e) => setAmount(parseInt(e.target.value))}
@@ -211,7 +235,9 @@ const ApyCalculator = () => {
           <p>You Will Receive(in {appName}):</p>
           <div>
             <p className="text-4xl my-2 text-[#0D47A1] ">{`${totalRewards.toLocaleString()}`}</p>
-            <p className="text-[#0D47A1]">LIBRA</p>
+            <p className="text-[#0D47A1]">
+              {appName == "miner" ? "SOL" : "LIBRA"}
+            </p>
             <p>After {duration ? duration : 0} days</p>
           </div>
         </div>

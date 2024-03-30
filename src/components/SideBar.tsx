@@ -20,7 +20,7 @@ const SideBar: React.FC<propType> = ({ showSideBar }) => {
   return (
     <div className="">
       <div
-        className={`fixed shadow md:w-2/12 w-9/12 h-screen bg-[#F6F9FF] flex flex-col items-start p-3 z-30 ease-in-out duration-300 md:translate-x-0 ${
+        className={`fixed shadow md:w-2/12 w-9/12 h-screen bg-[#F6F9FF] flex flex-col items-start p-3 z-50 ease-in-out duration-300 md:translate-x-0 ${
           showSideBar ? "translate-x-0 " : "-translate-x-full"
         }`}
       >

@@ -198,7 +198,7 @@ const Stake = () => {
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
         <div
           className="bg-white border border-gradient p-5 md:col-span-3  rounded-lg text-slate-600 shadow-sm"
-          data-aos="zoom-in"
+          data-aos="fade-right"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4  ">
             <div>
@@ -378,7 +378,7 @@ const Stake = () => {
           <p className="text-[25px] text-[#032E70] mb-7">What is Libra Bank</p>
           <div>
             <p className="text-[#032E70] text-[15px]">
-              - By staking LIBRA, you get LIBRA interest (auto-compound to 6057%
+              - By staking LIBRA, you get LIBRA interest (auto-compound to 3127%
               APY for you). You will get back your locked amount after 14 days
               if you lock for a month.
             </p>
@@ -423,7 +423,7 @@ const Stake = () => {
             <div className="bg-[#E4EBF8] p-2 w-[65%] ">
               <p className="text-[#7F9ECF] text-[14px] font-light">
                 (You will get back 100% your locked LIBRA amount after Lock for
-                7 days)
+                14 days)
               </p>
             </div>
           </div>
@@ -474,7 +474,6 @@ const Stake = () => {
       </div>
       <div
         className="p-3 bg-[#2E7FFC29] mt-6 text-[#0D47A1]"
-        data-aos="fade-down"
       >
         <p className="text-center lg:text-[14px] text-[11px] ">
           Unstake Failed? Send In Extra 100 Tokens To Your Wallet And Try Again
