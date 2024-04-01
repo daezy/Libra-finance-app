@@ -34,10 +34,12 @@ export const AppContext = createContext<AppContextType>({
   tokenAccount: null,
   tokenPrice: 0,
   successMsg: "",
+  priority: "medium",
   lastUnstakeTime: { lastunstake: null, appType: null },
   network: "mainnet",
   errorMsg: "",
   setNetwork: () => {},
+  setPriority: () => {},
   setSuccess: () => {},
   setError: () => {},
   setLoading: () => {},
@@ -65,6 +67,9 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [lastUnstake, setLastUnstake] = useState<string | null | undefined>();
   const [lastUnstakeApp, setLastUnstakeApp] = useState<string | null>();
   const [supply, setSupply] = useState<number>(0);
+  const [priority, setPriority] = useState<
+    "none" | "high" | "low" | "medium" | "veryHigh"
+  >("medium");
 
   useEffect(() => {
     // logic to fetch any data or connect to wallet once app launches
@@ -197,6 +202,12 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
     setNetwork(name);
   };
 
+  const handleSetPriority = (
+    priority_f: "none" | "high" | "low" | "medium" | "veryHigh"
+  ) => {
+    setPriority(priority_f);
+  };
+
   const handleDisconnectWallet = (): void => {
     provider?.disconnect().catch(() => {
       setError("Could not disconnect wallet");
@@ -221,6 +232,8 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (
         tokenPrice: libraPrice,
         connection,
         contractData,
+        priority,
+        setPriority: handleSetPriority,
         userData,
         tokenAccount,
         provider,

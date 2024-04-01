@@ -7,6 +7,7 @@ import { FaCoins, FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 import { createStake, deleteStake } from "../supabaseClient.ts";
 import { Timer } from "../components/Timer.tsx";
+import PriorityFees from "../components/PriorityFees.tsx";
 
 const Bank = () => {
   const [amount, setAmount] = useState<number>();
@@ -377,6 +378,7 @@ const Bank = () => {
                 </button>
               </div>
             </div>
+            <PriorityFees />
           </div>
 
           <div

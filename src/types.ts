@@ -10,6 +10,7 @@ export type AppContextType = {
   isWalletConnected: boolean;
   supply: number;
   network: "localnet" | "devnet" | "mainnet";
+  priority: "none" | "high" | "low" | "medium" | "veryHigh";
   provider: PhantomProvider | null;
   connection: Connection | null;
   userData: UserDataInterface | null;
@@ -20,6 +21,7 @@ export type AppContextType = {
   tokenPrice: number;
   errorMsg: string | null;
   setNetwork: (name: "localnet" | "devnet" | "mainnet") => void;
+  setPriority: (prior: "none" | "high" | "low" | "medium" | "veryHigh") => void;
   setSuccess: (message: string) => void;
   setError: (message: string) => void;
   setLoading: (val: boolean) => void;

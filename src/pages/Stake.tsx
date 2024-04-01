@@ -7,6 +7,7 @@ import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 import { StakeType } from "../solana/types.ts";
 import { Timer } from "../components/Timer.tsx";
 import { createStake, deleteStake } from "../supabaseClient.ts";
+import PriorityFees from "../components/PriorityFees.tsx";
 
 const Stake = () => {
   const [days, setDays] = useState<number>(0);
@@ -356,6 +357,8 @@ const Stake = () => {
                   </p>
                 </button>
               </div>
+
+              <PriorityFees />
               <div className="bg-[#E4EBF8] p-3 mt-3">
                 <p className="text-[#7F9ECF] text-[12px] font-light">
                   • You need to lock a minimum of 10 LIBRA
@@ -472,9 +475,7 @@ const Stake = () => {
           </div>
         </div>
       </div>
-      <div
-        className="p-3 bg-[#2E7FFC29] mt-6 text-[#0D47A1]"
-      >
+      <div className="p-3 bg-[#2E7FFC29] mt-6 text-[#0D47A1]">
         <p className="text-center lg:text-[14px] text-[11px] ">
           Unstake Failed? Send In Extra 100 Tokens To Your Wallet And Try Again
         </p>
