@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/App-Context";
 import { formatAmount } from "../solana/utils";
-import { performStake, performUnStake } from "../solana/services.ts";
+import { performStake, performStakeWithPriority, performUnStake } from "../solana/services.ts";
 import { StakeType } from "../solana/types.ts";
 import { FaCoins, FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
@@ -196,20 +196,28 @@ const Bank = () => {
       amount &&
       amount > 0
     ) {
-      await performStake(
-        ctx.connection,
-        ctx.provider,
-        amount,
-        0,
-        ctx.tokenAccount.address,
-        StakeType.NORMAL
-      );
-      await deleteStake(ctx.provider?.publicKey.toString());
-      ctx.setSuccess("$LIBRA staked successfully");
-      setTimeout(() => {
-        ctx.setSuccess("");
-      }, 3000);
-      window.location.reload();
+      try {
+        await performStakeWithPriority(
+          ctx.connection,
+          ctx.provider,
+          amount,
+          0,
+          ctx.tokenAccount.address,
+          StakeType.NORMAL,
+          ctx.priority
+        );
+        await deleteStake(ctx.provider?.publicKey.toString());
+        ctx.setSuccess("$LIBRA staked successfully");
+        setTimeout(() => {
+          ctx.setSuccess("");
+        }, 3000);
+        window.location.reload();
+      } catch (error) {
+        ctx.setError("An Error Occured while Performing Staking...");
+        setTimeout(() => {
+          ctx.setError("");
+        }, 3000);
+      }
     } else {
       ctx.setError("Unable to Perform Staking...");
       setTimeout(() => {

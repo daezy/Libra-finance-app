@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { FaLock, FaSpinner } from "react-icons/fa6";
 import { AppContext } from "../context/App-Context";
-import { performStake, performUnStake } from "../solana/services.ts";
+import { performStake, performStakeWithPriority, performUnStake } from "../solana/services.ts";
 import { formatAmount } from "../solana/utils.ts";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
 import { StakeType } from "../solana/types.ts";
@@ -134,13 +134,14 @@ const Stake = () => {
     if (ctx.connection && ctx.provider && ctx.tokenAccount) {
       try {
         const duration = days * 24 * 60 * 60;
-        await performStake(
+        await performStakeWithPriority(
           ctx.connection,
           ctx.provider,
           libraAmount,
           duration,
           ctx.tokenAccount.address,
-          StakeType.LOCKED
+          StakeType.LOCKED,
+          ctx.priority
         );
         await deleteStake(ctx.provider?.publicKey.toString());
         ctx.setSuccess("Stake Success 🚀✅");
