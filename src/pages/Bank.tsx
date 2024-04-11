@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/App-Context";
 import { formatAmount } from "../solana/utils";
-import { performStake, performStakeWithPriority, performUnStake } from "../solana/services.ts";
+import { performStakeWithPriority, performUnStake } from "../solana/services.ts";
 import { StakeType } from "../solana/types.ts";
 import { FaCoins, FaSpinner } from "react-icons/fa6";
 import { STAKE_TOKEN_DECIMALS } from "../solana/constants.ts";
