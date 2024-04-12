@@ -100,3 +100,56 @@
 
   color: #2362f5;
 }
+
+.preloader-img {
+  -webkit-animation: floating 1s cubic-bezier(0.4, -0.35, 0.01, 1.08) infinite
+    alternate !important;
+  -moz-animation: floating 1s cubic-bezier(0.4, -0.35, 0.01, 1.08) infinite
+    alternate !important;
+  -ms-animation: floating 1s cubic-bezier(0.4, -0.35, 0.01, 1.08) infinite
+    alternate !important;
+  -o-animation: floating 1s cubic-bezier(0.4, -0.35, 0.01, 1.08) infinite
+    alternate !important;
+  animation: floating 1s cubic-bezier(0.4, -0.35, 0.01, 1.08) infinite alternate !important;
+}
+
+@-webkit-keyframes floating {
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@-moz-keyframes floating {
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@-ms-keyframes floating {
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@-o-keyframes floating {
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes floating {
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
